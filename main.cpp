@@ -354,8 +354,9 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 	}
 
 	//Entertaste zum Starten des Spiels (Kugel rollt los)
-	if (key == 257 && action == 1){
-		if (whiteBall->speedZ == 0){
+	if (key == 257 && action == 1) {
+		if (whiteBall->speedZ == 0) {
+
 			whiteBall->wallBack = false;
 			whiteBall->wallFront = false;
 			whiteBall->wallLeft = false;
@@ -363,30 +364,16 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 			whiteBall->wallObst = false;
 			whiteBall->speedZ = -0.7;
 			whiteBall->speedX = 0.1;
-			/*ball1->wallBack = false;
-			ball1->wallFront = false;
-			ball1->wallLeft = false;
-			ball1->wallRight = false;
-			ball1->wallObst = false;
-			ball1->speedX = -0.5;
-			ball1->speedZ = -0.4;
-			ball2->wallBack = false;
-			ball2->wallFront = false;
-			ball2->wallLeft = false;
-			ball2->wallRight = false;
-			ball2->wallObst = false;
-			ball2->speedX = -0.2;
-			ball2->speedZ = 0.7;*/
 
 		}
 	}
 
-	//Leertaste zum Zurücksetzen der Kugel
-	if (GLFW_KEY_SPACE  && action == 2){
+	//Leertaste zum Zurücksetzen der Kugel auf die Startposition
+	if (key == 32  && action == 2){
 		whiteBall->posX = sphereX;
-				whiteBall->posZ = sphereZ;
-				whiteBall->speedZ = 0;
-				whiteBall->speedX = 0;
+		whiteBall->posZ = sphereZ;
+		whiteBall->speedZ = 0;
+		whiteBall->speedX = 0;
 	}
 
 }
@@ -395,26 +382,26 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 void mouse_callback(GLFWwindow *window, int button, int action, int mods) {
 	//left click changes speed of ball
 	if (button == 0 && action == GLFW_PRESS) {
-//			ball1->wallBack = false;
-//			ball1->wallFront = false;
-//			ball1->wallLeft = false;
-//			ball1->wallRight = false;
-//			ball1->wallObst = false;
-//			ball1->speedX = -0.5;
-//			ball1->speedZ = -0.4;
-			/*
-		   	ball2->wallBack = false;
-		   	ball2->wallFront = false;
-		   	ball2->wallLeft = false;
-		   	ball2->wallRight = false;
-		   	ball2->wallObst = false;
-			ball2->speedX = -0.2;
-			ball2->speedZ = 0.7;*/
+		ball1->wallBack = false;
+		ball1->wallFront = false;
+		ball1->wallLeft = false;
+		ball1->wallRight = false;
+		ball1->wallObst = false;
+		ball1->speedX = 0.8;
+		ball1->speedZ = 0.6;
+
 	}
 
-//	if (button == 1 && action == GLFW_PRESS) {
-//
-//	}
+	if (button == 1 && action == GLFW_PRESS) {
+
+		ball2->wallBack = false;
+		ball2->wallFront = false;
+		ball2->wallLeft = false;
+		ball2->wallRight = false;
+		ball2->wallObst = false;
+		ball2->speedX = -0.2;
+		ball2->speedZ = 0.7;
+	}
 
 }
 
