@@ -1,4 +1,7 @@
 #include <GL/gl.h>
+
+#include "Cylinder.h"
+
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
@@ -19,11 +22,17 @@ BilliardBall::BilliardBall(double posX, double posY, double posZ, float size, do
 	this->speedZ = 0.0;
 	this->friction = friction;
 	this->collision = false;
+	bool cylinderCol;
 	this->wallBack = false;
 	this->wallFront = false;
 	this->wallLeft = false;
 	this->wallRight = false;
 	this->wallObst = false;
+
+	this->cubeBack = false;
+	this->cubeFront = false;
+	this->cubeLeft = false;
+	this->cubeRight = false;
 
 }
 
@@ -71,6 +80,46 @@ bool BilliardBall::detectCollision(BilliardBall b) {
     }
 }
 
+bool BilliardBall::detectCollision(Cylinder c) {
+    //velocity
+    double dvX = this->speedX - c.speedX;
+    double dvY = this->speedY - c.speedY;
+    double dvZ = this->speedZ - c.speedZ;
+    //distance
+    double dpX = this->posX - c.posX;
+    double dpY = this->posY - c.posY;
+    double dpZ = this->posZ - c.posZ;
+    //minimal distance squared
+    double r = this->ballSize + c.cylinderSize;
+    double pp = dpX * dpX + dpY * dpY + dpZ * dpZ - r*r;
+    //already intersecting -> collision
+    if (pp < 0) {
+        return true;
+    }
+    double pv = dpX * dvX + dpY * dvY + dpZ * dvZ;
+    //moving away from each other (passed each other already) -> no collision
+    if (pv >= 0) {
+        return false;
+    }
+    double vv = dvX * dvX + dvY * dvY + dvZ * dvZ;
+    //possible intersection within the next frame? -> no collision
+    if ( (pv + vv) <= 0 && (vv + 2 * pv + pp) >= 0 ) {
+        return false;
+    }
+    //discriminant
+    double D = pv * pv - pp * vv;
+    if (D < 0) {
+    	D = D * -1;
+    }
+    //no collision
+    if(D > 0) {
+        return false;
+    //collision
+    } else {
+        return true;
+    }
+}
+
 //Returns true if balls collide strait
 bool BilliardBall::checkCollisionType(BilliardBall a, BilliardBall b) {
 	Vec3  t;
@@ -78,6 +127,21 @@ bool BilliardBall::checkCollisionType(BilliardBall a, BilliardBall b) {
 	t.p[0] = ( (b.posX - a.posX) / a.speedX );
 	t.p[1] = ( (b.posY - a.posY) / a.speedY );
 	t.p[2] = ( (b.posZ - a.posZ) / a.speedZ );
+
+	if( (t.p[0] == t.p[1]) && (t.p[0] == t.p[2]) ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+//Returns true if balls collide strait
+bool BilliardBall::checkCollisionType(BilliardBall a, Cylinder c) {
+	Vec3  t;
+
+	t.p[0] = ( (c.posX - a.posX) / a.speedX );
+	t.p[1] = ( (c.posY - a.posY) / a.speedY );
+	t.p[2] = ( (c.posZ - a.posZ) / a.speedZ );
 
 	if( (t.p[0] == t.p[1]) && (t.p[0] == t.p[2]) ) {
 		return true;
@@ -105,8 +169,30 @@ void BilliardBall::updatePosition(){
 
 }
 
-// Kollisiin mit einer Bande
+// Kollision mit einer Bande
 bool BilliardBall::wallCollisionDetection(Vec3& wallDot, Vec3& wallNormVec){
+
+    double amalb = (wallDot.p[0]*wallNormVec.p[0]) + (wallDot.p[1]*wallNormVec.p[1]) + (wallDot.p[2]*wallNormVec.p[2]);
+    double amaly = (posX*wallNormVec.p[0]) + (posY*wallNormVec.p[1]) + (posZ*wallNormVec.p[2]);
+    double betraga = sqrt((wallNormVec.p[0]*wallNormVec.p[0]) + (wallNormVec.p[1]*wallNormVec.p[1]) + (wallNormVec.p[2]*wallNormVec.p[2]));
+    double D = ((amalb - amaly) / betraga);
+
+    //std::cout << "D: " <<  D <<std::endl;
+
+    if(D < 0) {
+        D = D * (-1);
+    }
+
+    if(D <= ballSize){
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+// Kollision mit einer Bande
+bool BilliardBall::cubeCollisionDetection(Vec3& wallDot, Vec3& wallNormVec){
 
     double amalb = (wallDot.p[0]*wallNormVec.p[0]) + (wallDot.p[1]*wallNormVec.p[1]) + (wallDot.p[2]*wallNormVec.p[2]);
     double amaly = (posX*wallNormVec.p[0]) + (posY*wallNormVec.p[1]) + (posZ*wallNormVec.p[2]);

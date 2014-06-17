@@ -1,13 +1,14 @@
 #include <GL/gl.h>
-#define GLFW_DLL
 #include <GLFW/glfw3.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
 #include <iostream>
-#include "vec3.hpp"
+
 #include "BilliardBall.h"
 #include "BilliardTable.h"
+#include "Cube.h"
+#include "Cylinder.h"
+#include "vec3.hpp"
 
 static double alpha_ = 35;		// Winkel für Y Achse
 static double beta_ = 25;		// Winkel für X Achse
@@ -28,9 +29,14 @@ static double window_height_ = 768;
 
 BilliardTable* table = new BilliardTable(size);
 
-BilliardBall* whiteBall = new BilliardBall(sphereX, sphereY, sphereZ, sphereSize, 0.99);
-BilliardBall* ball1 = new BilliardBall(5, sphereY, -3, sphereSize,  0.99);
-BilliardBall* ball2 = new BilliardBall(3, sphereY, -1, sphereSize,  0.99);
+Cube* cube = new Cube(size);
+Cylinder* cylinder = new Cylinder(size, 6, 0.5, -1);
+
+BilliardBall* whiteBall = new BilliardBall(sphereX, sphereY, sphereZ, sphereSize, 0.978);
+BilliardBall* ball1 = new BilliardBall(5, sphereY, -3, sphereSize,  0.978);
+BilliardBall* ball2 = new BilliardBall(3, sphereY, -1, sphereSize,  0.978);
+
+//BilliardBall* ball3 = new BilliardBall(6, sphereY, -1, sphereSize,  0.978);
 
 BilliardBall* bList[3] = {whiteBall, ball1, ball2};
 
@@ -98,6 +104,74 @@ void checkBallsandWalls() {
 	  }
 	}
 
+}
+
+void checkBallsandCube() {
+
+	for (int i = 0; i<3; i++) {
+
+	  if((!bList[i]->wallBack) && bList[i]->wallCollisionDetection(table->wallDotBack, table->wallDotBackNormVec)){
+
+	  }
+	}
+}
+void checkBallsandCylinder() {
+
+	for (int i = 0; i<3; i++) {
+		if(bList[i]->detectCollision(*cylinder) && !(bList[i]->collision)){
+			if (bList[i]->checkCollisionType(*bList[i], *cylinder)){
+				//gerade Kugelkollision
+
+				std::cout << "Gerade Kollision" << std::endl;
+
+				bList[i]->cylinderCol = true;
+
+				bList[i]->speedX = bList[i]->speedX * (-1);
+				bList[i]->speedY = bList[i]->speedY * (-1);
+				bList[i]->speedZ = bList[i]->speedZ * (-1);
+
+
+			} else {
+				bList[i]->cylinderCol = true;
+
+				Vec3 n;
+				n.p[0] = ( (bList[i]->posX - cylinder->posX));
+				n.p[1] = ( (bList[i]->posY - cylinder->posY));
+				n.p[2] = ( (bList[i]->posZ - cylinder->posZ));
+
+				Vec3 v1maln;
+				v1maln.p[0] = ( cylinder->posX * n.p[0] );
+				v1maln.p[1] = ( cylinder->posY * n.p[1] );
+				v1maln.p[2] = ( cylinder->posZ * n.p[2] );
+
+				Vec3 v2maln;
+				v2maln.p[0] = ( bList[i]->posX * n.p[0] );
+				v2maln.p[1] = ( bList[i]->posY * n.p[1] );
+				v2maln.p[2] = ( bList[i]->posZ * n.p[2] );
+
+				Vec3 vplusn;
+				vplusn.p[0] = ( ( v1maln.p[0] + v2maln.p[0] ) / 2.0 );
+				vplusn.p[1] = ( ( v1maln.p[1] + v2maln.p[1] ) / 2.0 );
+				vplusn.p[2] = ( ( v1maln.p[2] + v2maln.p[2] ) / 2.0 );
+
+				Vec3 v1neu;
+				v1neu.p[0] = ( bList[i]->speedX + ( 2.0 * ( vplusn.p[0] - v1maln.p[0] ) * n.p[0]) );
+				v1neu.p[1] = ( bList[i]->speedY + ( 2.0 * ( vplusn.p[1] - v1maln.p[1] ) * n.p[1]) );
+				v1neu.p[2] = ( bList[i]->speedZ + ( 2.0 * ( vplusn.p[2] - v1maln.p[2] ) * n.p[2]) );
+
+				Vec3 v2neu;
+				v2neu.p[0] = ( cylinder->speedX + ( 2.0 * ( vplusn.p[0] - v2maln.p[0] ) * n.p[0]) );
+				v2neu.p[1] = ( cylinder->speedY + ( 2.0 * ( vplusn.p[1] - v2maln.p[1] ) * n.p[1]) );
+				v2neu.p[2] = ( cylinder->speedZ + ( 2.0 * ( vplusn.p[2] - v2maln.p[2] ) * n.p[2]) );
+
+				bList[i]->speedX = v1neu.p[0];
+				bList[i]->speedY = v1neu.p[1];
+				bList[i]->speedZ = v1neu.p[2];
+
+			}
+		}
+
+	}
 }
 
 void checkBalls() {
@@ -283,11 +357,17 @@ void Preview() {
   //BilliardTable colours inside and outside
   SetMaterialColor(2, 0.0, 1.0, 0.0);
   SetMaterialColor(1, 0.0, 1.0, 0.2);
-
   table->DrawTable();
 
+  SetMaterialColor(2, 1.0, 1.0, 0.0);
+  SetMaterialColor(1, 0.0, 1.0, 0.0);
+  cube->DrawCube();
+
   checkBallsandWalls();
+
   checkBalls();
+
+  checkBallsandCylinder();
   resetBalls();
 
   whiteBall->updatePosition();
@@ -303,6 +383,9 @@ void Preview() {
 
   SetMaterialColor(1, 1.0, 0.0, 0.0);
   ball2->DrawBall(Vec3( ball2->posX, ball2->posY, ball2->posZ), ball2->ballSize);
+
+  SetMaterialColor(1, 0.0, 1.0, 0.9);
+  cylinder->DrawCylinder(Vec3( cylinder->posX, cylinder->posY, cylinder->posZ), cylinder->cylinderSize);
 
   glPopMatrix();
 
@@ -355,17 +438,13 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 	//Entertaste zum Starten des Spiels (Kugel rollt los)
 	if (key == 257 && action == 1) {
-		if (whiteBall->speedZ == 0) {
-
-			whiteBall->wallBack = false;
-			whiteBall->wallFront = false;
-			whiteBall->wallLeft = false;
-			whiteBall->wallRight = false;
-			whiteBall->wallObst = false;
-			whiteBall->speedZ = -0.7;
-			whiteBall->speedX = 0.1;
-
-		}
+		whiteBall->wallBack = false;
+		whiteBall->wallFront = false;
+		whiteBall->wallLeft = false;
+		whiteBall->wallRight = false;
+		whiteBall->wallObst = false;
+		whiteBall->speedZ = -0.7;
+		whiteBall->speedX = 0.1;
 	}
 
 	//Leertaste zum Zurücksetzen der Kugel auf die Startposition
