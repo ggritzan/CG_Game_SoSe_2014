@@ -23,7 +23,7 @@ public:
 	Cylinder(float size, double posX, double posY, double posZ);
 	virtual ~Cylinder();
 
-	void DrawCylinder(const Vec3& ctr, double r);
+	void DrawCylinder(double x, double y, double z, double r);
 };
 
 #endif /* CYLINDER_H_ */

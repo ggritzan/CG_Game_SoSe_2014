@@ -11,8 +11,15 @@
 
 #include "vec3.hpp"
 
-Cube::Cube(double size) {
+Cube::Cube(double size, double posX, double posY, double posZ) {
 	this->cubeSize = size;
+
+	this->speedX = 0.0;
+	this->speedY = 0.0;
+	this->speedZ = 0.0;
+	this->posX = posX;
+	this->posY = posY;
+	this->posZ = posZ;
 
     this->cubeDotLeft = Vec3(-cubeSize, cubeSize, -cubeSize);
     this->cubeDotLeftNormVec = Vec3(-1, 0.0, 0.0);

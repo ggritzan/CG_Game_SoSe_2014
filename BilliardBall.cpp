@@ -21,8 +21,10 @@ BilliardBall::BilliardBall(double posX, double posY, double posZ, float size, do
 	this->speedY = 0.0;
 	this->speedZ = 0.0;
 	this->friction = friction;
+
 	this->collision = false;
-	bool cylinderCol;
+	this->cylinderCol = false;
+
 	this->wallBack = false;
 	this->wallFront = false;
 	this->wallLeft = false;

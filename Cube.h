@@ -13,6 +13,12 @@
 class Cube {
 public:
 	double cubeSize;
+	double speedX;
+	double speedY;
+	double speedZ;
+	double posX;
+	double posY;
+	double posZ;
 
     Vec3 cubeDotLeft;
     Vec3 cubeDotLeftNormVec;
@@ -26,7 +32,7 @@ public:
     Vec3 cubeDotBack;
     Vec3 cubeDotBackNormVec;
 
-	Cube(double size);
+	Cube(double size, double posX, double posY, double posZ);
 	virtual ~Cube();
 
 	void DrawCube();

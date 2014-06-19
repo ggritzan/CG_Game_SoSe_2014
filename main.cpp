@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 
 #include "BilliardBall.h"
 #include "BilliardTable.h"
@@ -29,20 +30,28 @@ static double window_height_ = 768;
 
 BilliardTable* table = new BilliardTable(size);
 
-Cube* cube = new Cube(size);
-Cylinder* cylinder = new Cylinder(size, 6, 0.5, -1);
+Cube* cube = new Cube(size, -5.0, 0.5, 5.0);
+Cylinder* cylinder = new Cylinder(size, 5.5, 0.5, -2);
 
 BilliardBall* whiteBall = new BilliardBall(sphereX, sphereY, sphereZ, sphereSize, 0.978);
-BilliardBall* ball1 = new BilliardBall(5, sphereY, -3, sphereSize,  0.978);
+BilliardBall* ball1 = new BilliardBall(4, sphereY, -4, sphereSize,  0.978);
 BilliardBall* ball2 = new BilliardBall(3, sphereY, -1, sphereSize,  0.978);
 
 //BilliardBall* ball3 = new BilliardBall(6, sphereY, -1, sphereSize,  0.978);
 
-BilliardBall* bList[3] = {whiteBall, ball1, ball2};
+//Deklaration der Objektarrays
+//std::vector<BilliardBall*> ballVector;
+//ballVector.push_back (whiteBall);
+//ballVector.push_back (ball1);
+//ballVector.push_back (ball2);
+
+BilliardBall* ballArray[5] = {whiteBall, ball1, ball2};
+Cube* cubeVector[5] = {};
+Cylinder* cylinderVector[5] = {};
 
 void resetBalls() {
 	for (int i = 0; i<3; i++) {
-		bList[i]->collision = false;
+		ballArray[i]->collision = false;
 	}
 }
 
@@ -50,57 +59,57 @@ void checkBallsandWalls() {
 
 	for (int i = 0; i<3; i++) {
 
-	  if((!bList[i]->wallBack) && bList[i]->wallCollisionDetection(table->wallDotBack, table->wallDotBackNormVec)){
-		  bList[i]->wallBack = true;
-		  bList[i]->wallFront = false;
-		  bList[i]->wallLeft = false;
-		  bList[i]->wallRight = false;
-		  bList[i]->wallObst = false;
-		  bList[i]->speedZ = bList[i]->speedZ * -1;
+	  if((!ballArray[i]->wallBack) && ballArray[i]->wallCollisionDetection(table->wallDotBack, table->wallDotBackNormVec)){
+		  ballArray[i]->wallBack = true;
+		  ballArray[i]->wallFront = false;
+		  ballArray[i]->wallLeft = false;
+		  ballArray[i]->wallRight = false;
+		  ballArray[i]->wallObst = false;
+		  ballArray[i]->speedZ = ballArray[i]->speedZ * -1;
 	  }
 
-	  if ((!bList[i]->wallFront) && bList[i]->wallCollisionDetection(table->wallDotFront, table->wallDotFrontNormVec)) {
-		  bList[i]->wallBack = false;
-		  bList[i]->wallFront = true;
-		  bList[i]->wallLeft = false;
-		  bList[i]->wallRight = false;
-		  bList[i]->wallObst = false;
-		  bList[i]->speedZ = bList[i]->speedZ * -1;
+	  if ((!ballArray[i]->wallFront) && ballArray[i]->wallCollisionDetection(table->wallDotFront, table->wallDotFrontNormVec)) {
+		  ballArray[i]->wallBack = false;
+		  ballArray[i]->wallFront = true;
+		  ballArray[i]->wallLeft = false;
+		  ballArray[i]->wallRight = false;
+		  ballArray[i]->wallObst = false;
+		  ballArray[i]->speedZ = ballArray[i]->speedZ * -1;
 	  }
 
-	  if ((!bList[i]->wallLeft) &&bList[i]->wallCollisionDetection(table->wallDotLeft, table->wallDotLeftNormVec)) {
-		  bList[i]->wallBack = false;
-		  bList[i]->wallFront = false;
-		  bList[i]->wallLeft = true;
-		  bList[i]->wallRight = false;
-		  bList[i]->wallObst = false;
-		  bList[i]->speedX = bList[i]->speedX * -1;
+	  if ((!ballArray[i]->wallLeft) &&ballArray[i]->wallCollisionDetection(table->wallDotLeft, table->wallDotLeftNormVec)) {
+		  ballArray[i]->wallBack = false;
+		  ballArray[i]->wallFront = false;
+		  ballArray[i]->wallLeft = true;
+		  ballArray[i]->wallRight = false;
+		  ballArray[i]->wallObst = false;
+		  ballArray[i]->speedX = ballArray[i]->speedX * -1;
 	  }
 
-	  if ((!bList[i]->wallRight) && bList[i]->wallCollisionDetection(table->wallDotRight, table->wallDotRightNormVec)) {
-		  bList[i]->wallBack = false;
-		  bList[i]->wallFront = false;
-		  bList[i]->wallLeft = false;
-		  bList[i]->wallRight = true;
-		  bList[i]->wallObst = false;
-		  bList[i]->speedX = bList[i]->speedX * -1;
+	  if ((!ballArray[i]->wallRight) && ballArray[i]->wallCollisionDetection(table->wallDotRight, table->wallDotRightNormVec)) {
+		  ballArray[i]->wallBack = false;
+		  ballArray[i]->wallFront = false;
+		  ballArray[i]->wallLeft = false;
+		  ballArray[i]->wallRight = true;
+		  ballArray[i]->wallObst = false;
+		  ballArray[i]->speedX = ballArray[i]->speedX * -1;
 	  }
 
-	  if ((!bList[i]->wallObst) && bList[i]->wallCollisionDetection(table->wallDotObs, table->WallDotObsNormVec)) {
+	  if ((!ballArray[i]->wallObst) && ballArray[i]->wallCollisionDetection(table->wallDotObs, table->WallDotObsNormVec)) {
 
-		  bList[i]->wallBack = false;
-		  bList[i]->wallFront = false;
-		  bList[i]->wallLeft = false;
-		  bList[i]->wallRight = false;
-		  bList[i]->wallObst = true;
+		  ballArray[i]->wallBack = false;
+		  ballArray[i]->wallFront = false;
+		  ballArray[i]->wallLeft = false;
+		  ballArray[i]->wallRight = false;
+		  ballArray[i]->wallObst = true;
 
-		  double amalV = ( (table->WallDotObsNormVec.p[0] * bList[i]->speedX) + (table->WallDotObsNormVec.p[1] * bList[i]->speedY) + (table->WallDotObsNormVec.p[2] * bList[i]->speedZ) );
+		  double amalV = ( (table->WallDotObsNormVec.p[0] * ballArray[i]->speedX) + (table->WallDotObsNormVec.p[1] * ballArray[i]->speedY) + (table->WallDotObsNormVec.p[2] * ballArray[i]->speedZ) );
 		  double betragA = (sqrt((table->WallDotObsNormVec.p[0]*table->WallDotObsNormVec.p[0]) + (table->WallDotObsNormVec.p[1]*table->WallDotObsNormVec.p[1]) + (table->WallDotObsNormVec.p[2]*table->WallDotObsNormVec.p[2]))) * (sqrt((table->WallDotObsNormVec.p[0]*table->WallDotObsNormVec.p[0]) + (table->WallDotObsNormVec.p[1]*table->WallDotObsNormVec.p[1]) + (table->WallDotObsNormVec.p[2]*table->WallDotObsNormVec.p[2])));
 		  double aNeuX = (2 * amalV / betragA) * table->WallDotObsNormVec.p[0];
 		  double aNeuZ = (2 * amalV / betragA) * table->WallDotObsNormVec.p[2];
 
-		  bList[i]->speedX = bList[i]->speedX - aNeuX;
-		  bList[i]->speedZ = bList[i]->speedZ - aNeuZ;
+		  ballArray[i]->speedX = ballArray[i]->speedX - aNeuX;
+		  ballArray[i]->speedZ = ballArray[i]->speedZ - aNeuZ;
 	  }
 	}
 
@@ -110,34 +119,93 @@ void checkBallsandCube() {
 
 	for (int i = 0; i<3; i++) {
 
-	  if((!bList[i]->wallBack) && bList[i]->wallCollisionDetection(table->wallDotBack, table->wallDotBackNormVec)){
+	  if((!ballArray[i]->cubeBack) && ballArray[i]->cubeCollisionDetection(cube->cubeDotBack, cube->cubeDotBackNormVec)){
 
+		  ballArray[i]->cubeBack = true;
+		  ballArray[i]->cubeFront = false;
+		  ballArray[i]->cubeLeft = false;
+		  ballArray[i]->cubeRight = false;
+
+		  double amalV = ( (cube->cubeDotBackNormVec.p[0] * ballArray[i]->speedX) + (cube->cubeDotBackNormVec.p[1] * ballArray[i]->speedY) + (cube->cubeDotBackNormVec.p[2] * ballArray[i]->speedZ) );
+		  double betragA = (sqrt((cube->cubeDotBackNormVec.p[0]*cube->cubeDotBackNormVec.p[0]) + (cube->cubeDotBackNormVec.p[1]*cube->cubeDotBackNormVec.p[1]) + (cube->cubeDotBackNormVec.p[2]*cube->cubeDotBackNormVec.p[2]))) * (sqrt((cube->cubeDotBackNormVec.p[0]*cube->cubeDotBackNormVec.p[0]) + (cube->cubeDotBackNormVec.p[1]*cube->cubeDotBackNormVec.p[1]) + (cube->cubeDotBackNormVec.p[2]*cube->cubeDotBackNormVec.p[2])));
+		  double aNeuX = (2 * amalV / betragA) * cube->cubeDotBackNormVec.p[0];
+		  double aNeuZ = (2 * amalV / betragA) * cube->cubeDotBackNormVec.p[2];
+
+		  ballArray[i]->speedX = ballArray[i]->speedX - aNeuX;
+		  ballArray[i]->speedZ = ballArray[i]->speedZ - aNeuZ;
+	  }
+
+	  if((!ballArray[i]->cubeFront) && ballArray[i]->cubeCollisionDetection(cube->cubeDotFront, cube->cubeDotFrontNormVec)){
+
+		  ballArray[i]->cubeBack = false;
+		  ballArray[i]->cubeFront = true;
+		  ballArray[i]->cubeLeft = false;
+		  ballArray[i]->cubeRight = false;
+
+		  double amalV = ( (cube->cubeDotFrontNormVec.p[0] * ballArray[i]->speedX) + (cube->cubeDotFrontNormVec.p[1] * ballArray[i]->speedY) + (cube->cubeDotFrontNormVec.p[2] * ballArray[i]->speedZ) );
+		  double betragA = (sqrt((cube->cubeDotFrontNormVec.p[0]*cube->cubeDotFrontNormVec.p[0]) + (cube->cubeDotFrontNormVec.p[1]*cube->cubeDotFrontNormVec.p[1]) + (cube->cubeDotFrontNormVec.p[2]*cube->cubeDotFrontNormVec.p[2]))) * (sqrt((cube->cubeDotFrontNormVec.p[0]*cube->cubeDotFrontNormVec.p[0]) + (cube->cubeDotFrontNormVec.p[1]*cube->cubeDotFrontNormVec.p[1]) + (cube->cubeDotFrontNormVec.p[2]*cube->cubeDotFrontNormVec.p[2])));
+		  double aNeuX = (2 * amalV / betragA) * cube->cubeDotFrontNormVec.p[0];
+		  double aNeuZ = (2 * amalV / betragA) * cube->cubeDotFrontNormVec.p[2];
+
+		  ballArray[i]->speedX = ballArray[i]->speedX - aNeuX;
+		  ballArray[i]->speedZ = ballArray[i]->speedZ - aNeuZ;
+	  }
+
+	  if((!ballArray[i]->cubeLeft) && ballArray[i]->cubeCollisionDetection(cube->cubeDotLeft, cube->cubeDotLeftNormVec)){
+		  ballArray[i]->cubeBack = false;
+		  ballArray[i]->cubeFront = false;
+		  ballArray[i]->cubeLeft = true;
+		  ballArray[i]->cubeRight = false;
+
+		  double amalV = ( (cube->cubeDotLeftNormVec.p[0] * ballArray[i]->speedX) + (cube->cubeDotLeftNormVec.p[1] * ballArray[i]->speedY) + (cube->cubeDotLeftNormVec.p[2] * ballArray[i]->speedZ) );
+		  double betragA = (sqrt((cube->cubeDotLeftNormVec.p[0]*cube->cubeDotLeftNormVec.p[0]) + (cube->cubeDotLeftNormVec.p[1]*cube->cubeDotLeftNormVec.p[1]) + (cube->cubeDotLeftNormVec.p[2]*cube->cubeDotLeftNormVec.p[2]))) * (sqrt((cube->cubeDotLeftNormVec.p[0]*cube->cubeDotLeftNormVec.p[0]) + (cube->cubeDotLeftNormVec.p[1]*cube->cubeDotLeftNormVec.p[1]) + (cube->cubeDotLeftNormVec.p[2]*cube->cubeDotLeftNormVec.p[2])));
+		  double aNeuX = (2 * amalV / betragA) * cube->cubeDotLeftNormVec.p[0];
+		  double aNeuZ = (2 * amalV / betragA) * cube->cubeDotLeftNormVec.p[2];
+
+		  ballArray[i]->speedX = ballArray[i]->speedX - aNeuX;
+		  ballArray[i]->speedZ = ballArray[i]->speedZ - aNeuZ;
+	  }
+
+	  if((!ballArray[i]->cubeRight) && ballArray[i]->cubeCollisionDetection(cube->cubeDotRight, cube->cubeDotRightNormVec)){
+		  ballArray[i]->cubeBack = false;
+		  ballArray[i]->cubeFront = false;
+		  ballArray[i]->cubeLeft = false;
+		  ballArray[i]->cubeRight = true;
+
+		  double amalV = ( (cube->cubeDotRightNormVec.p[0] * ballArray[i]->speedX) + (cube->cubeDotRightNormVec.p[1] * ballArray[i]->speedY) + (cube->cubeDotRightNormVec.p[2] * ballArray[i]->speedZ) );
+		  double betragA = (sqrt((cube->cubeDotRightNormVec.p[0]*cube->cubeDotRightNormVec.p[0]) + (cube->cubeDotRightNormVec.p[1]*cube->cubeDotRightNormVec.p[1]) + (cube->cubeDotRightNormVec.p[2]*cube->cubeDotRightNormVec.p[2]))) * (sqrt((cube->cubeDotRightNormVec.p[0]*cube->cubeDotRightNormVec.p[0]) + (cube->cubeDotRightNormVec.p[1]*cube->cubeDotRightNormVec.p[1]) + (cube->cubeDotRightNormVec.p[2]*cube->cubeDotRightNormVec.p[2])));
+		  double aNeuX = (2 * amalV / betragA) * cube->cubeDotRightNormVec.p[0];
+		  double aNeuZ = (2 * amalV / betragA) * cube->cubeDotRightNormVec.p[2];
+
+		  ballArray[i]->speedX = ballArray[i]->speedX - aNeuX;
+		  ballArray[i]->speedZ = ballArray[i]->speedZ - aNeuZ;
 	  }
 	}
 }
+
 void checkBallsandCylinder() {
 
 	for (int i = 0; i<3; i++) {
-		if(bList[i]->detectCollision(*cylinder) && !(bList[i]->collision)){
-			if (bList[i]->checkCollisionType(*bList[i], *cylinder)){
+		if(ballArray[i]->detectCollision(*cylinder) && !(ballArray[i]->collision)){
+			if (ballArray[i]->checkCollisionType(*ballArray[i], *cylinder)){
 				//gerade Kugelkollision
 
 				std::cout << "Gerade Kollision" << std::endl;
 
-				bList[i]->cylinderCol = true;
+				ballArray[i]->collision = true;
 
-				bList[i]->speedX = bList[i]->speedX * (-1);
-				bList[i]->speedY = bList[i]->speedY * (-1);
-				bList[i]->speedZ = bList[i]->speedZ * (-1);
+				ballArray[i]->speedX = ballArray[i]->speedX * (-1);
+				ballArray[i]->speedY = ballArray[i]->speedY * (-1);
+				ballArray[i]->speedZ = ballArray[i]->speedZ * (-1);
 
 
 			} else {
-				bList[i]->cylinderCol = true;
+				ballArray[i]->collision = true;
 
 				Vec3 n;
-				n.p[0] = ( (bList[i]->posX - cylinder->posX));
-				n.p[1] = ( (bList[i]->posY - cylinder->posY));
-				n.p[2] = ( (bList[i]->posZ - cylinder->posZ));
+				n.p[0] = ( (ballArray[i]->posX - cylinder->posX));
+				n.p[1] = ( (ballArray[i]->posY - cylinder->posY));
+				n.p[2] = ( (ballArray[i]->posZ - cylinder->posZ));
 
 				Vec3 v1maln;
 				v1maln.p[0] = ( cylinder->posX * n.p[0] );
@@ -145,9 +213,9 @@ void checkBallsandCylinder() {
 				v1maln.p[2] = ( cylinder->posZ * n.p[2] );
 
 				Vec3 v2maln;
-				v2maln.p[0] = ( bList[i]->posX * n.p[0] );
-				v2maln.p[1] = ( bList[i]->posY * n.p[1] );
-				v2maln.p[2] = ( bList[i]->posZ * n.p[2] );
+				v2maln.p[0] = ( ballArray[i]->posX * n.p[0] );
+				v2maln.p[1] = ( ballArray[i]->posY * n.p[1] );
+				v2maln.p[2] = ( ballArray[i]->posZ * n.p[2] );
 
 				Vec3 vplusn;
 				vplusn.p[0] = ( ( v1maln.p[0] + v2maln.p[0] ) / 2.0 );
@@ -155,22 +223,20 @@ void checkBallsandCylinder() {
 				vplusn.p[2] = ( ( v1maln.p[2] + v2maln.p[2] ) / 2.0 );
 
 				Vec3 v1neu;
-				v1neu.p[0] = ( bList[i]->speedX + ( 2.0 * ( vplusn.p[0] - v1maln.p[0] ) * n.p[0]) );
-				v1neu.p[1] = ( bList[i]->speedY + ( 2.0 * ( vplusn.p[1] - v1maln.p[1] ) * n.p[1]) );
-				v1neu.p[2] = ( bList[i]->speedZ + ( 2.0 * ( vplusn.p[2] - v1maln.p[2] ) * n.p[2]) );
+				v1neu.p[0] = ( ballArray[i]->speedX + ( 2.0 * ( vplusn.p[0] - v1maln.p[0] ) * n.p[0]) );
+				v1neu.p[1] = ( ballArray[i]->speedY + ( 2.0 * ( vplusn.p[1] - v1maln.p[1] ) * n.p[1]) );
+				v1neu.p[2] = ( ballArray[i]->speedZ + ( 2.0 * ( vplusn.p[2] - v1maln.p[2] ) * n.p[2]) );
 
 				Vec3 v2neu;
 				v2neu.p[0] = ( cylinder->speedX + ( 2.0 * ( vplusn.p[0] - v2maln.p[0] ) * n.p[0]) );
 				v2neu.p[1] = ( cylinder->speedY + ( 2.0 * ( vplusn.p[1] - v2maln.p[1] ) * n.p[1]) );
 				v2neu.p[2] = ( cylinder->speedZ + ( 2.0 * ( vplusn.p[2] - v2maln.p[2] ) * n.p[2]) );
 
-				bList[i]->speedX = v1neu.p[0];
-				bList[i]->speedY = v1neu.p[1];
-				bList[i]->speedZ = v1neu.p[2];
-
+				ballArray[i]->speedX = v1neu.p[0];
+				ballArray[i]->speedY = v1neu.p[1];
+				ballArray[i]->speedZ = v1neu.p[2];
 			}
 		}
-
 	}
 }
 
@@ -180,60 +246,60 @@ void checkBalls() {
 			/*if (i!= j) {
 				std::cout << i << "     " << j << std::endl;
 			}*/
-			if (i != j && bList[i]->detectCollision(*bList[j]) && !(bList[i]->collision && bList[j]->collision)) {
-				bList[i]->wallBack = false;
-				bList[i]->wallFront = false;
-				bList[i]->wallLeft = false;
-				bList[i]->wallRight = false;
-				bList[i]->wallObst = false;
-				bList[j]->wallBack = false;
-				bList[j]->wallFront = false;
-				bList[j]->wallLeft = false;
-				bList[j]->wallRight = false;
-				bList[j]->wallObst = false;
+			if (i != j && ballArray[i]->detectCollision(*ballArray[j]) && !(ballArray[i]->collision && ballArray[j]->collision)) {
+				ballArray[i]->wallBack = false;
+				ballArray[i]->wallFront = false;
+				ballArray[i]->wallLeft = false;
+				ballArray[i]->wallRight = false;
+				ballArray[i]->wallObst = false;
+				ballArray[j]->wallBack = false;
+				ballArray[j]->wallFront = false;
+				ballArray[j]->wallLeft = false;
+				ballArray[j]->wallRight = false;
+				ballArray[j]->wallObst = false;
 
-				if (bList[i]->checkCollisionType(*bList[i], *bList[j])){
+				if (ballArray[i]->checkCollisionType(*ballArray[i], *ballArray[j])){
 					//gerade Kugelkollision
 
 					std::cout << "Gerade Kollision" << std::endl;
 
-					bList[j]->collision = true;
-					bList[i]->collision = true;
+					ballArray[j]->collision = true;
+					ballArray[i]->collision = true;
 
 					Vec3 temp;
-					temp.p[0] = bList[i]->speedX;
-					temp.p[1] = bList[i]->speedY;
-					temp.p[2] = bList[i]->speedZ;
+					temp.p[0] = ballArray[i]->speedX;
+					temp.p[1] = ballArray[i]->speedY;
+					temp.p[2] = ballArray[i]->speedZ;
 
-					bList[i]->speedX = bList[j]->speedX;
-					bList[i]->speedY = bList[j]->speedY;
-					bList[i]->speedZ = bList[j]->speedZ;
+					ballArray[i]->speedX = ballArray[j]->speedX;
+					ballArray[i]->speedY = ballArray[j]->speedY;
+					ballArray[i]->speedZ = ballArray[j]->speedZ;
 
-					bList[j]->speedX = temp.p[0];
-					bList[j]->speedY= temp.p[1];
-					bList[j]->speedZ = temp.p[2];
+					ballArray[j]->speedX = temp.p[0];
+					ballArray[j]->speedY= temp.p[1];
+					ballArray[j]->speedZ = temp.p[2];
 
 				} else {
 
-					bList[j]->collision = true;
-					bList[i]->collision = true;
+					ballArray[j]->collision = true;
+					ballArray[i]->collision = true;
 
 //					double betragMittelpunkte = sqrt( ( (bList[j]->posX - bList[i]->posX) * (bList[j]->posX - bList[i]->posX) ) + ( (bList[j]->posY - bList[i]->posY) * (bList[j]->posY - bList[i]->posY) ) + ( (bList[j]->posZ - bList[i]->posZ) * (bList[j]->posZ - bList[i]->posZ) ) );
 
 					Vec3 n;
-					n.p[0] = ( (bList[j]->posX - bList[i]->posX));
-					n.p[1] = ( (bList[j]->posY - bList[i]->posY));
-					n.p[2] = ( (bList[j]->posZ - bList[i]->posZ));
+					n.p[0] = ( (ballArray[j]->posX - ballArray[i]->posX));
+					n.p[1] = ( (ballArray[j]->posY - ballArray[i]->posY));
+					n.p[2] = ( (ballArray[j]->posZ - ballArray[i]->posZ));
 
 					Vec3 v1maln;
-					v1maln.p[0] = ( bList[i]->posX * n.p[0] );
-					v1maln.p[1] = ( bList[i]->posY * n.p[1] );
-					v1maln.p[2] = ( bList[i]->posZ * n.p[2] );
+					v1maln.p[0] = ( ballArray[i]->posX * n.p[0] );
+					v1maln.p[1] = ( ballArray[i]->posY * n.p[1] );
+					v1maln.p[2] = ( ballArray[i]->posZ * n.p[2] );
 
 					Vec3 v2maln;
-					v2maln.p[0] = ( bList[j]->posX * n.p[0] );
-					v2maln.p[1] = ( bList[j]->posY * n.p[1] );
-					v2maln.p[2] = ( bList[j]->posZ * n.p[2] );
+					v2maln.p[0] = ( ballArray[j]->posX * n.p[0] );
+					v2maln.p[1] = ( ballArray[j]->posY * n.p[1] );
+					v2maln.p[2] = ( ballArray[j]->posZ * n.p[2] );
 
 					Vec3 vplusn;
 					vplusn.p[0] = ( ( v1maln.p[0] + v2maln.p[0] ) / 2.0 );
@@ -242,22 +308,22 @@ void checkBalls() {
 //					Vec3 vplusn = (v1maln.operator +=(v2maln)) / 2.0;
 
 					Vec3 v1neu;
-					v1neu.p[0] = ( bList[j]->speedX + ( 2.0 * ( vplusn.p[0] - v1maln.p[0] ) * n.p[0]) );
-					v1neu.p[1] = ( bList[j]->speedY + ( 2.0 * ( vplusn.p[1] - v1maln.p[1] ) * n.p[1]) );
-					v1neu.p[2] = ( bList[j]->speedZ + ( 2.0 * ( vplusn.p[2] - v1maln.p[2] ) * n.p[2]) );
+					v1neu.p[0] = ( ballArray[j]->speedX + ( 2.0 * ( vplusn.p[0] - v1maln.p[0] ) * n.p[0]) );
+					v1neu.p[1] = ( ballArray[j]->speedY + ( 2.0 * ( vplusn.p[1] - v1maln.p[1] ) * n.p[1]) );
+					v1neu.p[2] = ( ballArray[j]->speedZ + ( 2.0 * ( vplusn.p[2] - v1maln.p[2] ) * n.p[2]) );
 
 					Vec3 v2neu;
-					v2neu.p[0] = ( bList[i]->speedX + ( 2.0 * ( vplusn.p[0] - v2maln.p[0] ) * n.p[0]) );
-					v2neu.p[1] = ( bList[i]->speedY + ( 2.0 * ( vplusn.p[1] - v2maln.p[1] ) * n.p[1]) );
-					v2neu.p[2] = ( bList[i]->speedZ + ( 2.0 * ( vplusn.p[2] - v2maln.p[2] ) * n.p[2]) );
+					v2neu.p[0] = ( ballArray[i]->speedX + ( 2.0 * ( vplusn.p[0] - v2maln.p[0] ) * n.p[0]) );
+					v2neu.p[1] = ( ballArray[i]->speedY + ( 2.0 * ( vplusn.p[1] - v2maln.p[1] ) * n.p[1]) );
+					v2neu.p[2] = ( ballArray[i]->speedZ + ( 2.0 * ( vplusn.p[2] - v2maln.p[2] ) * n.p[2]) );
 
-					bList[j]->speedX = v1neu.p[0];
-					bList[j]->speedY = v1neu.p[1];
-					bList[j]->speedZ = v1neu.p[2];
+					ballArray[j]->speedX = v1neu.p[0];
+					ballArray[j]->speedY = v1neu.p[1];
+					ballArray[j]->speedZ = v1neu.p[2];
 
-					bList[i]->speedX = v2neu.p[0];
-					bList[i]->speedY = v2neu.p[1];
-					bList[i]->speedZ = v2neu.p[2];
+					ballArray[i]->speedX = v2neu.p[0];
+					ballArray[i]->speedY = v2neu.p[1];
+					ballArray[i]->speedZ = v2neu.p[2];
 
 				}
 			}
@@ -359,15 +425,29 @@ void Preview() {
   SetMaterialColor(1, 0.0, 1.0, 0.2);
   table->DrawTable();
 
-  SetMaterialColor(2, 1.0, 1.0, 0.0);
-  SetMaterialColor(1, 0.0, 1.0, 0.0);
-  cube->DrawCube();
+  //Rotes Zielkreuz
+  SetMaterialColor(1, 1.0, 0.0, 0.0);
+  SetMaterialColor(2, 1.0, 0.0, 0.0);
+  glBegin(GL_QUADS);
+  	  glNormal3f(0.0, 1.0, 0.0);
+	  glVertex3d(-0.5, 0.0001, 0);
+  	  glVertex3d(-1.5, 0.0001, 1);
+  	  glVertex3d(-1.25, 0.0001, 1.25);
+  	  glVertex3d(-0.25, 0.0001, 0.25);
+
+  	  glNormal3f(0.0, 1.0, 0.0);
+	  glVertex3d(-1.25, 0.0001, 0.0);
+  	  glVertex3d(-1.5, 0.0001, 0.25);
+  	  glVertex3d(-0.5, 0.0001, 1.25);
+  	  glVertex3d(-0.25, 0.0001, 1.0);
+  glEnd();
 
   checkBallsandWalls();
 
   checkBalls();
 
   checkBallsandCylinder();
+//  checkBallsandCube();
   resetBalls();
 
   whiteBall->updatePosition();
@@ -384,8 +464,11 @@ void Preview() {
   SetMaterialColor(1, 1.0, 0.0, 0.0);
   ball2->DrawBall(Vec3( ball2->posX, ball2->posY, ball2->posZ), ball2->ballSize);
 
-  SetMaterialColor(1, 0.0, 1.0, 0.9);
-  cylinder->DrawCylinder(Vec3( cylinder->posX, cylinder->posY, cylinder->posZ), cylinder->cylinderSize);
+//  SetMaterialColor(2, 1.0, 1.0, 0.0);
+//  SetMaterialColor(1, 0.0, 1.0, 0.0);
+//  cube->DrawCube();
+  SetMaterialColor(1, 0.0, 0.5, 0.9);
+  cylinder->DrawCylinder(cylinder->posX, cylinder->posY, cylinder->posZ, cylinder->cylinderSize);
 
   glPopMatrix();
 
@@ -466,8 +549,8 @@ void mouse_callback(GLFWwindow *window, int button, int action, int mods) {
 		ball1->wallLeft = false;
 		ball1->wallRight = false;
 		ball1->wallObst = false;
-		ball1->speedX = 0.8;
-		ball1->speedZ = 0.6;
+		ball1->speedX = -1.0;
+		ball1->speedZ = 1.0;
 
 	}
 
