@@ -20,6 +20,7 @@ public:
 	double posY;
 	double posZ;
 	double friction;
+	bool adventureBall;
 	bool collision;
 	bool cylinderCol;
 	bool wallBack;
