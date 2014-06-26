@@ -45,6 +45,7 @@ public:
 	bool cubeCollisionDetection(Vec3& wallDot, Vec3& wallNormVec);
 	bool detectCollision(BilliardBall b);
 	bool detectCollision(Cylinder c);
+	bool detectCollision(double posX, double posY, double posZ, double size);
 
 	bool checkCollisionType(BilliardBall a, BilliardBall b);
 	bool checkCollisionType(BilliardBall a, Cylinder c);

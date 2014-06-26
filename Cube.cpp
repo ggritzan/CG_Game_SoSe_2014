@@ -24,13 +24,13 @@ Cube::Cube(double size, double posX, double posY, double posZ) {
     this->cubeDotLeft = Vec3(-cubeSize, cubeSize, -cubeSize);
     this->cubeDotLeftNormVec = Vec3(-1, 0.0, 0.0);
 
-    this->cubeDotRight = Vec3(0.0, 0.0, -1);
+    this->cubeDotRight = Vec3(cubeSize, 0.0, cubeSize);
     this->cubeDotRightNormVec = Vec3(10, 0.0, 0.0);
 
-    this->cubeDotFront = Vec3(-1, 0.0, 0.0);
+    this->cubeDotFront = Vec3(-cubeSize, cubeSize, cubeSize);
     this->cubeDotFrontNormVec = Vec3(0.0, 0.0, 14);
 
-    this->cubeDotBack = Vec3(-1, 0.0, 0.0);
+    this->cubeDotBack = Vec3(-cubeSize, cubeSize, -cubeSize);
     this->cubeDotBackNormVec = Vec3(0.0, 0.0, 14);
 
 }

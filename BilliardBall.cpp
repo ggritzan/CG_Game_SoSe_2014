@@ -126,6 +126,27 @@ bool BilliardBall::detectCollision(Cylinder c) {
     }
 }
 
+bool BilliardBall::detectCollision(double posX, double posY, double posZ, double cubeSize) {
+
+	double r = 2 * cubeSize * (1 / sqrt(2));
+
+    //distance vector
+    double dvX = this->posX - posX;
+    double dvY = this->posY - posY;
+    double dvZ = this->posZ - posZ;
+
+    double distance = sqrt( dvX*dvX + dvY*dvY + dvZ*dvZ );
+
+    double minDistance = r + this->ballSize;
+
+    if(distance < minDistance) {
+    	std::cout << "collision" <<std::endl;
+    	return true;
+    } else {
+    	return false;
+    }
+}
+
 //Returns true if balls collide strait
 bool BilliardBall::checkCollisionType(BilliardBall a, BilliardBall b) {
 	Vec3  t;
