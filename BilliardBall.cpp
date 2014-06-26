@@ -12,7 +12,7 @@
 
 #include "BilliardBall.h"
 
-BilliardBall::BilliardBall(double posX, double posY, double posZ, float size, double friction) {
+BilliardBall::BilliardBall(double posX, double posY, double posZ, float size, double friction, double colourR, double colourG, double colourB) {
 	this->posX = posX;
 	this->posY = posY;
 	this->posZ = posZ;
@@ -21,6 +21,9 @@ BilliardBall::BilliardBall(double posX, double posY, double posZ, float size, do
 	this->speedY = 0.0;
 	this->speedZ = 0.0;
 	this->friction = friction;
+	this->colourR = colourR;
+	this->colourG = colourG;
+	this->colourB = colourB;
 
 	this->collision = false;
 	this->cylinderCol = false;
@@ -166,8 +169,8 @@ void BilliardBall::updatePosition(){
 	posX = posX + (speedX * 0.1);
 	posZ = posZ + (speedZ * 0.1);
 
-	speedX = (speedX * friction);
-	speedZ = (speedZ * friction);
+	//speedX = (speedX * friction);
+	//speedZ = (speedZ * friction);
 
 }
 

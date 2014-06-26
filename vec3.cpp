@@ -34,8 +34,6 @@ Vec3::Vec3(double x, double y, double z) {
 
 Vec3::~Vec3(){}
 
-
-
 Vec3& Vec3::operator=(const Vec3& a) {
   for(int i = 0; i < VEC_DIM; i++)
     p[i] = a.p[i];

@@ -40,7 +40,6 @@ public:
 
 	Vec3& operator=(const Vec3& a);
 
-
 	// scalar-vector arithmetics //////////////////////////////
 	Vec3& operator+=(const Vec3& a);
 	inline friend Vec3 operator+(Vec3 a, const Vec3& b) {

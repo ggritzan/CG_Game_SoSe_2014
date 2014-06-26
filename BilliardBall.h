@@ -13,6 +13,9 @@ public:
 	double speedX;
 	double speedY;
 	double speedZ;
+	double colourR;
+	double colourG;
+	double colourB;
 	double posX;
 	double posY;
 	double posZ;
@@ -30,7 +33,7 @@ public:
 	bool cubeLeft;
 	bool cubeRight;
 
-	BilliardBall(double posX, double posY, double posZ, float size, double friction);
+	BilliardBall(double posX, double posY, double posZ, float size, double friction, double colourR, double colourG, double colourB);
 	virtual ~BilliardBall();
 
 	//bool detectCollision(BilliardBall b);

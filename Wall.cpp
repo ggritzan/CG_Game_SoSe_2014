@@ -8,4 +8,3 @@ Wall::Wall() {
 Wall::~Wall() {
 	// TODO Auto-generated destructor stub
 }
-
