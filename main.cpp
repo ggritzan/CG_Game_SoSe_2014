@@ -372,7 +372,7 @@ void drawVectorCylinders() {
 		if (cs == i && selectionMode) {
 			SetMaterialColor(1, 0.0, 1.0, 1.0);
 		} else {
-	  	  SetMaterialColor(1, 0.0, 0.5, 0.9);
+	  	  SetMaterialColor(1, 0.0, 0.0, 0.0);
 		}
 	  	  cylinderVector.at(i)->DrawCylinder(cylinderVector.at(i)->posX, cylinderVector.at(i)->posY, cylinderVector.at(i)->posZ, cylinderVector.at(i)->cylinderSize);
 	}
@@ -514,25 +514,26 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 	}
 	//WASD rotating the table
 		// (W)
-		if (key == 87 && action == 2){
-			beta_ -= .9;
-		}
+	if (key == 87 && action == 2){
+		beta_ -= .9;
+	}
 
 		// (A)
-		if (key == 65 && action == 2){
-			alpha_ -= .9;
-		}
+	if (key == 65 && action == 2){
+		alpha_ -= .9;
+	}
 
 		// (S)
-		if (key == 83 && action == 2){
-			beta_ += .9;
-		}
+	if (key == 83 && action == 2){
+		beta_ += .9;
+	}
 
 		// (D)
-		if (key == 68 && action == 2){
-			alpha_ += .9;
-		}
-		if(selectionMode) {
+	if (key == 68 && action == 2){
+		alpha_ += .9;
+	}
+
+	if(selectionMode) {
 		//+ - zum Iterieren durch die Auswahl
 			//zum Iterieren durch die Kugelauswahl Shift und +/-
 			if(key == 45 && action == 1 && mods==GLFW_MOD_SHIFT) {
@@ -584,7 +585,6 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 			// (O) Creates a new Wall
 			if (key == 79 && action == 1){
 				//
-
 			}
 
 			//Bewegen der ausgewählten Kugel Shift + Pfeiltasten
@@ -644,6 +644,17 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		whiteBall->posZ = sphereZ;
 		whiteBall->speedZ = 0;
 		whiteBall->speedX = 0;
+	}
+	if (key == 32  && action == 1 && mods==GLFW_MOD_SHIFT){
+		selectionMode = true;
+		whiteBall->posX = sphereX;
+		whiteBall->posZ = sphereZ;
+		whiteBall->speedZ = 0;
+		whiteBall->speedX = 0;
+		cylinderVector.clear();
+		ballVector.clear();
+		ballVector.push_back(whiteBall);
+
 	}
 
 }
