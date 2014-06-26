@@ -23,6 +23,8 @@ public:
     Vec3 wallDotObs;
     Vec3 WallDotObsNormVec;
 
+	bool obstacle;
+
     BilliardTable(double size);
     virtual ~BilliardTable();
 
