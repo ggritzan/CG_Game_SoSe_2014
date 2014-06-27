@@ -9,6 +9,7 @@
 #include "BilliardBall.h"
 #include "BilliardTable.h"
 #include "Cube.h"
+#include "Goal.h"
 #include "Cylinder.h"
 #include "vec3.hpp"
 
@@ -444,6 +445,10 @@ void Preview() {
   table->DrawTable();
 
   //Rotes Zielkreuz
+  Goal* goal = new Goal(0.001, -5.0, 0.5, 5.0);
+  goal->DrawGoal();
+
+ /*
   SetMaterialColor(1, 1.0, 0.0, 0.0);
   SetMaterialColor(2, 1.0, 0.0, 0.0);
   glBegin(GL_QUADS);
@@ -459,6 +464,7 @@ void Preview() {
   	  glVertex3d(-0.5, 0.0001, 1.25);
   	  glVertex3d(-0.25, 0.0001, 1.0);
   glEnd();
+*/
 
   if(ballVector.at(0)->posX >= -1.5 && ballVector.at(0)->posX <= -0.25 && ballVector.at(0)->posZ >= 0 && ballVector.at(0)->posZ <=1.25 ) {
 	  ballVector.at(0)->speedX=0;
