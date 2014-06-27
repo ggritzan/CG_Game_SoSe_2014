@@ -22,7 +22,7 @@ public:
 	double posZ;
 
 	/* constructor */
-	Goal(int goalSize, double posX, double posY, double posZ);
+	Goal(double goalSize, double posX, double posY, double posZ);
 
 	/* destructor */
 	virtual ~Goal();
@@ -31,7 +31,7 @@ public:
 	void DrawGoal();
 
 	/* method to check if the goal is reached */
-	bool GoalReached();
+	bool GoalReached(double ballPosX, double ballPosY, double ballPosZ);
 
 	/* set material color */
 	void SetMaterialColor(int side, double r, double g, double b);

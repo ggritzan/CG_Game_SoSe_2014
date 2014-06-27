@@ -16,7 +16,7 @@
 
 
 /* constructor */
-Goal::Goal(int goalSize, double posX, double posY, double posZ) {
+Goal::Goal(double goalSize, double posX, double posY, double posZ) {
 	this->goalSize = goalSize;
 	this->posX = posX;
 	this->posY = posY;
@@ -35,18 +35,22 @@ void Goal::DrawGoal() {
 	SetMaterialColor(2, 1.0, 0.0, 0.0);
 
 	glBegin(GL_QUADS);
-		glNormal3f(0.0, 1.0, 0.0);
-		glVertex3d(-0.5, 0.0001, 0);
-	  	glVertex3d(-1.5, 0.0001, 1);
-	  	glVertex3d(-1.25, 0.0001, 1.25);
-	  	glVertex3d(-0.25, 0.0001, 0.25);
+			glNormal3f(0.0, 1.0, 0.0);
+			/*										x     								y     						z                  */
+			glVertex3d( (( -(this->goalSize / (this->goalSize*2))) + this->posX),	this->posY,	(-(this->goalSize/2.0)) + this->posZ);
+			glVertex3d( (( -(this->goalSize + (this->goalSize/5.0))) + this->posX), this->posY,	(this->goalSize/3.0) + this->posZ);
+			glVertex3d( (-this->goalSize) + this->posX, 							this->posY, (this->goalSize/2.0) + this->posZ);
+			glVertex3d( (-(this->goalSize/5.0) + this->posX),						this->posY, (-(this->goalSize/3.0)) + this->posZ);
 
-	  	glNormal3f(0.0, 1.0, 0.0);
-		glVertex3d(-1.25, 0.0001, 0.0);
-	  	glVertex3d(-1.5, 0.0001, 0.25);
-	  	glVertex3d(-0.5, 0.0001, 1.25);
-	  	glVertex3d(-0.25, 0.0001, 1.0);
-	 glEnd();
+			glNormal3f(0.0, 1.0, 0.0);
+			/*										x     								y     						z                  */
+			glVertex3d((-this->goalSize) + this->posX,								this->posY, (-(this->goalSize/2.0)) + this->posZ);
+			glVertex3d( (( -(this->goalSize + (this->goalSize/5.0))) + this->posX), this->posY, (-(this->goalSize/3.0)) + this->posZ);
+			glVertex3d((( -(this->goalSize / (this->goalSize*2))) + this->posX), 	this->posY, (this->goalSize/2.0) + this->posZ);
+			glVertex3d((-(this->goalSize/5.0)) + this->posX, 						this->posY, (this->goalSize/3.0) + this->posZ);
+
+
+	glEnd();
 
 }
 
@@ -78,8 +82,13 @@ void Goal::SetMaterialColor(int side, double r, double g, double b) {
   glMaterialfv(mat, GL_SPECULAR, spe);
   glMaterialf( mat, GL_SHININESS, 20);
 }
-/* method to check if the goal is reached */
 
-bool Goal::GoalReached() {
- return true;
+/* method to check if the goal is reached */
+bool Goal::GoalReached(double ballPosX, double ballPosY, double ballPosZ) {
+
+	if (ballPosX >= ( -(this->goalSize + (this->goalSize/5.0))) + this->posX && ballPosX <= (-(this->goalSize/5.0)) + this->posX && ballPosZ >= 0 + this->posZ && ballPosZ <= ((this->goalSize/2.0) + this->posZ)) {
+		return true;
+	} else {
+		return false;
+	}
 }

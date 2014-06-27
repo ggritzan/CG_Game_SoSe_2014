@@ -445,31 +445,13 @@ void Preview() {
   table->DrawTable();
 
   //Rotes Zielkreuz
-  Goal* goal = new Goal(0.001, -5.0, 0.5, 5.0);
+  /* 					size,   x,      y,   z    */
+  Goal* goal = new Goal(1.50, -2.0, 0.0001, 0.0);
   goal->DrawGoal();
-
- /*
-  SetMaterialColor(1, 1.0, 0.0, 0.0);
-  SetMaterialColor(2, 1.0, 0.0, 0.0);
-  glBegin(GL_QUADS);
-  	  glNormal3f(0.0, 1.0, 0.0);
-	  glVertex3d(-0.5, 0.0001, 0);
-  	  glVertex3d(-1.5, 0.0001, 1);
-  	  glVertex3d(-1.25, 0.0001, 1.25);
-  	  glVertex3d(-0.25, 0.0001, 0.25);
-
-  	  glNormal3f(0.0, 1.0, 0.0);
-	  glVertex3d(-1.25, 0.0001, 0.0);
-  	  glVertex3d(-1.5, 0.0001, 0.25);
-  	  glVertex3d(-0.5, 0.0001, 1.25);
-  	  glVertex3d(-0.25, 0.0001, 1.0);
-  glEnd();
-*/
-
-  if(ballVector.at(0)->posX >= -1.5 && ballVector.at(0)->posX <= -0.25 && ballVector.at(0)->posZ >= 0 && ballVector.at(0)->posZ <=1.25 ) {
+  /* GoalReached - decreases the speed of the billiardball to 0 when the area is reached */
+  if(goal->GoalReached(ballVector.at(0)->posX, ballVector.at(0)->posY, ballVector.at(0)->posZ)) {
 	  ballVector.at(0)->speedX=0;
 	  ballVector.at(0)->speedZ=0;
-	  printf("gameOver");
   }
 
   checkBallsandWalls();
