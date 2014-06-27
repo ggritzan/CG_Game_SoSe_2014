@@ -445,8 +445,8 @@ void Preview() {
   table->DrawTable();
 
   //Rotes Zielkreuz
-  /* 					size,   x,      y,   z    */
-  Goal* goal = new Goal(1.50, -2.0, 0.0001, 0.0);
+  /* maxsize 1.5		size,   x,      y,   z    */
+  Goal* goal = new Goal(0.80, -2.0, 0.0001, 0.0);
   goal->DrawGoal();
   /* GoalReached - decreases the speed of the billiardball to 0 when the area is reached */
   if(goal->GoalReached(ballVector.at(0)->posX, ballVector.at(0)->posY, ballVector.at(0)->posZ)) {

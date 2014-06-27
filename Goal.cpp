@@ -13,6 +13,7 @@
 #include "Goal.h"
 #include <stdlib.h>
 #include "vec3.hpp"
+#define degToRad( x ) ( x*0.0174532925 )
 
 
 /* constructor */
@@ -34,6 +35,7 @@ void Goal::DrawGoal() {
 	SetMaterialColor(1, 1.0, 0.0, 0.0);
 	SetMaterialColor(2, 1.0, 0.0, 0.0);
 
+	/* draws the cross */
 	glBegin(GL_QUADS);
 			glNormal3f(0.0, 1.0, 0.0);
 			/*										x     								y     						z                  */
@@ -48,9 +50,26 @@ void Goal::DrawGoal() {
 			glVertex3d( (( -(this->goalSize + (this->goalSize/5.0))) + this->posX), this->posY, (-(this->goalSize/3.0)) + this->posZ);
 			glVertex3d((( -(this->goalSize / (this->goalSize*2))) + this->posX), 	this->posY, (this->goalSize/2.0) + this->posZ);
 			glVertex3d((-(this->goalSize/5.0)) + this->posX, 						this->posY, (this->goalSize/3.0) + this->posZ);
-
-
 	glEnd();
+
+
+	SetMaterialColor(3, 1.0, 1.0, 1.0);
+	const double PI2 = 6.28272;
+	double xm = (posX - (goalSize-(this->goalSize/3.4)));
+	double ym = posY + 0.0001;
+	double zm = posZ ;
+	double r = goalSize/1.5;
+
+
+	/* draws the circle */
+	glBegin(GL_TRIANGLE_FAN);
+		for( double i = 0.0; i < PI2; i += PI2 / 360.0 ) {
+			float x = xm + ( cos( i ) * r );
+			float y = zm + ( sin( i ) * r);
+			glVertex3f( x, ym ,y );
+		  }
+	glEnd();
+
 
 }
 
