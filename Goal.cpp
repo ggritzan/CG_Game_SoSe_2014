@@ -56,7 +56,7 @@ void Goal::DrawGoal() {
 	SetMaterialColor(3, 1.0, 1.0, 1.0);
 	const double PI2 = 6.28272;
 	double xm = (posX - (goalSize-(this->goalSize/3.4)));
-	double ym = posY + 0.0001;
+	double ym = posY - 0.0001;
 	double zm = posZ ;
 	double r = goalSize/1.5;
 
