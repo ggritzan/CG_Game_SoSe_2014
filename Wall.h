@@ -10,6 +10,9 @@ public:
 	double posX;
 	double posY;
 	double posZ;
+	double rotX;
+	double rotY;
+	double rotZ;
 
     Vec3 wallDotObs;
     Vec3 WallDotObsNormVec;

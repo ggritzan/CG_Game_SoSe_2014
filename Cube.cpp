@@ -45,9 +45,9 @@ Cube::~Cube() {
 // Zeichnen des Würfels
 void Cube::DrawCube() {
 
-    glTranslatef(posX, posY, posZ);
-    glPushMatrix();
 
+    glPushMatrix();
+    glTranslatef(posX, posY, posZ);
       glRotated(rotX, 1, 0, 0);
       glRotated(rotY, 0, 1, 0);// Rotation um die Y Achse
       glRotated(rotZ, 0 ,0 ,1);
