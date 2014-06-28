@@ -133,6 +133,11 @@ void checkBallsandCube() {
 
 		  ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 		  ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
+
+		  ballVector.at(i)->wallBack = false;
+		  ballVector.at(i)->wallFront = false;
+		  ballVector.at(i)->wallLeft = false;
+		  ballVector.at(i)->wallRight = false;
 	  }
 
 	  if((!ballVector.at(i)->cubeFront) && ballVector.at(i)->cubeCollisionDetection(cube->cubeDotFront, cube->cubeDotFrontNormVec)){
@@ -149,6 +154,11 @@ void checkBallsandCube() {
 
 		  ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 		  ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
+
+		  ballVector.at(i)->wallBack = false;
+		  ballVector.at(i)->wallFront = false;
+		  ballVector.at(i)->wallLeft = false;
+		  ballVector.at(i)->wallRight = false;
 	  }
 
 	  if((!ballVector.at(i)->cubeLeft) && ballVector.at(i)->cubeCollisionDetection(cube->cubeDotLeft, cube->cubeDotLeftNormVec)){
@@ -164,6 +174,11 @@ void checkBallsandCube() {
 
 		  ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 		  ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
+
+		  ballVector.at(i)->wallBack = false;
+		  ballVector.at(i)->wallFront = false;
+		  ballVector.at(i)->wallLeft = false;
+		  ballVector.at(i)->wallRight = false;
 	  }
 
 	  if((!ballVector.at(i)->cubeRight) && ballVector.at(i)->cubeCollisionDetection(cube->cubeDotRight, cube->cubeDotRightNormVec)){
@@ -179,6 +194,11 @@ void checkBallsandCube() {
 
 		  ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 		  ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
+
+		  ballVector.at(i)->wallBack = false;
+		  ballVector.at(i)->wallFront = false;
+		  ballVector.at(i)->wallLeft = false;
+		  ballVector.at(i)->wallRight = false;
 	  }
 	}
 }
@@ -199,6 +219,10 @@ void checkBallsandCylinder() {
 					ballVector.at(i)->speedY = ballVector.at(i)->speedY * (-1);
 					ballVector.at(i)->speedZ = ballVector.at(i)->speedZ * (-1);
 
+					ballVector.at(i)->wallBack = false;
+					ballVector.at(i)->wallFront = false;
+					ballVector.at(i)->wallLeft = false;
+					ballVector.at(i)->wallRight = false;
 
 				} else {
 					ballVector.at(i)->collision = true;
@@ -236,6 +260,11 @@ void checkBallsandCylinder() {
 					ballVector.at(i)->speedX = v1neu.p[0];
 					ballVector.at(i)->speedY = v1neu.p[1];
 					ballVector.at(i)->speedZ = v1neu.p[2];
+
+					ballVector.at(i)->wallBack = false;
+					ballVector.at(i)->wallFront = false;
+					ballVector.at(i)->wallLeft = false;
+					ballVector.at(i)->wallRight = false;
 				}
 			}
 		}
@@ -283,7 +312,7 @@ void checkBalls() {
 					ballVector.at(j)->collision = true;
 					ballVector.at(i)->collision = true;
 
-//					double betragMittelpunkte = sqrt( ( (bList[j]->posX - bList[i]->posX) * (bList[j]->posX - bList[i]->posX) ) + ( (bList[j]->posY - bList[i]->posY) * (bList[j]->posY - bList[i]->posY) ) + ( (bList[j]->posZ - bList[i]->posZ) * (bList[j]->posZ - bList[i]->posZ) ) );
+					//double betragMittelpunkte = sqrt( ( (ballVector.at(j)->posX - ballVector.at(i)->posX) * (ballVector.at(j)->posX - ballVector.at(i)->posX) ) + ( (ballVector.at(j)->posY - ballVector.at(i)->posY) * (ballVector.at(j)->posY - ballVector.at(i)->posY) ) + ( (ballVector.at(j)->posZ - ballVector.at(i)->posZ) * (ballVector.at(j)->posZ - ballVector.at(i)->posZ) ) );
 
 					Vec3 n;
 					n.p[0] = ( (ballVector.at(j)->posX - ballVector.at(i)->posX));
