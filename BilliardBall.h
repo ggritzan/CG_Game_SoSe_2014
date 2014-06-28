@@ -2,6 +2,8 @@
 
 #ifndef BILLIARDBALL_H_
 #define BILLIARDBALL_H_
+class Cube;
+
 class Wall;
 
 class Cylinder;
@@ -50,6 +52,7 @@ public:
 
 	bool detectCollision(Wall w);
 	bool detectCollision(Cylinder c);
+	bool detectCollision(Cube c);
 	bool detectCollision(double posX, double posY, double posZ, double size);
 
 	bool checkCollisionType(BilliardBall a, BilliardBall b);
