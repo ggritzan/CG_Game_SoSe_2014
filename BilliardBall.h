@@ -2,6 +2,8 @@
 
 #ifndef BILLIARDBALL_H_
 #define BILLIARDBALL_H_
+class Wall;
+
 class Cylinder;
 
 
@@ -46,6 +48,7 @@ public:
 	bool cubeCollisionDetection(Vec3& wallDot, Vec3& wallNormVec);
 	bool detectCollision(BilliardBall b);
 
+	bool detectCollision(Wall w);
 	bool detectCollision(Cylinder c);
 	bool detectCollision(double posX, double posY, double posZ, double size);
 

@@ -119,6 +119,30 @@ void checkBallsandWalls() {
 
 }
 
+void checkBallsandObstacle() {
+
+	for (int i = 0; i<ballVector.size(); i++) {
+//		for(int j =0; j<wallVector.size();j++) {}
+		if ( (!ballVector.at(i)->wallObst) && ballVector.at(i)->wallCollisionDetection(wall->wallDotObs, wall->WallDotObsNormVec) && ballVector.at(i)->detectCollision(*wall)) {
+
+					  ballVector.at(i)->wallBack = false;
+					  ballVector.at(i)->wallFront = false;
+					  ballVector.at(i)->wallLeft = false;
+					  ballVector.at(i)->wallRight = false;
+					  ballVector.at(i)->wallObst = true;
+
+					  double amalV = ( (wall->WallDotObsNormVec.p[0] * ballVector.at(i)->speedX) + (wall->WallDotObsNormVec.p[1] * ballVector.at(i)->speedY) + (wall->WallDotObsNormVec.p[2] * ballVector.at(i)->speedZ) );
+					  double betragA = (sqrt((wall->WallDotObsNormVec.p[0]*wall->WallDotObsNormVec.p[0]) + (wall->WallDotObsNormVec.p[1]*wall->WallDotObsNormVec.p[1]) + (wall->WallDotObsNormVec.p[2]*wall->WallDotObsNormVec.p[2]))) * (sqrt((wall->WallDotObsNormVec.p[0]*wall->WallDotObsNormVec.p[0]) + (wall->WallDotObsNormVec.p[1]*wall->WallDotObsNormVec.p[1]) + (wall->WallDotObsNormVec.p[2]*wall->WallDotObsNormVec.p[2])));
+					  double aNeuX = (2 * amalV / betragA) * wall->WallDotObsNormVec.p[0];
+					  double aNeuZ = (2 * amalV / betragA) * wall->WallDotObsNormVec.p[2];
+
+					  ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
+					  ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
+				  }
+
+	}
+}
+
 void checkBallsandCube() {
 
 	for (int i = 0; i<ballVector.size(); i++) {
@@ -473,6 +497,8 @@ void Preview() {
   }
 
   checkBallsandWalls();
+
+  checkBallsandObstacle();
 
   checkBalls();
 
