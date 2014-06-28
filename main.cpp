@@ -632,7 +632,7 @@ if(infoScreen) {
   checkBallsandCylinder();
   checkBallsandCube();
   resetBalls();
-  std::cout <<selectedObject << std::endl;
+  //std::cout <<selectedObject << std::endl;
   for(int i =0; i<ballVector.size(); i++) {
 	  ballVector.at(i)->updatePosition();
   }

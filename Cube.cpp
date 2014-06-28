@@ -8,7 +8,7 @@
 #include "Cube.h"
 
 #include <GL/gl.h>
-
+#include <iostream>
 #include "vec3.hpp"
 
 Cube::Cube(double size, double posX, double posY, double posZ) {
@@ -112,6 +112,7 @@ void Cube::UpdateColliPoints() {
 
 	glPushMatrix();
 
+		std::cout << this->cubeDotLeft.p[1]  << std::endl;
 		/* Left */
 		glTranslatef(this->cubeDotLeft.p[0], this->cubeDotLeft.p[1], this->cubeDotLeft.p[2]);
 		glRotated(rotX, 1, 0, 0);
@@ -120,7 +121,7 @@ void Cube::UpdateColliPoints() {
 
 		this->cubeDotLeft = Vec3(this->cubeDotLeft.p[0],this->cubeDotLeft.p[1],this->cubeDotLeft.p[2]);
 
-
+		std::cout << this->cubeDotLeft.p[1]  << std::endl;
 
 		glTranslatef(this->cubeDotLeftNormVec.p[0], this->cubeDotLeftNormVec.p[1], this->cubeDotLeftNormVec.p[2]);
 		glRotated(rotX, 1, 0, 0);
