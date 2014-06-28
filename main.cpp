@@ -14,6 +14,9 @@
 #include "Cylinder.h"
 #include "vec3.hpp"
 
+
+
+
 static double alpha_ = 35;		// Winkel für Y Achse
 static double beta_ = 25;		// Winkel für X Achse
 
@@ -30,6 +33,11 @@ static double sphereY = sphereSize;
 static double sphereZ = 0;
 
 static bool selectionMode = true;
+<<<<<<< HEAD
+static bool infoScreen = true;
+=======
+static std::string selectedObject = "balls";
+>>>>>>> 4925cdf0f7d61c1732cf74fc8cdaef05cde05a75
 
 // Größe des OpenGL Fensters
 static double window_width_ = 1024;
@@ -38,9 +46,9 @@ static double window_height_ = 768;
 static int bs = 1;
 static int cs = 0;
 static int cus = 0;
+static int os = 0;
 
 BilliardTable* table = new BilliardTable(size);
-Wall* wall = new Wall(wallSize, 0.0, 0.0, 0.0);
 
 BilliardBall* whiteBall = new BilliardBall(sphereX, sphereY, sphereZ, sphereSize, 0.978, 1.0, 1.0, 1.0);
 
@@ -48,6 +56,7 @@ BilliardBall* whiteBall = new BilliardBall(sphereX, sphereY, sphereZ, sphereSize
 std::vector<BilliardBall*> ballVector;
 std::vector<Cube*> cubeVector;
 std::vector<Cylinder*> cylinderVector;
+std::vector<Wall*> obstacleVector;
 
 void resetBalls() {
 	for (int i = 0; i<ballVector.size(); i++) {
@@ -119,9 +128,10 @@ void checkBallsandWalls() {
 void checkBallsandObstacle() {
 
 	for (int i = 0; i<ballVector.size(); i++) {
-//		for(int j =0; j<wallVector.size();j++) {}
-		if ( (!ballVector.at(i)->wallObst) && ballVector.at(i)->wallCollisionDetection(wall->wallDotObs, wall->WallDotObsNormVec) && ballVector.at(i)->detectCollision(*wall)) {
+		for(int j = 0; j<obstacleVector.size();j++) {
+			if ((!ballVector.at(i)->wallObst) && ballVector.at(i)->wallCollisionDetection(obstacleVector.at(j)->wallDotObs, obstacleVector.at(j)->WallDotObsNormVec) && ballVector.at(i)->detectCollision(*obstacleVector.at(j))) {
 
+<<<<<<< HEAD
 			ballVector.at(i)->wallBack = false;
 			ballVector.at(i)->wallFront = false;
 			ballVector.at(i)->wallLeft = false;
@@ -135,6 +145,22 @@ void checkBallsandObstacle() {
 
 			ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 			ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
+=======
+					  ballVector.at(i)->wallBack = false;
+					  ballVector.at(i)->wallFront = false;
+					  ballVector.at(i)->wallLeft = false;
+					  ballVector.at(i)->wallRight = false;
+					  ballVector.at(i)->wallObst = true;
+
+					  double amalV = ( (obstacleVector.at(j)->WallDotObsNormVec.p[0] * ballVector.at(i)->speedX) + (obstacleVector.at(j)->WallDotObsNormVec.p[1] * ballVector.at(i)->speedY) + (obstacleVector.at(j)->WallDotObsNormVec.p[2] * ballVector.at(i)->speedZ) );
+					  double betragA = (sqrt((obstacleVector.at(j)->WallDotObsNormVec.p[0]*obstacleVector.at(j)->WallDotObsNormVec.p[0]) + (obstacleVector.at(j)->WallDotObsNormVec.p[1]*obstacleVector.at(j)->WallDotObsNormVec.p[1]) + (obstacleVector.at(j)->WallDotObsNormVec.p[2]*obstacleVector.at(j)->WallDotObsNormVec.p[2]))) * (sqrt((obstacleVector.at(j)->WallDotObsNormVec.p[0]*obstacleVector.at(j)->WallDotObsNormVec.p[0]) + (obstacleVector.at(j)->WallDotObsNormVec.p[1]*obstacleVector.at(j)->WallDotObsNormVec.p[1]) + (obstacleVector.at(j)->WallDotObsNormVec.p[2]*obstacleVector.at(j)->WallDotObsNormVec.p[2])));
+					  double aNeuX = (2 * amalV / betragA) * obstacleVector.at(j)->WallDotObsNormVec.p[0];
+					  double aNeuZ = (2 * amalV / betragA) * obstacleVector.at(j)->WallDotObsNormVec.p[2];
+
+					  ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
+					  ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
+			}
+>>>>>>> d4175193e7d91a7e2bf5cfe1fd64f70c5a2d6cc6
 		}
 	}
 }
@@ -420,7 +446,7 @@ void SetMaterialColor(int side, double r, double g, double b) {
 
 void drawVectorBalls(){
 	for (int i = 0; i<ballVector.size();i++) {
-		if (bs == i && selectionMode) {
+		if (bs == i && selectionMode && selectedObject == "balls") {
 			SetMaterialColor(1, 0.0, 1.0, 1.0);
 		} else {
 			SetMaterialColor(1, ballVector.at(i)->colourR, ballVector.at(i)->colourG, ballVector.at(i)->colourB);
@@ -430,7 +456,7 @@ void drawVectorBalls(){
 }
 void drawVectorCylinders() {
 	for (int i = 0; i<cylinderVector.size();i++) {
-		if (cs == i && selectionMode) {
+		if (cs == i && selectionMode && selectedObject == "cylinders") {
 			SetMaterialColor(1, 0.0, 1.0, 1.0);
 			SetMaterialColor(2, 0.0, 1.0, 1.0);
 		} else {
@@ -442,12 +468,24 @@ void drawVectorCylinders() {
 }
 void drawCubes() {
 	for(int i =0;i<cubeVector.size();i++){
-		if(cus==i && selectionMode){
+		if(cus==i && selectionMode && selectedObject == "cubes"){
 			SetMaterialColor(2, 0.0, 1.0, 1.0);
 		}else{
 			SetMaterialColor(2 ,0.0, 0.0, 0.0);
 		}
 		cubeVector.at(i)->DrawCube();
+	}
+}
+void drawObstacles() {
+	for(int i =0;i<obstacleVector.size();i++){
+		if(os==i && selectionMode && selectedObject == "obstacles"){
+			SetMaterialColor(1, 0.0, 1.0, 1.0);
+			SetMaterialColor(2, 0.0, 1.0, 1.0);
+		}else{
+			SetMaterialColor(1 ,0.0, 0.0, 0.0);
+			SetMaterialColor(2 ,0.0, 0.0, 0.0);
+		}
+		obstacleVector.at(i)->DrawWall();
 	}
 }
 // Erstellung der Beleuchtung
@@ -497,7 +535,7 @@ void InitLighting() {
 
 // Zeichnen der Szene
 void Preview() {
-
+if(infoScreen) {
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();				  // Reset The Current Modelview Matrix
 
@@ -515,7 +553,10 @@ void Preview() {
   SetMaterialColor(2, 0.0, 1.0, 0.0);
   SetMaterialColor(1, 0.0, 1.0, 0.2);
   table->DrawTable();
+<<<<<<< HEAD
 //  wall->DrawWall();
+=======
+>>>>>>> d4175193e7d91a7e2bf5cfe1fd64f70c5a2d6cc6
 
   //Rotes Zielkreuz
   /* maxsize 1.5		size,   x,      y,   z    */
@@ -536,7 +577,7 @@ void Preview() {
   checkBallsandCylinder();
   checkBallsandCube();
   resetBalls();
-
+  std::cout <<selectedObject << std::endl;
   for(int i =0; i<ballVector.size(); i++) {
 	  ballVector.at(i)->updatePosition();
   }
@@ -547,59 +588,121 @@ void Preview() {
   if (cylinderVector.size()>=1) {
 	  drawVectorCylinders();
   }
+  if (obstacleVector.size()>=1) {
+	  drawObstacles();
+  }
   if (cubeVector.size()>=1) {
 	  drawCubes();
   }
 
-  glPopMatrix();
 
+  glPopMatrix();
+} else {
+
+
+
+
+}
 }
 
 // Key Callback
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods){
 //Pfeiltasten moving the table
 	// (<-)
-	if (key == 263 && action == 2 && !(mods==GLFW_MOD_SHIFT || mods==GLFW_MOD_CONTROL || mods==GLFW_MOD_ALT)){
+	if (key == 263 && action == 2 && !(mods==GLFW_MOD_SHIFT)){
 		moveX -= 0.1;
 	}
 
 	// (->)
-	if (key == 262 && action == 2 && !(mods==GLFW_MOD_SHIFT || mods==GLFW_MOD_CONTROL || mods==GLFW_MOD_ALT)){
+	if (key == 262 && action == 2 && !(mods==GLFW_MOD_SHIFT)){
 		moveX += 0.1;
 	}
 
 	// (^)
-	if (key == 265 && action == 2 && !(mods==GLFW_MOD_SHIFT || mods==GLFW_MOD_CONTROL || mods==GLFW_MOD_ALT)){
+	if (key == 265 && action == 2 && !(mods==GLFW_MOD_SHIFT)){
 		moveY += 0.1;
 	}
 
 	// (v)
-	if (key == 264 && action == 2 && !(mods==GLFW_MOD_SHIFT || mods==GLFW_MOD_CONTROL || mods==GLFW_MOD_ALT)){
+	if (key == 264 && action == 2 && !(mods==GLFW_MOD_SHIFT)){
 		moveY -= 0.1;
 	}
 	//WASD rotating the table
 		// (W)
-	if (key == 87 && action == 2 && !(mods==GLFW_MOD_ALT)){
+	if (key == 87 && action == 2 && !(mods==GLFW_MOD_SHIFT)){
 		beta_ -= .9;
 	}
 
 		// (A)
-	if (key == 65 && action == 2&& !(mods==GLFW_MOD_ALT)){
+	if (key == 65 && action == 2&& !(mods==GLFW_MOD_SHIFT)){
 		alpha_ -= .9;
 	}
 
 		// (S)
-	if (key == 83 && action == 2&& !(mods==GLFW_MOD_ALT)){
+	if (key == 83 && action == 2&& !(mods==GLFW_MOD_SHIFT)){
 		beta_ += .9;
 	}
 
 		// (D)
-	if (key == 68 && action == 2&& !(mods==GLFW_MOD_ALT)){
+	if (key == 68 && action == 2&& !(mods==GLFW_MOD_SHIFT)){
 		alpha_ += .9;
 	}
 
+	//selectedObject verändern
+	if(key == 45 && action == 1 && !(mods==GLFW_MOD_SHIFT)) {
+		if(selectedObject=="balls"){
+			selectedObject="cylinders";
+			printf("cylinders");
+		}else if (selectedObject=="cylinders"){
+			selectedObject="cubes";
+			printf("cubes");
+		}else if(selectedObject=="cubes"){
+			selectedObject="obstacles";
+			printf("obstacles");
+		}else if(selectedObject=="obstacles"){
+			selectedObject="balls";
+			printf("balls");
+		} else {
+			printf("Fatal fault");
+		}
+	}
+	if(key == 61 && action == 1 && !(mods==GLFW_MOD_SHIFT)) {
+		if(selectedObject=="balls"){
+			selectedObject="obstacles";
+			printf("obstacles");
+		}else if (selectedObject=="cylinders"){
+			selectedObject="balls";
+			printf("balls");
+		}else if(selectedObject=="cubes"){
+			selectedObject="cylinders";
+			printf("cylinders");
+		}else if(selectedObject=="obstacles"){
+			selectedObject="cubes";
+			printf("cubes");
+		}else {
+			printf("Fatal fault");
+		}
+	}
 	if(selectionMode) {
-		//+ - zum Iterieren durch die Auswahl
+		//BCZO Creating new Objects
+		// (B) Creates a new Ball
+		if (key == 66 && action == 1){
+			ballVector.push_back(new BilliardBall(5, sphereY, -3,sphereSize, 0.978, 0.0, 0.0, 0.0));
+
+		}
+		// (C) Creates a new Cube
+		if (key == 67 && action == 1){
+			cubeVector.push_back(new Cube(size, 0.0, 0.0, 0.0));
+		}
+		// (Z) Creates a new Cylinder
+		if (key == 90 && action == 1){
+			cylinderVector.push_back(new Cylinder(size, -2.5, 0.5, -2));
+		}
+		// (O) Creates a new Wall
+		if (key == 79 && action == 1){
+			obstacleVector.push_back(new Wall(wallSize, 1.0, 0.0, -1.0));
+		}
+		if (selectedObject == "balls") {
 			//zum Iterieren durch die Kugelauswahl Shift und +/-
 			if(key == 45 && action == 1 && mods==GLFW_MOD_SHIFT) {
 				if (bs-1 <= 0) {
@@ -615,55 +718,6 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 					bs++;
 				}
 			}
-			//zum Iterieren durch die Zylinderauswahl strg und +/-
-			if(key == 45 && action == 1 && mods==GLFW_MOD_CONTROL) {
-				if (cs-1 < 0) {
-					cs = cylinderVector.size()-1;
-				} else {
-					cs--;
-				}
-			}
-			if(key == 61 && action == 1 && mods==GLFW_MOD_CONTROL) {
-				if (cs+1 >= cylinderVector.size()) {
-					cs = 0;
-				} else {
-					cs++;
-				}
-			}
-			//Zum Iterieren durch die Würfelauswahl
-			if(key == 45 && action == 1 && mods==GLFW_MOD_ALT) {
-				if (cus-1 < 0) {
-					cus = cubeVector.size()-1;
-				} else {
-					cus--;
-				}
-			}
-			if(key == 61 && action == 1 && mods==GLFW_MOD_ALT) {
-				if (cus+1 >= cubeVector.size()) {
-					cus = 0;
-				} else {
-					cus++;
-				}
-			}
-			//BCZO Creating new Objects
-			// (B) Creates a new Ball
-			if (key == 66 && action == 1){
-				ballVector.push_back(new BilliardBall(5, sphereY, -3,sphereSize, 0.978, 0.0, 0.0, 0.0));
-
-			}
-			// (C) Creates a new Cube
-			if (key == 67 && action == 1){
-				cubeVector.push_back(new Cube(size, 0.0, 0.0, 0.0));
-			}
-			// (Z) Creates a new Cylinder
-			if (key == 90 && action == 1){
-				cylinderVector.push_back(new Cylinder(size, -2.5, 0.5, -2));
-			}
-			// (O) Creates a new Wall
-			if (key == 79 && action == 1){
-				table->obstacle=true;
-			}
-
 			//Bewegen der ausgewählten Kugel Shift + Pfeiltasten
 			if (ballVector.size()>1) {
 				// (<-)
@@ -683,55 +737,134 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 					ballVector.at(bs)->posZ += 0.1;
 				}
 			}
+		}else if(selectedObject=="cylinders"){
+			//zum Iterieren durch die Zylinderauswahl strg und +/-
+			if(key == 45 && action == 1 && mods==GLFW_MOD_SHIFT) {
+				if (cs-1 < 0) {
+					cs = cylinderVector.size()-1;
+				} else {
+					cs--;
+				}
+			}
+			if(key == 61 && action == 1 && mods==GLFW_MOD_SHIFT) {
+				if (cs+1 >= cylinderVector.size()) {
+					cs = 0;
+				} else {
+					cs++;
+				}
+			}
 			//Bewegen des ausgewählten Zylinders strg + Pfeiltasten
 			if (cylinderVector.size()>0) {
 				// (<-)
-				if ((key == 263 && action == 2 )&& mods==GLFW_MOD_CONTROL){
+				if ((key == 263 && action == 2 )&& mods==GLFW_MOD_SHIFT){
 					cylinderVector.at(cs)->posX -= 0.1;
 				}
 				// (->)
-				if (key == 262 && action == 2 && mods==GLFW_MOD_CONTROL){
+				if (key == 262 && action == 2 && mods==GLFW_MOD_SHIFT){
 					cylinderVector.at(cs)->posX += 0.1;
 				}
 				// (^)
-				if (key == 265 && action == 2 && mods==GLFW_MOD_CONTROL){
+				if (key == 265 && action == 2 && mods==GLFW_MOD_SHIFT){
 					cylinderVector.at(cs)->posZ -= 0.1;
 				}
 				// (v)
-				if (key == 264 && action == 2 && mods==GLFW_MOD_CONTROL){
+				if (key == 264 && action == 2 && mods==GLFW_MOD_SHIFT){
 					cylinderVector.at(cs)->posZ += 0.1;
+				}
+			}
+		}else if(selectedObject=="cubes") {
+			//Zum Iterieren durch die Würfelauswahl
+			if(key == 45 && action == 1 && mods==GLFW_MOD_SHIFT) {
+				if (cus-1 < 0) {
+					cus = cubeVector.size()-1;
+				} else {
+					cus--;
+				}
+			}
+			if(key == 61 && action == 1 && mods==GLFW_MOD_SHIFT) {
+				if (cus+1 >= cubeVector.size()) {
+					cus = 0;
+				} else {
+					cus++;
 				}
 			}
 			//Bewegen des ausgewählten Würfels alt + Pfeiltasten
 			if (cubeVector.size()>0) {
 				// (<-)
-				if ((key == 263 && action == 2 )&& mods==GLFW_MOD_ALT){
+				if ((key == 263 && action == 2 )&& mods==GLFW_MOD_SHIFT){
 					cubeVector.at(cus)->posX -= 0.1;
 				}
 				// (->)
-				if (key == 262 && action == 2 && mods==GLFW_MOD_ALT){
+				if (key == 262 && action == 2 && mods==GLFW_MOD_SHIFT){
 					cubeVector.at(cus)->posX += 0.1;
 				}
 				// (^)
-				if (key == 265 && action == 2 && mods==GLFW_MOD_ALT){
+				if (key == 265 && action == 2 && mods==GLFW_MOD_SHIFT){
 					cubeVector.at(cus)->posZ -= 0.1;
 				}
 				// (v)
-				if (key == 264 && action == 2 && mods==GLFW_MOD_ALT){
+				if (key == 264 && action == 2 && mods==GLFW_MOD_SHIFT){
 					cubeVector.at(cus)->posZ += 0.1;
 				}
 			}
 			//AD rotieren des ausgewählten Würfels
 			if (cubeVector.size()>0) {
 			    // (A)
-				if (key == 65 && action == 2 && mods==GLFW_MOD_ALT){
+				if (key == 65 && action == 2 && mods==GLFW_MOD_SHIFT){
 					cubeVector.at(cus)->rotY-=0.9;
 				}
 				// (D)
-				if (key == 68 && action == 2 && mods==GLFW_MOD_ALT){
+				if (key == 68 && action == 2 && mods==GLFW_MOD_SHIFT){
 					cubeVector.at(cus)->rotY+=0.9;
 				}
 			}
+		}else if(selectedObject=="obstacles") {
+			//Zum Iterieren durch die Wandauswahl
+			if(key == 45 && action == 1 && mods==GLFW_MOD_SHIFT) {
+				if (os-1 < 0) {
+					os = obstacleVector.size()-1;
+				} else {
+					os--;
+				}
+			}
+			if(key == 61 && action == 1 && mods==GLFW_MOD_SHIFT) {
+				if (os+1 >= obstacleVector.size()) {
+					os = 0;
+				} else {
+					os++;
+				}
+			}
+			//AD rotieren der ausgewählten Wand
+			if (obstacleVector.size()>0) {
+			    // (A)
+				if (key == 65 && action == 2 && mods==GLFW_MOD_SHIFT){
+					obstacleVector.at(os)->rotY-=0.9;
+				}
+				// (D)
+				if (key == 68 && action == 2 && mods==GLFW_MOD_SHIFT){
+					obstacleVector.at(os)->rotY+=0.9;
+				}
+			}
+			//bewegen der ausgewählten Wand
+			if (obstacleVector.size()>0) {
+				// (<-)
+				if ((key == 263 && action == 2 )&& mods==GLFW_MOD_SHIFT){
+					obstacleVector.at(os)->posX -= 0.1;
+				}
+				// (->)
+				if (key == 262 && action == 2 && mods==GLFW_MOD_SHIFT){
+					obstacleVector.at(os)->posX += 0.1;
+				}
+				// (^)
+				if (key == 265 && action == 2 && mods==GLFW_MOD_SHIFT){
+					obstacleVector.at(os)->posZ -= 0.1;
+				}
+				// (v)
+				if (key == 264 && action == 2 && mods==GLFW_MOD_SHIFT){
+					obstacleVector.at(os)->posZ += 0.1;
+				}
+			}
+		}
 	}
 
 	//Entertaste zum Starten des Spiels (Kugel rollt los)
@@ -749,6 +882,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 	//Leertaste zum Zurücksetzen der Kugel auf die Startposition
 	if (key == 32  && action == 1){
 		selectionMode = true;
+		selectedObject = "balls";
 		whiteBall->posX = sphereX;
 		whiteBall->posZ = sphereZ;
 		whiteBall->speedZ = 0;
@@ -756,11 +890,14 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 	}
 	if (key == 32  && action == 1 && mods==GLFW_MOD_SHIFT){
 		selectionMode = true;
+		selectedObject = "balls";
 		whiteBall->posX = sphereX;
 		whiteBall->posZ = sphereZ;
 		whiteBall->speedZ = 0;
 		whiteBall->speedX = 0;
 		cylinderVector.clear();
+		cubeVector.clear();
+		obstacleVector.clear();
 		ballVector.clear();
 		ballVector.push_back(whiteBall);
 		table->obstacle=false;

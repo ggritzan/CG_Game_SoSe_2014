@@ -10,6 +10,9 @@ Wall::Wall(double size, double posX, double posY, double posZ) {
 	this->posX = posX;
 	this->posY = posY;
 	this->posZ = posZ;
+	this->rotX = 0.0;
+	this->rotY = 0.0;
+	this->rotZ = 0.0;
 
     this->obstacle = false;
 
@@ -29,14 +32,20 @@ void Wall::DrawWall(){
 
 	double a = (wallSize * (1 / sqrt(2)));
 
-	glBegin(GL_QUADS);
-		  //Hinderniswand
-		  glNormal3f(wallSize * 6, 0.0, 8.0);
 
-		  glVertex3f(posX - a, 1.0, posZ + a);
-		  glVertex3f(posX + a, 1.0, posZ - a);
-		  glVertex3f(posX + a, 0.0, posZ - a);
-		  glVertex3f(posX - a, 0.0, posZ + a);
+    glPushMatrix();
+    glTranslatef(posX, posY, posZ);
+    glRotated(rotX, 1, 0, 0);
+    glRotated(rotY, 0, 1, 0);// Rotation um die Y Achse
+    glRotated(rotZ, 0 ,0 ,1);
+		glBegin(GL_QUADS);
+			  //Hinderniswand
+			  glNormal3f(wallSize * 6, 0.0, 8.0);
 
-	glEnd();
+			  glVertex3f(posX - a, 1.0, posZ + a);
+			  glVertex3f(posX + a, 1.0, posZ - a);
+			  glVertex3f(posX + a, 0.0, posZ - a);
+			  glVertex3f(posX - a, 0.0, posZ + a);
+		glEnd();
+	glPopMatrix();
 }
