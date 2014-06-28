@@ -1,5 +1,6 @@
 #include <GL/gl.h>
 
+#include "Cube.h"
 #include "Cylinder.h"
 #include "Wall.h"
 
@@ -99,7 +100,6 @@ bool BilliardBall::detectCollision(Wall w) {
     double minDistance = w.wallSize + this->ballSize;
 
     if(distance < minDistance) {
-    	std::cout << "collision" <<std::endl;
     	return true;
     } else {
     	return false;
@@ -148,24 +148,47 @@ bool BilliardBall::detectCollision(Cylinder c) {
     }
 }
 
-bool BilliardBall::detectCollision(double posX, double posY, double posZ, double cubeSize) {
+bool BilliardBall::detectCollision(Cube c) {
 
-	double r = 2 * cubeSize * (1 / sqrt(2));
+	double a = 2 * c.cubeSize * (1 / sqrt(2));
 
-    //distance vector
-    double dvX = this->posX - posX;
-    double dvY = this->posY - posY;
-    double dvZ = this->posZ - posZ;
-
-    double distance = sqrt( dvX*dvX + dvY*dvY + dvZ*dvZ );
-
-    double minDistance = r + this->ballSize;
-
-    if(distance < minDistance) {
-    	std::cout << "collision" <<std::endl;
-    	return true;
+    //velocity
+    double dvX = this->speedX - c.speedX;
+    double dvY = this->speedY - c.speedY;
+    double dvZ = this->speedZ - c.speedZ;
+    //distance
+    double dpX = this->posX - c.posX;
+    double dpY = this->posY - c.posY;
+    double dpZ = this->posZ - c.posZ;
+    //minimal distance squared
+    double r = this->ballSize + a;
+    double pp = dpX * dpX + dpY * dpY + dpZ * dpZ - r*r;
+    //already intersecting -> collision
+    if (pp < 0) {
+        return true;
+    }
+    double pv = dpX * dvX + dpY * dvY + dpZ * dvZ;
+    //moving away from each other (passed each other already) -> no collision
+    if (pv >= 0) {
+        return false;
+    }
+    double vv = dvX * dvX + dvY * dvY + dvZ * dvZ;
+    //possible intersection within the next frame? -> no collision
+    if ( (pv + vv) <= 0 && (vv + 2 * pv + pp) >= 0 ) {
+        return false;
+    }
+    //discriminant
+    double D = pv * pv - pp * vv;
+    if (D < 0) {
+    	D = D * -1;
+    }
+    //no collision
+    if(D > 0) {
+        return false;
+    //collision
     } else {
-    	return false;
+    	std::cout << "collision" <<std::endl;
+        return true;
     }
 }
 
