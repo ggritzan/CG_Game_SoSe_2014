@@ -46,7 +46,7 @@ Cube::~Cube() {
 void Cube::DrawCube() {
 
 
-    glPushMatrix();
+    //glPushMatrix();
     glTranslatef(posX, posY, posZ);
       glRotated(rotX, 1, 0, 0);
       glRotated(rotY, 0, 1, 0);// Rotation um die Y Achse
@@ -101,7 +101,7 @@ void Cube::DrawCube() {
       glVertex3f(cubeSize+posX, cubeSize, -cubeSize+posZ);
       glVertex3f(cubeSize+posX, cubeSize, cubeSize+posZ);
       glEnd();
-      glPopMatrix();
+    //  glPopMatrix();
 
 }
 

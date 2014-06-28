@@ -289,7 +289,7 @@ bool BilliardBall::cubeCollisionDetection(Vec3& wallDot, Vec3& wallNormVec){
         D = D * (-1);
     }
 
-    if(D <= ballSize){
+    if(D <= ballSize/2){
         return true;
     } else {
         return false;
