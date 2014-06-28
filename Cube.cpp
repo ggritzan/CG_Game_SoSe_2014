@@ -17,6 +17,9 @@ Cube::Cube(double size, double posX, double posY, double posZ) {
 	this->speedX = 0.0;
 	this->speedY = 0.0;
 	this->speedZ = 0.0;
+	this->rotX = 0.0;
+	this->rotY = 0.0;
+	this->rotZ = 0.0;
 	this->posX = posX;
 	this->posY = posY;
 	this->posZ = posZ;
@@ -41,8 +44,14 @@ Cube::~Cube() {
 
 // Zeichnen des Würfels
 void Cube::DrawCube() {
-    glBegin(GL_QUADS);
 
+    glTranslatef(posX, posY, posZ);
+    glPushMatrix();
+
+      glRotated(rotX, 1, 0, 0);
+      glRotated(rotY, 0, 1, 0);// Rotation um die Y Achse
+      glRotated(rotZ, 0 ,0 ,1);
+      glBegin(GL_QUADS);
       //ground
       glNormal3f(0.0, 0.0, cubeSize);
 
@@ -91,6 +100,8 @@ void Cube::DrawCube() {
       glVertex3f(-cubeSize+posX, cubeSize, -cubeSize+posZ);
       glVertex3f(cubeSize+posX, cubeSize, -cubeSize+posZ);
       glVertex3f(cubeSize+posX, cubeSize, cubeSize+posZ);
-    glEnd();
+      glEnd();
+      glPopMatrix();
+
 }
 

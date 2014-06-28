@@ -19,9 +19,10 @@ static double beta_ = 25;		// Winkel für X Achse
 
 static float scale = 1.0;		// Skalierungswert
 static float size = 1.0;		// Größe des Würfels entspricht immer der Hälfte der Würfel Größe
+
 static double wallSize = 2.0;
-static float cubeVerschiebungX = 0.0;	// Verschiebung des Würfels auf der X-Achse
-static float cubeVerschiebungY = 0.0;	// Verscheibung des Würfels auf der Y-Achse
+static float moveX = 0.0;	// Verschiebung des Würfels auf der X-Achse
+static float moveY = 0.0;	// Verscheibung des Würfels auf der Y-Achse
 
 static double sphereSize = 0.286;
 static double sphereX = 5;
@@ -41,16 +42,12 @@ static int cus = 0;
 BilliardTable* table = new BilliardTable(size);
 Wall* wall = new Wall(wallSize, 0.0, 0.0, 0.0);
 
-//Cube* cube = new Cube(size, -5.0, 0.5, 5.0);
-
 BilliardBall* whiteBall = new BilliardBall(sphereX, sphereY, sphereZ, sphereSize, 0.978, 1.0, 1.0, 1.0);
 
-//Deklaration der Objektarrays
+//Deklaration der Objekvektoren
 std::vector<BilliardBall*> ballVector;
 std::vector<Cube*> cubeVector;
 std::vector<Cylinder*> cylinderVector;
-//Cube* cubeVector[5] = {};
-//Cylinder* cylinderVector[5] = {};
 
 void resetBalls() {
 	for (int i = 0; i<ballVector.size(); i++) {
@@ -228,6 +225,11 @@ void checkBallsandCylinder() {
 					ballVector.at(i)->speedY = ballVector.at(i)->speedY * (-1);
 					ballVector.at(i)->speedZ = ballVector.at(i)->speedZ * (-1);
 
+					ballVector.at(i)->wallBack = false;
+					ballVector.at(i)->wallFront = false;
+					ballVector.at(i)->wallLeft = false;
+					ballVector.at(i)->wallRight = false;
+					ballVector.at(i)->wallObst = false;
 
 				} else {
 					ballVector.at(i)->collision = true;
@@ -265,6 +267,12 @@ void checkBallsandCylinder() {
 					ballVector.at(i)->speedX = v1neu.p[0];
 					ballVector.at(i)->speedY = v1neu.p[1];
 					ballVector.at(i)->speedZ = v1neu.p[2];
+
+					ballVector.at(i)->wallBack = false;
+					ballVector.at(i)->wallFront = false;
+					ballVector.at(i)->wallLeft = false;
+					ballVector.at(i)->wallRight = false;
+					ballVector.at(i)->wallObst = false;
 				}
 			}
 		}
@@ -473,12 +481,13 @@ void Preview() {
 
   glPushMatrix();
 
-  glTranslated(cubeVerschiebungX, cubeVerschiebungY, 0);
+  glTranslated(moveX, moveY, 0);
 
   glRotated(alpha_, 0 , 1, 0);	// Rotation um die Y Achse
   glRotated(beta_, 1 ,0 ,0);	// Rotation um die X Achse
 
   glScalef(scale, scale, scale );
+
 
   //BilliardTable colours inside and outside
   SetMaterialColor(2, 0.0, 1.0, 0.0);
@@ -503,7 +512,7 @@ void Preview() {
   checkBalls();
 
   checkBallsandCylinder();
-  //checkBallsandCube();
+  checkBallsandCube();
   resetBalls();
 
   for(int i =0; i<ballVector.size(); i++) {
@@ -529,41 +538,41 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 //Pfeiltasten moving the table
 	// (<-)
 	if (key == 263 && action == 2 && !(mods==GLFW_MOD_SHIFT || mods==GLFW_MOD_CONTROL || mods==GLFW_MOD_ALT)){
-		cubeVerschiebungX -= 0.1;
+		moveX -= 0.1;
 	}
 
 	// (->)
 	if (key == 262 && action == 2 && !(mods==GLFW_MOD_SHIFT || mods==GLFW_MOD_CONTROL || mods==GLFW_MOD_ALT)){
-		cubeVerschiebungX += 0.1;
+		moveX += 0.1;
 	}
 
 	// (^)
 	if (key == 265 && action == 2 && !(mods==GLFW_MOD_SHIFT || mods==GLFW_MOD_CONTROL || mods==GLFW_MOD_ALT)){
-		cubeVerschiebungY += 0.1;
+		moveY += 0.1;
 	}
 
 	// (v)
 	if (key == 264 && action == 2 && !(mods==GLFW_MOD_SHIFT || mods==GLFW_MOD_CONTROL || mods==GLFW_MOD_ALT)){
-		cubeVerschiebungY -= 0.1;
+		moveY -= 0.1;
 	}
 	//WASD rotating the table
 		// (W)
-	if (key == 87 && action == 2){
+	if (key == 87 && action == 2 && !(mods==GLFW_MOD_ALT)){
 		beta_ -= .9;
 	}
 
 		// (A)
-	if (key == 65 && action == 2){
+	if (key == 65 && action == 2&& !(mods==GLFW_MOD_ALT)){
 		alpha_ -= .9;
 	}
 
 		// (S)
-	if (key == 83 && action == 2){
+	if (key == 83 && action == 2&& !(mods==GLFW_MOD_ALT)){
 		beta_ += .9;
 	}
 
 		// (D)
-	if (key == 68 && action == 2){
+	if (key == 68 && action == 2&& !(mods==GLFW_MOD_ALT)){
 		alpha_ += .9;
 	}
 
@@ -622,7 +631,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 			}
 			// (C) Creates a new Cube
 			if (key == 67 && action == 1){
-				cubeVector.push_back(new Cube(size, -5.0, 0.5, 5.0));
+				cubeVector.push_back(new Cube(size, 0.0, 0.0, 0.0));
 			}
 			// (Z) Creates a new Cylinder
 			if (key == 90 && action == 1){
@@ -688,6 +697,17 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 				// (v)
 				if (key == 264 && action == 2 && mods==GLFW_MOD_ALT){
 					cubeVector.at(cus)->posZ += 0.1;
+				}
+			}
+			//AD rotieren des ausgewählten Würfels
+			if (cubeVector.size()>0) {
+			    // (A)
+				if (key == 65 && action == 2 && mods==GLFW_MOD_ALT){
+					cubeVector.at(cus)->rotY-=0.9;
+				}
+				// (D)
+				if (key == 68 && action == 2 && mods==GLFW_MOD_ALT){
+					cubeVector.at(cus)->rotY+=0.9;
 				}
 			}
 	}

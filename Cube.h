@@ -16,6 +16,9 @@ public:
 	double speedX;
 	double speedY;
 	double speedZ;
+	double rotX;
+	double rotY;
+	double rotZ;
 	double posX;
 	double posY;
 	double posZ;
