@@ -375,8 +375,10 @@ void drawVectorCylinders() {
 	for (int i = 0; i<cylinderVector.size();i++) {
 		if (cs == i && selectionMode) {
 			SetMaterialColor(1, 0.0, 1.0, 1.0);
+			SetMaterialColor(2, 0.0, 1.0, 1.0);
 		} else {
 	  	  SetMaterialColor(1, 0.0, 0.0, 0.0);
+	  	  SetMaterialColor(2, 0.0, 0.0, 0.0);
 		}
 	  	  cylinderVector.at(i)->DrawCylinder(cylinderVector.at(i)->posX, cylinderVector.at(i)->posY, cylinderVector.at(i)->posZ, cylinderVector.at(i)->cylinderSize);
 	}
@@ -384,9 +386,9 @@ void drawVectorCylinders() {
 void drawCubes() {
 	for(int i =0;i<cubeVector.size();i++){
 		if(cus==i && selectionMode){
-			SetMaterialColor(1, 0.0, 1.0, 1.0);
+			SetMaterialColor(2, 0.0, 1.0, 1.0);
 		}else{
-			SetMaterialColor(1 ,0.0, 1.0, 0.0);
+			SetMaterialColor(2 ,0.0, 0.0, 0.0);
 		}
 		cubeVector.at(i)->DrawCube();
 	}
@@ -484,7 +486,7 @@ void Preview() {
   if (cylinderVector.size()>=1) {
 	  drawVectorCylinders();
   }
-  if (cubeVector.size()>0) {
+  if (cubeVector.size()>=1) {
 	  drawCubes();
   }
 
@@ -591,12 +593,10 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 			// (C) Creates a new Cube
 			if (key == 67 && action == 1){
 				cubeVector.push_back(new Cube(size, -5.0, 0.5, 5.0));
-
 			}
 			// (Z) Creates a new Cylinder
 			if (key == 90 && action == 1){
 				cylinderVector.push_back(new Cylinder(size, -2.5, 0.5, -2));
-
 			}
 			// (O) Creates a new Wall
 			if (key == 79 && action == 1){

@@ -46,51 +46,51 @@ void Cube::DrawCube() {
       //ground
       glNormal3f(0.0, 0.0, cubeSize);
 
-      glVertex3f(-cubeSize, 0, cubeSize);
-      glVertex3f(-cubeSize, 0, -cubeSize);
-      glVertex3f(cubeSize, 0, -cubeSize);
-      glVertex3f(cubeSize, 0, cubeSize);
+      glVertex3f(-cubeSize+posX, 0, cubeSize+posZ);
+      glVertex3f(-cubeSize+posX, 0, -cubeSize+posZ);
+      glVertex3f(cubeSize+posX, 0, -cubeSize+posZ);
+      glVertex3f(cubeSize+posX, 0, cubeSize+posZ);
 
       //Bande left
 
       glNormal3f(-cubeSize, 0.0, 0.0);
 
-      glVertex3f(-cubeSize, cubeSize, -cubeSize);
-      glVertex3f(-cubeSize, cubeSize, cubeSize);
-      glVertex3f(-cubeSize, 0, cubeSize);
-      glVertex3f(-cubeSize, 0, -cubeSize);
+      glVertex3f(-cubeSize+posX, cubeSize, -cubeSize+posZ);
+      glVertex3f(-cubeSize+posX, cubeSize, cubeSize+posZ);
+      glVertex3f(-cubeSize+posX, 0, cubeSize+posZ);
+      glVertex3f(-cubeSize+posX, 0, -cubeSize+posZ);
 
       //Bande right
       glNormal3f(0.0, 0.0, -cubeSize);
 
-      glVertex3f(cubeSize, 0, cubeSize);
-      glVertex3f(cubeSize, 0, -cubeSize);
-      glVertex3f(cubeSize, cubeSize, -cubeSize);
-      glVertex3f(cubeSize, cubeSize, cubeSize);
+      glVertex3f(cubeSize+posX, 0, cubeSize+posZ);
+      glVertex3f(cubeSize+posX, 0, -cubeSize+posZ);
+      glVertex3f(cubeSize+posX, cubeSize, -cubeSize+posZ);
+      glVertex3f(cubeSize+posX, cubeSize, cubeSize+posZ);
 
       //Bande front
       glNormal3f(-cubeSize, 0.0, 0.0);
 
-      glVertex3f(-cubeSize, cubeSize, cubeSize);
-      glVertex3f(-cubeSize, 0, cubeSize);
-      glVertex3f(cubeSize, 0, cubeSize);
-      glVertex3f(cubeSize, cubeSize, cubeSize);
+      glVertex3f(-cubeSize+posX, cubeSize, cubeSize+posZ);
+      glVertex3f(-cubeSize+posX, 0, cubeSize+posZ);
+      glVertex3f(cubeSize+posX, 0, cubeSize+posZ);
+      glVertex3f(cubeSize+posX, cubeSize, cubeSize+posZ);
 
       //Bande back
       glNormal3f(-cubeSize, 0.0, 0.0);
 
-      glVertex3f(-cubeSize, cubeSize, -cubeSize);
-      glVertex3f(-cubeSize, 0, -cubeSize);
-      glVertex3f(cubeSize, 0, -cubeSize);
-      glVertex3f(cubeSize, cubeSize, -cubeSize);
+      glVertex3f(-cubeSize+posX, cubeSize, -cubeSize+posZ);
+      glVertex3f(-cubeSize+posX, 0, -cubeSize+posZ);
+      glVertex3f(cubeSize+posX, 0, -cubeSize+posZ);
+      glVertex3f(cubeSize+posX, cubeSize, -cubeSize+posZ);
 
       //top
       glNormal3f(0.0, 0.0, -cubeSize);
 
-      glVertex3f(-cubeSize, cubeSize, cubeSize);
-      glVertex3f(-cubeSize, cubeSize, -cubeSize);
-      glVertex3f(cubeSize, cubeSize, -cubeSize);
-      glVertex3f(cubeSize, cubeSize, cubeSize);
+      glVertex3f(-cubeSize+posX, cubeSize, cubeSize+posZ);
+      glVertex3f(-cubeSize+posX, cubeSize, -cubeSize+posZ);
+      glVertex3f(cubeSize+posX, cubeSize, -cubeSize+posZ);
+      glVertex3f(cubeSize+posX, cubeSize, cubeSize+posZ);
     glEnd();
 }
 
