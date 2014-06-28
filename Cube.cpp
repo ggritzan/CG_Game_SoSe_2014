@@ -14,6 +14,7 @@
 Cube::Cube(double size, double posX, double posY, double posZ) {
 	this->cubeSize = size;
 
+
 	this->speedX = 0.0;
 	this->speedY = 0.0;
 	this->speedZ = 0.0;
@@ -46,7 +47,7 @@ Cube::~Cube() {
 void Cube::DrawCube() {
 
 
-    //glPushMatrix();
+   glPushMatrix();
     glTranslatef(posX, posY, posZ);
       glRotated(rotX, 1, 0, 0);
       glRotated(rotY, 0, 1, 0);// Rotation um die Y Achse
@@ -101,7 +102,110 @@ void Cube::DrawCube() {
       glVertex3f(cubeSize+posX, cubeSize, -cubeSize+posZ);
       glVertex3f(cubeSize+posX, cubeSize, cubeSize+posZ);
       glEnd();
-    //  glPopMatrix();
+    glPopMatrix();
 
+    this->UpdateColliPoints();
 }
 
+// Translate der Collisionswerte
+void Cube::UpdateColliPoints() {
+
+	glPushMatrix();
+
+		/* Left */
+		glTranslatef(this->cubeDotLeft.p[0], this->cubeDotLeft.p[1], this->cubeDotLeft.p[2]);
+		glRotated(rotX, 1, 0, 0);
+		glRotated(rotY, 0, 1, 0);
+		glRotated(rotZ, 0, 0, 1);
+
+		this->cubeDotLeft = Vec3(this->cubeDotLeft.p[0],this->cubeDotLeft.p[1],this->cubeDotLeft.p[2]);
+
+
+
+		glTranslatef(this->cubeDotLeftNormVec.p[0], this->cubeDotLeftNormVec.p[1], this->cubeDotLeftNormVec.p[2]);
+		glRotated(rotX, 1, 0, 0);
+		glRotated(rotY, 0, 1, 0);
+		glRotated(rotZ, 0, 0, 1);
+
+		this->cubeDotLeftNormVec = Vec3(this->cubeDotLeftNormVec.p[0], this->cubeDotLeftNormVec.p[1], this->cubeDotLeftNormVec.p[2]);
+
+	glPopMatrix();
+
+
+
+	glPushMatrix();
+
+		/* Right */
+		glTranslatef(this->cubeDotRight.p[0], this->cubeDotRight.p[1], this->cubeDotRight.p[2]);
+		glRotated(rotX, 1, 0, 0);
+		glRotated(rotY, 0, 1, 0);
+		glRotated(rotZ, 0, 0, 1);
+
+		this->cubeDotRight = Vec3(this->cubeDotRight.p[0],this->cubeDotRight.p[1],this->cubeDotRight.p[2]);
+
+
+
+		glTranslatef(this->cubeDotRightNormVec.p[0], this->cubeDotRightNormVec.p[1], this->cubeDotRightNormVec.p[2]);
+		glRotated(rotX, 1, 0, 0);
+		glRotated(rotY, 0, 1, 0);
+		glRotated(rotZ, 0, 0, 1);
+
+		this->cubeDotRightNormVec = Vec3(this->cubeDotRightNormVec.p[0], this->cubeDotRightNormVec.p[1], this->cubeDotRightNormVec.p[2]);
+
+
+
+	glPopMatrix();
+
+
+
+	glPushMatrix();
+
+			/* Front */
+			glTranslatef(this->cubeDotFront.p[0], this->cubeDotFront.p[1], this->cubeDotFront.p[2]);
+			glRotated(rotX, 1, 0, 0);
+			glRotated(rotY, 0, 1, 0);
+			glRotated(rotZ, 0, 0, 1);
+
+			this->cubeDotFront = Vec3(this->cubeDotFront.p[0],this->cubeDotFront.p[1],this->cubeDotFront.p[2]);
+
+
+
+			glTranslatef(this->cubeDotFrontNormVec.p[0], this->cubeDotFrontNormVec.p[1], this->cubeDotFrontNormVec.p[2]);
+			glRotated(rotX, 1, 0, 0);
+			glRotated(rotY, 0, 1, 0);
+			glRotated(rotZ, 0, 0, 1);
+
+			this->cubeDotFrontNormVec = Vec3(this->cubeDotFrontNormVec.p[0], this->cubeDotFrontNormVec.p[1], this->cubeDotFrontNormVec.p[2]);
+
+
+
+	glPopMatrix();
+
+
+
+	glPushMatrix();
+
+				/* Back */
+				glTranslatef(this->cubeDotBack.p[0], this->cubeDotBack.p[1], this->cubeDotBack.p[2]);
+				glRotated(rotX, 1, 0, 0);
+				glRotated(rotY, 0, 1, 0);
+				glRotated(rotZ, 0, 0, 1);
+
+				this->cubeDotBack = Vec3(this->cubeDotBack.p[0],this->cubeDotBack.p[1],this->cubeDotBack.p[2]);
+
+
+
+				glTranslatef(this->cubeDotBackNormVec.p[0], this->cubeDotBackNormVec.p[1], this->cubeDotBackNormVec.p[2]);
+				glRotated(rotX, 1, 0, 0);
+				glRotated(rotY, 0, 1, 0);
+				glRotated(rotZ, 0, 0, 1);
+
+				this->cubeDotBackNormVec = Vec3(this->cubeDotBackNormVec.p[0], this->cubeDotBackNormVec.p[1], this->cubeDotBackNormVec.p[2]);
+
+
+
+	glPopMatrix();
+
+
+
+}

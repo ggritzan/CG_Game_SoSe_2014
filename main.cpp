@@ -169,6 +169,7 @@ void checkBallsandCube() {
 	for (int i = 0; i<ballVector.size(); i++) {
 		for(int j =0; j<cubeVector.size();j++) {
 
+
 			if( ( (!ballVector.at(i)->cubeBack) && ballVector.at(i)->detectCollision(*cubeVector.at(j)) ) && ballVector.at(i)->cubeCollisionDetection(cubeVector.at(j)->cubeDotBack, cubeVector.at(j)->cubeDotBackNormVec) ) {
 
 				ballVector.at(i)->cubeBack = true;

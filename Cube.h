@@ -23,6 +23,8 @@ public:
 	double posY;
 	double posZ;
 
+
+
     Vec3 cubeDotLeft;
     Vec3 cubeDotLeftNormVec;
 
@@ -39,6 +41,8 @@ public:
 	virtual ~Cube();
 
 	void DrawCube();
+
+	void UpdateColliPoints();
 };
 
 #endif /* CUBE_H_ */
