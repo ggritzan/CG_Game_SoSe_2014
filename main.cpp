@@ -201,6 +201,11 @@ void checkBallsandCylinder() {
 					ballVector.at(i)->speedY = ballVector.at(i)->speedY * (-1);
 					ballVector.at(i)->speedZ = ballVector.at(i)->speedZ * (-1);
 
+					ballVector.at(i)->wallBack = false;
+					ballVector.at(i)->wallFront = false;
+					ballVector.at(i)->wallLeft = false;
+					ballVector.at(i)->wallRight = false;
+					ballVector.at(i)->wallObst = false;
 
 				} else {
 					ballVector.at(i)->collision = true;
@@ -238,6 +243,12 @@ void checkBallsandCylinder() {
 					ballVector.at(i)->speedX = v1neu.p[0];
 					ballVector.at(i)->speedY = v1neu.p[1];
 					ballVector.at(i)->speedZ = v1neu.p[2];
+
+					ballVector.at(i)->wallBack = false;
+					ballVector.at(i)->wallFront = false;
+					ballVector.at(i)->wallLeft = false;
+					ballVector.at(i)->wallRight = false;
+					ballVector.at(i)->wallObst = false;
 				}
 			}
 		}
@@ -519,22 +530,22 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 	}
 	//WASD rotating the table
 		// (W)
-	if (key == 87 && action == 2){
+	if (key == 87 && action == 2 && !(mods==GLFW_MOD_ALT)){
 		beta_ -= .9;
 	}
 
 		// (A)
-	if (key == 65 && action == 2){
+	if (key == 65 && action == 2&& !(mods==GLFW_MOD_ALT)){
 		alpha_ -= .9;
 	}
 
 		// (S)
-	if (key == 83 && action == 2){
+	if (key == 83 && action == 2&& !(mods==GLFW_MOD_ALT)){
 		beta_ += .9;
 	}
 
 		// (D)
-	if (key == 68 && action == 2){
+	if (key == 68 && action == 2&& !(mods==GLFW_MOD_ALT)){
 		alpha_ += .9;
 	}
 
@@ -593,7 +604,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 			}
 			// (C) Creates a new Cube
 			if (key == 67 && action == 1){
-				cubeVector.push_back(new Cube(size, -5.0, 0.5, 5.0));
+				cubeVector.push_back(new Cube(size, 0.0, 0.5, 0.0));
 			}
 			// (Z) Creates a new Cylinder
 			if (key == 90 && action == 1){
@@ -659,6 +670,33 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 				// (v)
 				if (key == 264 && action == 2 && mods==GLFW_MOD_ALT){
 					cubeVector.at(cus)->posZ += 0.1;
+				}
+			}
+			//WASD rotieren des ausgewählten Würfels
+			if (cubeVector.size()>0) {
+				// (W)
+				if (key == 87 && action == 2  && mods==GLFW_MOD_ALT){
+					glTranslatef(cubeVector.at(cus)->posX, cubeVector.at(cus)->posY, cubeVector.at(cus)->posZ);
+					glPushMatrix();
+					cubeVector.at(cus)->rotX+=0.5;
+					// Ein "neues" Koordinatensystem erstellen
+				    	glRotatef(cubeVector.at(cus)->rotX, 1, 0, 0); // Den Würfel um seine x-Achse drehen
+				    glPopMatrix();
+				}
+
+					// (A)
+				if (key == 65 && action == 2 && mods==GLFW_MOD_ALT){
+					//alpha_ -= .9;
+				}
+
+					// (S)
+				if (key == 83 && action == 2 && mods==GLFW_MOD_ALT){
+					//beta_ += .9;
+				}
+
+					// (D)
+				if (key == 68 && action == 2 && mods==GLFW_MOD_ALT){
+					//alpha_ += .9;
 				}
 			}
 	}

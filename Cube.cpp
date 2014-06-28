@@ -17,6 +17,9 @@ Cube::Cube(double size, double posX, double posY, double posZ) {
 	this->speedX = 0.0;
 	this->speedY = 0.0;
 	this->speedZ = 0.0;
+	this->rotX = 0.0;
+	this->rotY = 0.0;
+	this->rotZ = 0.0;
 	this->posX = posX;
 	this->posY = posY;
 	this->posZ = posZ;
