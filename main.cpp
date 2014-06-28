@@ -694,8 +694,8 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		whiteBall->wallLeft = false;
 		whiteBall->wallRight = false;
 		whiteBall->wallObst = false;
-		whiteBall->speedZ = 0.2;
-		whiteBall->speedX = -0.3;
+		whiteBall->speedZ = -0.4;
+		whiteBall->speedX = 0.1;
 	}
 
 	//Leertaste zum Zurücksetzen der Kugel auf die Startposition
@@ -716,20 +716,6 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		ballVector.clear();
 		ballVector.push_back(whiteBall);
 		table->obstacle=false;
-	}
-
-}
-
-// Mouse Callback
-void mouse_callback(GLFWwindow *window, int button, int action, int mods) {
-	//left click changes speed of ball
-	if (button == 0 && action == GLFW_PRESS) {
-
-
-	}
-
-	if (button == 1 && action == GLFW_PRESS) {
-
 	}
 
 }
@@ -768,9 +754,8 @@ int main() {
 
 			glfwPollEvents();
 
-			// Callbacks for Keyboard, MouseButtons and MouseScrollWheel
+			// Callbacks for Keyboard
 			glfwSetKeyCallback(window, key_callback);
-			glfwSetMouseButtonCallback(window, mouse_callback);
 
 	  }
 
