@@ -486,7 +486,7 @@ void Preview() {
   checkBalls();
 
   checkBallsandCylinder();
-  //checkBallsandCube();
+  checkBallsandCube();
   resetBalls();
 
   for(int i =0; i<ballVector.size(); i++) {
