@@ -89,4 +89,23 @@ void BilliardTable::DrawTable(){
 		  glVertex3f(billiardTableSize * 3, 0, billiardTableSize * 5);
       }
     glEnd();
+
+    // Beine des Tisches
+    const double PI2 = 6.28272;
+
+    //Zeichnen des Deckels
+    for(double j = 0.0001; j < 2.0; j += 0.1){
+
+		glBegin(GL_TRIANGLE_FAN);
+		for( double i = 0.0; i < PI2; i += PI2 / 360.0 ) {
+
+			float x = 7 + ( cos( i ) * billiardTableSize );
+			float y = j;
+			float z = 5 + ( sin( i ) * billiardTableSize);
+			glVertex3f( x, y ,z );
+
+		  }
+		glEnd();
+    }
+
 }

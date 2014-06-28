@@ -53,7 +53,7 @@ void Goal::DrawGoal() {
 	glEnd();
 
 	/* draws the circle */
-	SetMaterialColor(3, 1.0, 1.0, 1.0);
+	SetMaterialColor(2, 1.0, 1.0, 1.0);
 	const double PI2 = 6.28272;
 	double xm = (posX - (goalSize-(this->goalSize/3.4)));
 	double ym = posY - 0.0001;
