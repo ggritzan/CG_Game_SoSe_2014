@@ -16,7 +16,7 @@ Wall::Wall(double size, double posX, double posY, double posZ) {
 	double a = (wallSize * (1 / sqrt(2)));
 
     this->wallDotObs = Vec3(posX - a, 1.0, posZ + a);
-    this->WallDotObsNormVec = Vec3(wallSize * 6, 0.0, 8.0);
+    this->WallDotObsNormVec = Vec3(-2 * a, 0.0, -2 * a);
 
 }
 

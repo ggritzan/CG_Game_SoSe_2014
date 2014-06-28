@@ -1,6 +1,7 @@
 #include <GL/gl.h>
 
 #include "Cylinder.h"
+#include "Wall.h"
 
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
@@ -83,6 +84,25 @@ bool BilliardBall::detectCollision(BilliardBall b) {
     //collision
     } else {
         return true;
+    }
+}
+
+bool BilliardBall::detectCollision(Wall w) {
+
+    //distance vector
+    double dvX = this->posX - w.posX;
+    double dvY = this->posY - w.posY;
+    double dvZ = this->posZ - w.posZ;
+
+    double distance = sqrt( dvX*dvX + dvY*dvY + dvZ*dvZ );
+
+    double minDistance = w.wallSize + this->ballSize;
+
+    if(distance < minDistance) {
+    	std::cout << "collision" <<std::endl;
+    	return true;
+    } else {
+    	return false;
     }
 }
 
