@@ -33,11 +33,11 @@ static double sphereY = sphereSize;
 static double sphereZ = 0;
 
 static bool selectionMode = true;
-<<<<<<< HEAD
+
 static bool infoScreen = true;
-=======
+
 static std::string selectedObject = "balls";
->>>>>>> 4925cdf0f7d61c1732cf74fc8cdaef05cde05a75
+
 
 // Größe des OpenGL Fensters
 static double window_width_ = 1024;
