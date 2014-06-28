@@ -129,7 +129,7 @@ void checkBallsandObstacle() {
 
 	for (int i = 0; i<ballVector.size(); i++) {
 		for(int j = 0; j<obstacleVector.size();j++) {
-<<<<<<< HEAD
+
 			if ((!ballVector.at(i)->wallObst) && ballVector.at(i)->wallCollisionDetection(obstacleVector.at(j)->wallDotObs, obstacleVector.at(j)->WallDotObsNormVec) && ballVector.at(i)->detectCollision(*obstacleVector.at(j))) {
 
 				ballVector.at(i)->wallBack = false;
@@ -145,9 +145,9 @@ void checkBallsandObstacle() {
 
 				ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 				ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
-=======
-			if ( ballVector.at(i)->wallCollisionDetection(obstacleVector.at(j)->wallDotObs, obstacleVector.at(j)->WallDotObsNormVec) && ballVector.at(i)->detectCollision(*obstacleVector.at(j))) {
->>>>>>> 5195f14fd9cc8cedb3e8a87666b70f27eed7e6af
+
+
+
 
 				ballVector.at(i)->wallBack = false;
 				ballVector.at(i)->wallFront = false;
