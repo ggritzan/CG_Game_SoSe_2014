@@ -14,6 +14,9 @@
 #include "Cylinder.h"
 #include "vec3.hpp"
 
+
+
+
 static double alpha_ = 35;		// Winkel für Y Achse
 static double beta_ = 25;		// Winkel für X Achse
 
@@ -30,6 +33,7 @@ static double sphereY = sphereSize;
 static double sphereZ = 0;
 
 static bool selectionMode = true;
+static bool infoScreen = true;
 
 // Größe des OpenGL Fensters
 static double window_width_ = 1024;
@@ -475,7 +479,7 @@ void InitLighting() {
 
 // Zeichnen der Szene
 void Preview() {
-
+if(infoScreen) {
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();				  // Reset The Current Modelview Matrix
 
@@ -530,7 +534,12 @@ void Preview() {
   }
 
   glPopMatrix();
+} else {
 
+
+
+
+}
 }
 
 // Key Callback
