@@ -131,24 +131,31 @@ void checkBallsandObstacle() {
 		for(int j = 0; j<obstacleVector.size();j++) {
 			if ((!ballVector.at(i)->wallObst) && ballVector.at(i)->wallCollisionDetection(obstacleVector.at(j)->wallDotObs, obstacleVector.at(j)->WallDotObsNormVec) && ballVector.at(i)->detectCollision(*obstacleVector.at(j))) {
 
+				ballVector.at(i)->wallBack = false;
+				ballVector.at(i)->wallFront = false;
+				ballVector.at(i)->wallLeft = false;
+				ballVector.at(i)->wallRight = false;
+				ballVector.at(i)->wallObst = true;
 
+				double amalV = ( (obstacleVector.at(j)->WallDotObsNormVec.p[0] * ballVector.at(i)->speedX) + (obstacleVector.at(j)->WallDotObsNormVec.p[1] * ballVector.at(i)->speedY) + (obstacleVector.at(j)->WallDotObsNormVec.p[2] * ballVector.at(i)->speedZ) );
+				double betragA = (sqrt((obstacleVector.at(j)->WallDotObsNormVec.p[0]*obstacleVector.at(j)->WallDotObsNormVec.p[0]) + (obstacleVector.at(j)->WallDotObsNormVec.p[1]*obstacleVector.at(j)->WallDotObsNormVec.p[1]) + (obstacleVector.at(j)->WallDotObsNormVec.p[2]*obstacleVector.at(j)->WallDotObsNormVec.p[2]))) * (sqrt((obstacleVector.at(j)->WallDotObsNormVec.p[0]*obstacleVector.at(j)->WallDotObsNormVec.p[0]) + (obstacleVector.at(j)->WallDotObsNormVec.p[1]*obstacleVector.at(j)->WallDotObsNormVec.p[1]) + (obstacleVector.at(j)->WallDotObsNormVec.p[2]*obstacleVector.at(j)->WallDotObsNormVec.p[2])));
+				double aNeuX = (2 * amalV / betragA) * obstacleVector.at(j)->WallDotObsNormVec.p[0];
+				double aNeuZ = (2 * amalV / betragA) * obstacleVector.at(j)->WallDotObsNormVec.p[2];
 
+				ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
+				ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
 
-					  ballVector.at(i)->wallBack = false;
-					  ballVector.at(i)->wallFront = false;
-					  ballVector.at(i)->wallLeft = false;
-					  ballVector.at(i)->wallRight = false;
-					  ballVector.at(i)->wallObst = true;
-
-					  double amalV = ( (obstacleVector.at(j)->WallDotObsNormVec.p[0] * ballVector.at(i)->speedX) + (obstacleVector.at(j)->WallDotObsNormVec.p[1] * ballVector.at(i)->speedY) + (obstacleVector.at(j)->WallDotObsNormVec.p[2] * ballVector.at(i)->speedZ) );
-					  double betragA = (sqrt((obstacleVector.at(j)->WallDotObsNormVec.p[0]*obstacleVector.at(j)->WallDotObsNormVec.p[0]) + (obstacleVector.at(j)->WallDotObsNormVec.p[1]*obstacleVector.at(j)->WallDotObsNormVec.p[1]) + (obstacleVector.at(j)->WallDotObsNormVec.p[2]*obstacleVector.at(j)->WallDotObsNormVec.p[2]))) * (sqrt((obstacleVector.at(j)->WallDotObsNormVec.p[0]*obstacleVector.at(j)->WallDotObsNormVec.p[0]) + (obstacleVector.at(j)->WallDotObsNormVec.p[1]*obstacleVector.at(j)->WallDotObsNormVec.p[1]) + (obstacleVector.at(j)->WallDotObsNormVec.p[2]*obstacleVector.at(j)->WallDotObsNormVec.p[2])));
-					  double aNeuX = (2 * amalV / betragA) * obstacleVector.at(j)->WallDotObsNormVec.p[0];
-					  double aNeuZ = (2 * amalV / betragA) * obstacleVector.at(j)->WallDotObsNormVec.p[2];
-
-					  ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
-					  ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
+				ballVector.at(i)->wallBack = false;
+				ballVector.at(i)->wallFront = false;
+				ballVector.at(i)->wallLeft = false;
+				ballVector.at(i)->wallRight = false;
+				ballVector.at(i)->cubeBack = false;
+				ballVector.at(i)->cubeFront = false;
+				ballVector.at(i)->cubeLeft = false;
+				ballVector.at(i)->cubeRight = false;
+				ballVector.at(i)->collision = false;
+				ballVector.at(i)->cylinderCol = false;
 			}
-
 		}
 	}
 }
@@ -177,6 +184,12 @@ void checkBallsandCube() {
 				ballVector.at(i)->wallFront = false;
 				ballVector.at(i)->wallLeft = false;
 				ballVector.at(i)->wallRight = false;
+				ballVector.at(i)->cubeBack = false;
+				ballVector.at(i)->cubeFront = false;
+				ballVector.at(i)->cubeLeft = false;
+				ballVector.at(i)->cubeRight = false;
+				ballVector.at(i)->collision = false;
+				ballVector.at(i)->cylinderCol = false;
 			}
 
 			if( ( (!ballVector.at(i)->cubeFront)  && ballVector.at(i)->detectCollision(*cubeVector.at(j)) ) && ballVector.at(i)->cubeCollisionDetection(cubeVector.at(j)->cubeDotFront, cubeVector.at(j)->cubeDotFrontNormVec)){
@@ -198,6 +211,12 @@ void checkBallsandCube() {
 				ballVector.at(i)->wallFront = false;
 				ballVector.at(i)->wallLeft = false;
 				ballVector.at(i)->wallRight = false;
+				ballVector.at(i)->cubeBack = false;
+				ballVector.at(i)->cubeFront = false;
+				ballVector.at(i)->cubeLeft = false;
+				ballVector.at(i)->cubeRight = false;
+				ballVector.at(i)->collision = false;
+				ballVector.at(i)->cylinderCol = false;
 			}
 
 			if( ( (!ballVector.at(i)->cubeLeft)  && ballVector.at(i)->detectCollision(*cubeVector.at(j)) ) && ballVector.at(i)->cubeCollisionDetection(cubeVector.at(j)->cubeDotLeft, cubeVector.at(j)->cubeDotLeftNormVec) ){
@@ -218,6 +237,12 @@ void checkBallsandCube() {
 				ballVector.at(i)->wallFront = false;
 				ballVector.at(i)->wallLeft = false;
 				ballVector.at(i)->wallRight = false;
+				ballVector.at(i)->cubeBack = false;
+				ballVector.at(i)->cubeFront = false;
+				ballVector.at(i)->cubeLeft = false;
+				ballVector.at(i)->cubeRight = false;
+				ballVector.at(i)->collision = false;
+				ballVector.at(i)->cylinderCol = false;
 			}
 
 			if( ( (!ballVector.at(i)->cubeRight)  && ballVector.at(i)->detectCollision(*cubeVector.at(j)) ) && ballVector.at(i)->cubeCollisionDetection(cubeVector.at(j)->cubeDotRight, cubeVector.at(j)->cubeDotRightNormVec) ){
@@ -238,6 +263,12 @@ void checkBallsandCube() {
 				ballVector.at(i)->wallFront = false;
 				ballVector.at(i)->wallLeft = false;
 				ballVector.at(i)->wallRight = false;
+				ballVector.at(i)->cubeBack = false;
+				ballVector.at(i)->cubeFront = false;
+				ballVector.at(i)->cubeLeft = false;
+				ballVector.at(i)->cubeRight = false;
+				ballVector.at(i)->collision = false;
+				ballVector.at(i)->cylinderCol = false;
 			}
 		}
 	}
@@ -263,7 +294,12 @@ void checkBallsandCylinder() {
 					ballVector.at(i)->wallFront = false;
 					ballVector.at(i)->wallLeft = false;
 					ballVector.at(i)->wallRight = false;
-					ballVector.at(i)->wallObst = false;
+					ballVector.at(i)->cubeBack = false;
+					ballVector.at(i)->cubeFront = false;
+					ballVector.at(i)->cubeLeft = false;
+					ballVector.at(i)->cubeRight = false;
+					ballVector.at(i)->collision = false;
+					ballVector.at(i)->cylinderCol = false;
 
 				} else {
 					ballVector.at(i)->collision = true;
@@ -309,7 +345,12 @@ void checkBallsandCylinder() {
 					ballVector.at(i)->wallFront = false;
 					ballVector.at(i)->wallLeft = false;
 					ballVector.at(i)->wallRight = false;
-					ballVector.at(i)->wallObst = false;
+					ballVector.at(i)->cubeBack = false;
+					ballVector.at(i)->cubeFront = false;
+					ballVector.at(i)->cubeLeft = false;
+					ballVector.at(i)->cubeRight = false;
+					ballVector.at(i)->collision = false;
+					ballVector.at(i)->cylinderCol = false;
 				}
 			}
 		}
@@ -351,6 +392,17 @@ void checkBalls() {
 					ballVector.at(j)->speedX = temp.p[0];
 					ballVector.at(j)->speedY= temp.p[1];
 					ballVector.at(j)->speedZ = temp.p[2];
+
+					ballVector.at(i)->wallBack = false;
+					ballVector.at(i)->wallFront = false;
+					ballVector.at(i)->wallLeft = false;
+					ballVector.at(i)->wallRight = false;
+					ballVector.at(i)->cubeBack = false;
+					ballVector.at(i)->cubeFront = false;
+					ballVector.at(i)->cubeLeft = false;
+					ballVector.at(i)->cubeRight = false;
+					ballVector.at(i)->collision = false;
+					ballVector.at(i)->cylinderCol = false;
 
 				} else {
 
@@ -397,6 +449,17 @@ void checkBalls() {
 					ballVector.at(i)->speedX = v2neu.p[0];
 					ballVector.at(i)->speedY = v2neu.p[1];
 					ballVector.at(i)->speedZ = v2neu.p[2];
+
+					ballVector.at(i)->wallBack = false;
+					ballVector.at(i)->wallFront = false;
+					ballVector.at(i)->wallLeft = false;
+					ballVector.at(i)->wallRight = false;
+					ballVector.at(i)->cubeBack = false;
+					ballVector.at(i)->cubeFront = false;
+					ballVector.at(i)->cubeLeft = false;
+					ballVector.at(i)->cubeRight = false;
+					ballVector.at(i)->collision = false;
+					ballVector.at(i)->cylinderCol = false;
 				}
 			}
 		}
