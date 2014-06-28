@@ -624,7 +624,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		whiteBall->wallLeft = false;
 		whiteBall->wallRight = false;
 		whiteBall->wallObst = false;
-		whiteBall->speedZ = 0.2;
+		whiteBall->speedZ = 0.6;
 		whiteBall->speedX = -0.3;
 	}
 
