@@ -8,6 +8,7 @@
 
 #include "BilliardBall.h"
 #include "BilliardTable.h"
+#include "Wall.h"
 #include "Cube.h"
 #include "Goal.h"
 #include "Cylinder.h"
@@ -18,6 +19,7 @@ static double beta_ = 25;		// Winkel für X Achse
 
 static float scale = 1.0;		// Skalierungswert
 static float size = 1.0;		// Größe des Würfels entspricht immer der Hälfte der Würfel Größe
+static double wallSize = 2.0;
 static float cubeVerschiebungX = 0.0;	// Verschiebung des Würfels auf der X-Achse
 static float cubeVerschiebungY = 0.0;	// Verscheibung des Würfels auf der Y-Achse
 
@@ -36,6 +38,7 @@ static int bs = 1;
 static int cs = 0;
 
 BilliardTable* table = new BilliardTable(size);
+Wall* wall = new Wall(wallSize, 0.0, 0.0, 0.0);
 
 Cube* cube = new Cube(size, -5.0, 0.5, 5.0);
 
@@ -472,6 +475,7 @@ void Preview() {
   SetMaterialColor(2, 0.0, 1.0, 0.0);
   SetMaterialColor(1, 0.0, 1.0, 0.2);
   table->DrawTable();
+  wall->DrawWall();
 
   //Rotes Zielkreuz
   /* maxsize 1.5		size,   x,      y,   z    */
@@ -487,7 +491,7 @@ void Preview() {
 
   checkBalls();
 
-  //checkBallsandCylinder();
+  checkBallsandCylinder();
   //checkBallsandCube();
   resetBalls();
 

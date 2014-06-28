@@ -88,22 +88,6 @@ bool BilliardBall::detectCollision(BilliardBall b) {
 
 bool BilliardBall::detectCollision(Cylinder c) {
 
-//    //distance vector
-//    double dvX = this->posX - c.posX;
-//    double dvY = this->posY - c.posY;
-//    double dvZ = this->posZ - c.posZ;
-//
-//    double distance = sqrt( dvX*dvX + dvY*dvY + dvZ*dvZ );
-//
-//    double minDistance = c.cylinderSize + this->ballSize;
-//
-//    if(distance <= minDistance) {
-//    	std::cout << "collision" <<std::endl;
-//    	return true;
-//    } else {
-//    	return false;
-//    }
-
     //velocity
     double dvX = this->speedX - c.speedX;
     double dvY = this->speedY - c.speedY;
