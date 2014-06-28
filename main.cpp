@@ -18,8 +18,8 @@ static double beta_ = 25;		// Winkel für X Achse
 
 static float scale = 1.0;		// Skalierungswert
 static float size = 1.0;		// Größe des Würfels entspricht immer der Hälfte der Würfel Größe
-static float cubeVerschiebungX = 0.0;	// Verschiebung des Würfels auf der X-Achse
-static float cubeVerschiebungY = 0.0;	// Verscheibung des Würfels auf der Y-Achse
+static float moveX = 0.0;	// Verschiebung des Würfels auf der X-Achse
+static float moveY = 0.0;	// Verscheibung des Würfels auf der Y-Achse
 
 static double sphereSize = 0.286;
 static double sphereX = 5;
@@ -38,16 +38,12 @@ static int cus = 0;
 
 BilliardTable* table = new BilliardTable(size);
 
-//Cube* cube = new Cube(size, -5.0, 0.5, 5.0);
-
 BilliardBall* whiteBall = new BilliardBall(sphereX, sphereY, sphereZ, sphereSize, 0.978, 1.0, 1.0, 1.0);
 
-//Deklaration der Objektarrays
+//Deklaration der Objekvektoren
 std::vector<BilliardBall*> ballVector;
 std::vector<Cube*> cubeVector;
 std::vector<Cylinder*> cylinderVector;
-//Cube* cubeVector[5] = {};
-//Cylinder* cylinderVector[5] = {};
 
 void resetBalls() {
 	for (int i = 0; i<ballVector.size(); i++) {
@@ -446,7 +442,7 @@ void Preview() {
 
   glPushMatrix();
 
-  glTranslated(cubeVerschiebungX, cubeVerschiebungY, 0);
+  glTranslated(moveX, moveY, 0);
 
   glRotated(alpha_, 0 , 1, 0);	// Rotation um die Y Achse
   glRotated(beta_, 1 ,0 ,0);	// Rotation um die X Achse
@@ -499,22 +495,22 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 //Pfeiltasten moving the table
 	// (<-)
 	if (key == 263 && action == 2 && !(mods==GLFW_MOD_SHIFT || mods==GLFW_MOD_CONTROL || mods==GLFW_MOD_ALT)){
-		cubeVerschiebungX -= 0.1;
+		moveX -= 0.1;
 	}
 
 	// (->)
 	if (key == 262 && action == 2 && !(mods==GLFW_MOD_SHIFT || mods==GLFW_MOD_CONTROL || mods==GLFW_MOD_ALT)){
-		cubeVerschiebungX += 0.1;
+		moveX += 0.1;
 	}
 
 	// (^)
 	if (key == 265 && action == 2 && !(mods==GLFW_MOD_SHIFT || mods==GLFW_MOD_CONTROL || mods==GLFW_MOD_ALT)){
-		cubeVerschiebungY += 0.1;
+		moveY += 0.1;
 	}
 
 	// (v)
 	if (key == 264 && action == 2 && !(mods==GLFW_MOD_SHIFT || mods==GLFW_MOD_CONTROL || mods==GLFW_MOD_ALT)){
-		cubeVerschiebungY -= 0.1;
+		moveY -= 0.1;
 	}
 	//WASD rotating the table
 		// (W)
