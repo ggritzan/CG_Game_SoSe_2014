@@ -446,7 +446,7 @@ void Preview() {
 
   //Rotes Zielkreuz
   /* maxsize 1.5		size,   x,      y,   z    */
-  Goal* goal = new Goal(0.80, -2.0, 0.0001, 0.0);
+  Goal* goal = new Goal(1.25, -2.0, 0.0002, 0.0);
   goal->DrawGoal();
   /* GoalReached - decreases the speed of the billiardball to 0 when the area is reached */
   if(goal->GoalReached(ballVector.at(0)->posX, ballVector.at(0)->posY, ballVector.at(0)->posZ)) {
@@ -624,7 +624,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		whiteBall->wallLeft = false;
 		whiteBall->wallRight = false;
 		whiteBall->wallObst = false;
-		whiteBall->speedZ = 0.7;
+		whiteBall->speedZ = 0.2;
 		whiteBall->speedX = -0.3;
 	}
 

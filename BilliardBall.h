@@ -4,6 +4,7 @@
 #define BILLIARDBALL_H_
 class Cylinder;
 
+
 class Vec3;
 
 class BilliardBall {
@@ -44,11 +45,13 @@ public:
 	bool wallCollisionDetection(Vec3& wallDot, Vec3& wallNormVec);
 	bool cubeCollisionDetection(Vec3& wallDot, Vec3& wallNormVec);
 	bool detectCollision(BilliardBall b);
+
 	bool detectCollision(Cylinder c);
 	bool detectCollision(double posX, double posY, double posZ, double size);
 
 	bool checkCollisionType(BilliardBall a, BilliardBall b);
 	bool checkCollisionType(BilliardBall a, Cylinder c);
+
 
 	void DrawBall(const Vec3& ctr, double r);
 
