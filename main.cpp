@@ -464,6 +464,7 @@ void Preview() {
 
   glScalef(scale, scale, scale );
 
+
   //BilliardTable colours inside and outside
   SetMaterialColor(2, 0.0, 1.0, 0.0);
   SetMaterialColor(1, 0.0, 1.0, 0.2);
@@ -604,7 +605,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 			}
 			// (C) Creates a new Cube
 			if (key == 67 && action == 1){
-				cubeVector.push_back(new Cube(size, 0.0, 0.5, 0.0));
+				cubeVector.push_back(new Cube(size, 0.0, 0.0, 0.0));
 			}
 			// (Z) Creates a new Cylinder
 			if (key == 90 && action == 1){
@@ -672,31 +673,15 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 					cubeVector.at(cus)->posZ += 0.1;
 				}
 			}
-			//WASD rotieren des ausgewählten Würfels
+			//AD rotieren des ausgewählten Würfels
 			if (cubeVector.size()>0) {
-				// (W)
-				if (key == 87 && action == 2  && mods==GLFW_MOD_ALT){
-					glTranslatef(cubeVector.at(cus)->posX, cubeVector.at(cus)->posY, cubeVector.at(cus)->posZ);
-					glPushMatrix();
-					cubeVector.at(cus)->rotX+=0.5;
-					// Ein "neues" Koordinatensystem erstellen
-				    	glRotatef(cubeVector.at(cus)->rotX, 1, 0, 0); // Den Würfel um seine x-Achse drehen
-				    glPopMatrix();
-				}
-
-					// (A)
+			    // (A)
 				if (key == 65 && action == 2 && mods==GLFW_MOD_ALT){
-					//alpha_ -= .9;
+					cubeVector.at(cus)->rotY-=0.9;
 				}
-
-					// (S)
-				if (key == 83 && action == 2 && mods==GLFW_MOD_ALT){
-					//beta_ += .9;
-				}
-
-					// (D)
+				// (D)
 				if (key == 68 && action == 2 && mods==GLFW_MOD_ALT){
-					//alpha_ += .9;
+					cubeVector.at(cus)->rotY+=0.9;
 				}
 			}
 	}
