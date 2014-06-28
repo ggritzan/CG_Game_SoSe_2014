@@ -19,14 +19,10 @@ static double beta_ = 25;		// Winkel für X Achse
 
 static float scale = 1.0;		// Skalierungswert
 static float size = 1.0;		// Größe des Würfels entspricht immer der Hälfte der Würfel Größe
-<<<<<<< HEAD
+
+static double wallSize = 2.0;
 static float moveX = 0.0;	// Verschiebung des Würfels auf der X-Achse
 static float moveY = 0.0;	// Verscheibung des Würfels auf der Y-Achse
-=======
-static double wallSize = 2.0;
-static float cubeVerschiebungX = 0.0;	// Verschiebung des Würfels auf der X-Achse
-static float cubeVerschiebungY = 0.0;	// Verscheibung des Würfels auf der Y-Achse
->>>>>>> 81e48251756f6cbb4b554f3ad3f70afa2154dd08
 
 static double sphereSize = 0.286;
 static double sphereX = 5;
