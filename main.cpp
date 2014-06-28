@@ -131,21 +131,9 @@ void checkBallsandObstacle() {
 		for(int j = 0; j<obstacleVector.size();j++) {
 			if ((!ballVector.at(i)->wallObst) && ballVector.at(i)->wallCollisionDetection(obstacleVector.at(j)->wallDotObs, obstacleVector.at(j)->WallDotObsNormVec) && ballVector.at(i)->detectCollision(*obstacleVector.at(j))) {
 
-<<<<<<< HEAD
-			ballVector.at(i)->wallBack = false;
-			ballVector.at(i)->wallFront = false;
-			ballVector.at(i)->wallLeft = false;
-			ballVector.at(i)->wallRight = false;
-			ballVector.at(i)->wallObst = true;
 
-			double amalV = ( (wall->WallDotObsNormVec.p[0] * ballVector.at(i)->speedX) + (wall->WallDotObsNormVec.p[1] * ballVector.at(i)->speedY) + (wall->WallDotObsNormVec.p[2] * ballVector.at(i)->speedZ) );
-			double betragA = (sqrt((wall->WallDotObsNormVec.p[0]*wall->WallDotObsNormVec.p[0]) + (wall->WallDotObsNormVec.p[1]*wall->WallDotObsNormVec.p[1]) + (wall->WallDotObsNormVec.p[2]*wall->WallDotObsNormVec.p[2]))) * (sqrt((wall->WallDotObsNormVec.p[0]*wall->WallDotObsNormVec.p[0]) + (wall->WallDotObsNormVec.p[1]*wall->WallDotObsNormVec.p[1]) + (wall->WallDotObsNormVec.p[2]*wall->WallDotObsNormVec.p[2])));
-			double aNeuX = (2 * amalV / betragA) * wall->WallDotObsNormVec.p[0];
-			double aNeuZ = (2 * amalV / betragA) * wall->WallDotObsNormVec.p[2];
 
-			ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
-			ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
-=======
+
 					  ballVector.at(i)->wallBack = false;
 					  ballVector.at(i)->wallFront = false;
 					  ballVector.at(i)->wallLeft = false;
@@ -160,7 +148,7 @@ void checkBallsandObstacle() {
 					  ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 					  ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
 			}
->>>>>>> d4175193e7d91a7e2bf5cfe1fd64f70c5a2d6cc6
+
 		}
 	}
 }
@@ -553,10 +541,9 @@ if(infoScreen) {
   SetMaterialColor(2, 0.0, 1.0, 0.0);
   SetMaterialColor(1, 0.0, 1.0, 0.2);
   table->DrawTable();
-<<<<<<< HEAD
+
 //  wall->DrawWall();
-=======
->>>>>>> d4175193e7d91a7e2bf5cfe1fd64f70c5a2d6cc6
+
 
   //Rotes Zielkreuz
   /* maxsize 1.5		size,   x,      y,   z    */
