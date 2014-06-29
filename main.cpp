@@ -146,9 +146,6 @@ void checkBallsandObstacle() {
 				ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 				ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
 
-
-
-
 				ballVector.at(i)->wallBack = false;
 				ballVector.at(i)->wallFront = false;
 				ballVector.at(i)->wallLeft = false;
@@ -189,6 +186,7 @@ void checkBallsandCube() {
 				ballVector.at(i)->wallFront = false;
 				ballVector.at(i)->wallLeft = false;
 				ballVector.at(i)->wallRight = false;
+				ballVector.at(i)->wallObst = false;
 				ballVector.at(i)->cubeBack = false;
 				ballVector.at(i)->cubeFront = false;
 				ballVector.at(i)->cubeLeft = false;
@@ -216,6 +214,7 @@ void checkBallsandCube() {
 				ballVector.at(i)->wallFront = false;
 				ballVector.at(i)->wallLeft = false;
 				ballVector.at(i)->wallRight = false;
+				ballVector.at(i)->wallObst = false;
 				ballVector.at(i)->cubeBack = false;
 				ballVector.at(i)->cubeFront = false;
 				ballVector.at(i)->cubeLeft = false;
@@ -242,6 +241,7 @@ void checkBallsandCube() {
 				ballVector.at(i)->wallFront = false;
 				ballVector.at(i)->wallLeft = false;
 				ballVector.at(i)->wallRight = false;
+				ballVector.at(i)->wallObst = false;
 				ballVector.at(i)->cubeBack = false;
 				ballVector.at(i)->cubeFront = false;
 				ballVector.at(i)->cubeLeft = false;
@@ -268,6 +268,7 @@ void checkBallsandCube() {
 				ballVector.at(i)->wallFront = false;
 				ballVector.at(i)->wallLeft = false;
 				ballVector.at(i)->wallRight = false;
+				ballVector.at(i)->wallObst = false;
 				ballVector.at(i)->cubeBack = false;
 				ballVector.at(i)->cubeFront = false;
 				ballVector.at(i)->cubeLeft = false;
@@ -299,6 +300,7 @@ void checkBallsandCylinder() {
 					ballVector.at(i)->wallFront = false;
 					ballVector.at(i)->wallLeft = false;
 					ballVector.at(i)->wallRight = false;
+					ballVector.at(i)->wallObst = false;
 					ballVector.at(i)->cubeBack = false;
 					ballVector.at(i)->cubeFront = false;
 					ballVector.at(i)->cubeLeft = false;
@@ -350,6 +352,7 @@ void checkBallsandCylinder() {
 					ballVector.at(i)->wallFront = false;
 					ballVector.at(i)->wallLeft = false;
 					ballVector.at(i)->wallRight = false;
+					ballVector.at(i)->wallObst = false;
 					ballVector.at(i)->cubeBack = false;
 					ballVector.at(i)->cubeFront = false;
 					ballVector.at(i)->cubeLeft = false;
