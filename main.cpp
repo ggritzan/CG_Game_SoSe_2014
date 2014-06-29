@@ -44,7 +44,7 @@ static int os = 0;
 
 //Initialisierung von Tischobjekt und der weißen Kugel
 Table* table = new Table(size);
-Ball* whiteBall = new Ball(sphereX, sphereY, sphereZ, sphereSize, 0.978, 1.0, 1.0, 1.0);
+Ball* whiteBall = new Ball(sphereX, sphereY, sphereZ, sphereSize, 0.99, 1.0, 1.0, 1.0);
 
 //Deklaration der Objekvektoren
 std::vector<Ball*> ballVector;
@@ -705,8 +705,8 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 			whiteBall->wallLeft = false;
 			whiteBall->wallRight = false;
 			whiteBall->wallObst = false;
-			whiteBall->speedZ = 1.5;
-			whiteBall->speedX = -2.0;
+			whiteBall->speedZ = 0.8;
+			whiteBall->speedX = -1.1;
 		}
 		//BCZO Um neue Objekte hinzuzufügen
 		// (B) Erstellt einen neuen Ball
