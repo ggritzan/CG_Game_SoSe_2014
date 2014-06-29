@@ -236,6 +236,8 @@ void BilliardBall::updatePosition(){
 
 		posX = posX + (speedX * 0.1);
 		posZ = posZ + (speedZ * 0.1);
+		speedX = (speedX * friction);
+		speedZ = (speedZ * friction);
 	} else {
 		if (speedZ == 0 && speedX == 0) {
 			this->collision = false;

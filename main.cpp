@@ -933,8 +933,8 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		whiteBall->wallLeft = false;
 		whiteBall->wallRight = false;
 		whiteBall->wallObst = false;
-		whiteBall->speedZ = 0.1;
-		whiteBall->speedX = 0.4;
+		whiteBall->speedZ = 1.5;
+		whiteBall->speedX = -2.0;
 	}
 
 	//Leertaste zum Zurücksetzen der Kugel auf die Startposition
@@ -953,6 +953,10 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		whiteBall->posZ = sphereZ;
 		whiteBall->speedZ = 0;
 		whiteBall->speedX = 0;
+		bs = 1;
+		cs = 0;
+		cus = 0;
+		os = 0;
 		cylinderVector.clear();
 		cubeVector.clear();
 		obstacleVector.clear();
