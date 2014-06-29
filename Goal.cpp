@@ -58,7 +58,7 @@ void Goal::DrawGoal() {
 	double xm = (posX - (goalSize-(this->goalSize/3.4)));
 	double ym = posY - 0.0001;
 	double zm = posZ ;
-	double r = goalSize/1.5;
+	double r = goalSize/1.8;
 
 
 	/* draws the circle */
