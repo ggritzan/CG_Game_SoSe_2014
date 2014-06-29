@@ -170,17 +170,17 @@ void checkBallsandCube() {
 		for(int j =0; j<cubeVector.size();j++) {
 
 
-			if( ( (!ballVector.at(i)->cubeBack) && ballVector.at(i)->detectCollision(*cubeVector.at(j)) ) && ballVector.at(i)->cubeCollisionDetection(cubeVector.at(j)->cubeDotBack, cubeVector.at(j)->cubeDotBackNormVec) ) {
+			if( ( (!ballVector.at(i)->cubeBack) && ballVector.at(i)->detectCollision(*cubeVector.at(j)) ) && ballVector.at(i)->cubeCollisionDetection(cubeVector.at(j)->newCubeDotBack, cubeVector.at(j)->newCubeDotBackNormVec) ) {
 
 				ballVector.at(i)->cubeBack = true;
 				ballVector.at(i)->cubeFront = false;
 				ballVector.at(i)->cubeLeft = false;
 				ballVector.at(i)->cubeRight = false;
 
-				double amalV = ( (cubeVector.at(j)->cubeDotBackNormVec.p[0] * ballVector.at(i)->speedX) + (cubeVector.at(j)->cubeDotBackNormVec.p[1] * ballVector.at(i)->speedY) + (cubeVector.at(j)->cubeDotBackNormVec.p[2] * ballVector.at(i)->speedZ) );
-				double betragA = (sqrt((cubeVector.at(j)->cubeDotBackNormVec.p[0]*cubeVector.at(j)->cubeDotBackNormVec.p[0]) + (cubeVector.at(j)->cubeDotBackNormVec.p[1]*cubeVector.at(j)->cubeDotBackNormVec.p[1]) + (cubeVector.at(j)->cubeDotBackNormVec.p[2]*cubeVector.at(j)->cubeDotBackNormVec.p[2]))) * (sqrt((cubeVector.at(j)->cubeDotBackNormVec.p[0]*cubeVector.at(j)->cubeDotBackNormVec.p[0]) + (cubeVector.at(j)->cubeDotBackNormVec.p[1]*cubeVector.at(j)->cubeDotBackNormVec.p[1]) + (cubeVector.at(j)->cubeDotBackNormVec.p[2]*cubeVector.at(j)->cubeDotBackNormVec.p[2])));
-				double aNeuX = (2 * amalV / betragA) * cubeVector.at(j)->cubeDotBackNormVec.p[0];
-				double aNeuZ = (2 * amalV / betragA) * cubeVector.at(j)->cubeDotBackNormVec.p[2];
+				double amalV = ( (cubeVector.at(j)->newCubeDotBackNormVec.p[0] * ballVector.at(i)->speedX) + (cubeVector.at(j)->newCubeDotBackNormVec.p[1] * ballVector.at(i)->speedY) + (cubeVector.at(j)->newCubeDotBackNormVec.p[2] * ballVector.at(i)->speedZ) );
+				double betragA = (sqrt((cubeVector.at(j)->newCubeDotBackNormVec.p[0]*cubeVector.at(j)->newCubeDotBackNormVec.p[0]) + (cubeVector.at(j)->newCubeDotBackNormVec.p[1]*cubeVector.at(j)->newCubeDotBackNormVec.p[1]) + (cubeVector.at(j)->newCubeDotBackNormVec.p[2]*cubeVector.at(j)->newCubeDotBackNormVec.p[2]))) * (sqrt((cubeVector.at(j)->newCubeDotBackNormVec.p[0]*cubeVector.at(j)->newCubeDotBackNormVec.p[0]) + (cubeVector.at(j)->newCubeDotBackNormVec.p[1]*cubeVector.at(j)->newCubeDotBackNormVec.p[1]) + (cubeVector.at(j)->newCubeDotBackNormVec.p[2]*cubeVector.at(j)->newCubeDotBackNormVec.p[2])));
+				double aNeuX = (2 * amalV / betragA) * cubeVector.at(j)->newCubeDotBackNormVec.p[0];
+				double aNeuZ = (2 * amalV / betragA) * cubeVector.at(j)->newCubeDotBackNormVec.p[2];
 
 				ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 				ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
@@ -197,17 +197,17 @@ void checkBallsandCube() {
 				ballVector.at(i)->cylinderCol = false;
 			}
 
-			if( ( (!ballVector.at(i)->cubeFront)  && ballVector.at(i)->detectCollision(*cubeVector.at(j)) ) && ballVector.at(i)->cubeCollisionDetection(cubeVector.at(j)->cubeDotFront, cubeVector.at(j)->cubeDotFrontNormVec)){
+			if( ( (!ballVector.at(i)->cubeFront)  && ballVector.at(i)->detectCollision(*cubeVector.at(j)) ) && ballVector.at(i)->cubeCollisionDetection(cubeVector.at(j)->newCubeDotFront, cubeVector.at(j)->newCubeDotFrontNormVec)){
 
 				ballVector.at(i)->cubeBack = false;
 				ballVector.at(i)->cubeFront = true;
 				ballVector.at(i)->cubeLeft = false;
 				ballVector.at(i)->cubeRight = false;
 
-				double amalV = ( (cubeVector.at(j)->cubeDotFrontNormVec.p[0] * ballVector.at(i)->speedX) + (cubeVector.at(j)->cubeDotFrontNormVec.p[1] * ballVector.at(i)->speedY) + (cubeVector.at(j)->cubeDotFrontNormVec.p[2] * ballVector.at(i)->speedZ) );
-				double betragA = (sqrt((cubeVector.at(j)->cubeDotFrontNormVec.p[0]*cubeVector.at(j)->cubeDotFrontNormVec.p[0]) + (cubeVector.at(j)->cubeDotFrontNormVec.p[1]*cubeVector.at(j)->cubeDotFrontNormVec.p[1]) + (cubeVector.at(j)->cubeDotFrontNormVec.p[2]*cubeVector.at(j)->cubeDotFrontNormVec.p[2]))) * (sqrt((cubeVector.at(j)->cubeDotFrontNormVec.p[0]*cubeVector.at(j)->cubeDotFrontNormVec.p[0]) + (cubeVector.at(j)->cubeDotFrontNormVec.p[1]*cubeVector.at(j)->cubeDotFrontNormVec.p[1]) + (cubeVector.at(j)->cubeDotFrontNormVec.p[2]*cubeVector.at(j)->cubeDotFrontNormVec.p[2])));
-				double aNeuX = (2 * amalV / betragA) * cubeVector.at(j)->cubeDotFrontNormVec.p[0];
-				double aNeuZ = (2 * amalV / betragA) * cubeVector.at(j)->cubeDotFrontNormVec.p[2];
+				double amalV = ( (cubeVector.at(j)->newCubeDotFrontNormVec.p[0] * ballVector.at(i)->speedX) + (cubeVector.at(j)->newCubeDotFrontNormVec.p[1] * ballVector.at(i)->speedY) + (cubeVector.at(j)->newCubeDotFrontNormVec.p[2] * ballVector.at(i)->speedZ) );
+				double betragA = (sqrt((cubeVector.at(j)->newCubeDotFrontNormVec.p[0]*cubeVector.at(j)->newCubeDotFrontNormVec.p[0]) + (cubeVector.at(j)->newCubeDotFrontNormVec.p[1]*cubeVector.at(j)->newCubeDotFrontNormVec.p[1]) + (cubeVector.at(j)->newCubeDotFrontNormVec.p[2]*cubeVector.at(j)->newCubeDotFrontNormVec.p[2]))) * (sqrt((cubeVector.at(j)->newCubeDotFrontNormVec.p[0]*cubeVector.at(j)->newCubeDotFrontNormVec.p[0]) + (cubeVector.at(j)->newCubeDotFrontNormVec.p[1]*cubeVector.at(j)->newCubeDotFrontNormVec.p[1]) + (cubeVector.at(j)->newCubeDotFrontNormVec.p[2]*cubeVector.at(j)->newCubeDotFrontNormVec.p[2])));
+				double aNeuX = (2 * amalV / betragA) * cubeVector.at(j)->newCubeDotFrontNormVec.p[0];
+				double aNeuZ = (2 * amalV / betragA) * cubeVector.at(j)->newCubeDotFrontNormVec.p[2];
 
 				ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 				ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
@@ -224,16 +224,16 @@ void checkBallsandCube() {
 				ballVector.at(i)->cylinderCol = false;
 			}
 
-			if( ( (!ballVector.at(i)->cubeLeft)  && ballVector.at(i)->detectCollision(*cubeVector.at(j)) ) && ballVector.at(i)->cubeCollisionDetection(cubeVector.at(j)->cubeDotLeft, cubeVector.at(j)->cubeDotLeftNormVec) ){
+			if( ( (!ballVector.at(i)->cubeLeft)  && ballVector.at(i)->detectCollision(*cubeVector.at(j)) ) && ballVector.at(i)->cubeCollisionDetection(cubeVector.at(j)->newCubeDotLeft, cubeVector.at(j)->newCubeDotLeftNormVec) ){
 				ballVector.at(i)->cubeBack = false;
 				ballVector.at(i)->cubeFront = false;
 				ballVector.at(i)->cubeLeft = true;
 				ballVector.at(i)->cubeRight = false;
 
-				double amalV = ( (cubeVector.at(j)->cubeDotLeftNormVec.p[0] * ballVector.at(i)->speedX) + (cubeVector.at(j)->cubeDotLeftNormVec.p[1] * ballVector.at(i)->speedY) + (cubeVector.at(j)->cubeDotLeftNormVec.p[2] * ballVector.at(i)->speedZ) );
-				double betragA = (sqrt((cubeVector.at(j)->cubeDotLeftNormVec.p[0]*cubeVector.at(j)->cubeDotLeftNormVec.p[0]) + (cubeVector.at(j)->cubeDotLeftNormVec.p[1]*cubeVector.at(j)->cubeDotLeftNormVec.p[1]) + (cubeVector.at(j)->cubeDotLeftNormVec.p[2]*cubeVector.at(j)->cubeDotLeftNormVec.p[2]))) * (sqrt((cubeVector.at(j)->cubeDotLeftNormVec.p[0]*cubeVector.at(j)->cubeDotLeftNormVec.p[0]) + (cubeVector.at(j)->cubeDotLeftNormVec.p[1]*cubeVector.at(j)->cubeDotLeftNormVec.p[1]) + (cubeVector.at(j)->cubeDotLeftNormVec.p[2]*cubeVector.at(j)->cubeDotLeftNormVec.p[2])));
-				double aNeuX = (2 * amalV / betragA) * cubeVector.at(j)->cubeDotLeftNormVec.p[0];
-				double aNeuZ = (2 * amalV / betragA) * cubeVector.at(j)->cubeDotLeftNormVec.p[2];
+				double amalV = ( (cubeVector.at(j)->newCubeDotLeftNormVec.p[0] * ballVector.at(i)->speedX) + (cubeVector.at(j)->newCubeDotLeftNormVec.p[1] * ballVector.at(i)->speedY) + (cubeVector.at(j)->newCubeDotLeftNormVec.p[2] * ballVector.at(i)->speedZ) );
+				double betragA = (sqrt((cubeVector.at(j)->newCubeDotLeftNormVec.p[0]*cubeVector.at(j)->newCubeDotLeftNormVec.p[0]) + (cubeVector.at(j)->newCubeDotLeftNormVec.p[1]*cubeVector.at(j)->newCubeDotLeftNormVec.p[1]) + (cubeVector.at(j)->newCubeDotLeftNormVec.p[2]*cubeVector.at(j)->newCubeDotLeftNormVec.p[2]))) * (sqrt((cubeVector.at(j)->newCubeDotLeftNormVec.p[0]*cubeVector.at(j)->newCubeDotLeftNormVec.p[0]) + (cubeVector.at(j)->newCubeDotLeftNormVec.p[1]*cubeVector.at(j)->newCubeDotLeftNormVec.p[1]) + (cubeVector.at(j)->newCubeDotLeftNormVec.p[2]*cubeVector.at(j)->newCubeDotLeftNormVec.p[2])));
+				double aNeuX = (2 * amalV / betragA) * cubeVector.at(j)->newCubeDotLeftNormVec.p[0];
+				double aNeuZ = (2 * amalV / betragA) * cubeVector.at(j)->newCubeDotLeftNormVec.p[2];
 
 				ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 				ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
@@ -250,16 +250,16 @@ void checkBallsandCube() {
 				ballVector.at(i)->cylinderCol = false;
 			}
 
-			if( ( (!ballVector.at(i)->cubeRight)  && ballVector.at(i)->detectCollision(*cubeVector.at(j)) ) && ballVector.at(i)->cubeCollisionDetection(cubeVector.at(j)->cubeDotRight, cubeVector.at(j)->cubeDotRightNormVec) ){
+			if( ( (!ballVector.at(i)->cubeRight)  && ballVector.at(i)->detectCollision(*cubeVector.at(j)) ) && ballVector.at(i)->cubeCollisionDetection(cubeVector.at(j)->newCubeDotRight, cubeVector.at(j)->newCubeDotRightNormVec) ){
 				ballVector.at(i)->cubeBack = false;
 				ballVector.at(i)->cubeFront = false;
 				ballVector.at(i)->cubeLeft = false;
 				ballVector.at(i)->cubeRight = true;
 
-				double amalV = ( (cubeVector.at(j)->cubeDotRightNormVec.p[0] * ballVector.at(i)->speedX) + (cubeVector.at(j)->cubeDotRightNormVec.p[1] * ballVector.at(i)->speedY) + (cubeVector.at(j)->cubeDotRightNormVec.p[2] * ballVector.at(i)->speedZ) );
-				double betragA = (sqrt((cubeVector.at(j)->cubeDotRightNormVec.p[0]*cubeVector.at(j)->cubeDotRightNormVec.p[0]) + (cubeVector.at(j)->cubeDotRightNormVec.p[1]*cubeVector.at(j)->cubeDotRightNormVec.p[1]) + (cubeVector.at(j)->cubeDotRightNormVec.p[2]*cubeVector.at(j)->cubeDotRightNormVec.p[2]))) * (sqrt((cubeVector.at(j)->cubeDotRightNormVec.p[0]*cubeVector.at(j)->cubeDotRightNormVec.p[0]) + (cubeVector.at(j)->cubeDotRightNormVec.p[1]*cubeVector.at(j)->cubeDotRightNormVec.p[1]) + (cubeVector.at(j)->cubeDotRightNormVec.p[2]*cubeVector.at(j)->cubeDotRightNormVec.p[2])));
-				double aNeuX = (2 * amalV / betragA) * cubeVector.at(j)->cubeDotRightNormVec.p[0];
-				double aNeuZ = (2 * amalV / betragA) * cubeVector.at(j)->cubeDotRightNormVec.p[2];
+				double amalV = ( (cubeVector.at(j)->newCubeDotRightNormVec.p[0] * ballVector.at(i)->speedX) + (cubeVector.at(j)->newCubeDotRightNormVec.p[1] * ballVector.at(i)->speedY) + (cubeVector.at(j)->newCubeDotRightNormVec.p[2] * ballVector.at(i)->speedZ) );
+				double betragA = (sqrt((cubeVector.at(j)->newCubeDotRightNormVec.p[0]*cubeVector.at(j)->newCubeDotRightNormVec.p[0]) + (cubeVector.at(j)->newCubeDotRightNormVec.p[1]*cubeVector.at(j)->newCubeDotRightNormVec.p[1]) + (cubeVector.at(j)->newCubeDotRightNormVec.p[2]*cubeVector.at(j)->newCubeDotRightNormVec.p[2]))) * (sqrt((cubeVector.at(j)->newCubeDotRightNormVec.p[0]*cubeVector.at(j)->newCubeDotRightNormVec.p[0]) + (cubeVector.at(j)->newCubeDotRightNormVec.p[1]*cubeVector.at(j)->newCubeDotRightNormVec.p[1]) + (cubeVector.at(j)->newCubeDotRightNormVec.p[2]*cubeVector.at(j)->newCubeDotRightNormVec.p[2])));
+				double aNeuX = (2 * amalV / betragA) * cubeVector.at(j)->newCubeDotRightNormVec.p[0];
+				double aNeuZ = (2 * amalV / betragA) * cubeVector.at(j)->newCubeDotRightNormVec.p[2];
 
 				ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 				ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
