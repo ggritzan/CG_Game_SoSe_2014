@@ -17,4 +17,5 @@ Auswählen von Objektgruppen +/-
 
 Bewegen eines Ausgewählten Objekts: SHIFT und Pfeiltasten
 Auswählen eines Objekts aus einer Objektgruppe: SHIFT und +/-
-	
+
+Ausgewählte Objekte werden durch türkise Färbung hervorgehoben
