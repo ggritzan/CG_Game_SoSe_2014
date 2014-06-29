@@ -10,7 +10,6 @@
 
 BilliardTable::BilliardTable(double size) {
     this->billiardTableSize = size;
-    this->obstacle = false;
 
     this->wallDotLeft = Vec3(-billiardTableSize*7, billiardTableSize, billiardTableSize*-5);
     this->wallDotLeftNormVec = Vec3(10, 0.0, 0.0);
@@ -79,15 +78,6 @@ void BilliardTable::DrawTable(){
       glVertex3f(billiardTableSize*7, 0, billiardTableSize*-5);
       glVertex3f(billiardTableSize*7, billiardTableSize, billiardTableSize*-5);
 
-      if (this->obstacle) {
-		  //Hinderniswand
-		  glNormal3f(billiardTableSize * 6, 0.0, 8.0);
-
-		  glVertex3f(billiardTableSize * 3, billiardTableSize, billiardTableSize * 5);
-		  glVertex3f(billiardTableSize * 7, billiardTableSize, billiardTableSize * 2);
-		  glVertex3f(billiardTableSize * 7, 0, billiardTableSize * 2);
-		  glVertex3f(billiardTableSize * 3, 0, billiardTableSize * 5);
-      }
     glEnd();
 
 //    // Beine des Tisches

@@ -38,7 +38,6 @@ static bool infoScreen = true;
 
 static std::string selectedObject = "balls";
 
-
 // Größe des OpenGL Fensters
 static double window_width_ = 1024;
 static double window_height_ = 768;
@@ -103,24 +102,6 @@ void checkBallsandWalls() {
 		  ballVector.at(i)->wallObst = false;
 		  ballVector.at(i)->speedX = ballVector.at(i)->speedX * -1;
 	  }
-//	  if (table->obstacle) {
-//		  if ((!ballVector.at(i)->wallObst) && ballVector.at(i)->wallCollisionDetection(table->wallDotObs, table->WallDotObsNormVec)) {
-//
-//			  ballVector.at(i)->wallBack = false;
-//			  ballVector.at(i)->wallFront = false;
-//			  ballVector.at(i)->wallLeft = false;
-//			  ballVector.at(i)->wallRight = false;
-//			  ballVector.at(i)->wallObst = true;
-//
-//			  double amalV = ( (table->WallDotObsNormVec.p[0] * ballVector.at(i)->speedX) + (table->WallDotObsNormVec.p[1] * ballVector.at(i)->speedY) + (table->WallDotObsNormVec.p[2] * ballVector.at(i)->speedZ) );
-//			  double betragA = (sqrt((table->WallDotObsNormVec.p[0]*table->WallDotObsNormVec.p[0]) + (table->WallDotObsNormVec.p[1]*table->WallDotObsNormVec.p[1]) + (table->WallDotObsNormVec.p[2]*table->WallDotObsNormVec.p[2]))) * (sqrt((table->WallDotObsNormVec.p[0]*table->WallDotObsNormVec.p[0]) + (table->WallDotObsNormVec.p[1]*table->WallDotObsNormVec.p[1]) + (table->WallDotObsNormVec.p[2]*table->WallDotObsNormVec.p[2])));
-//			  double aNeuX = (2 * amalV / betragA) * table->WallDotObsNormVec.p[0];
-//			  double aNeuZ = (2 * amalV / betragA) * table->WallDotObsNormVec.p[2];
-//
-//			  ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
-//			  ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
-//		  }
-//	  }
 	}
 
 }
@@ -962,7 +943,6 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		obstacleVector.clear();
 		ballVector.clear();
 		ballVector.push_back(whiteBall);
-		table->obstacle=false;
 	}
 
 }
