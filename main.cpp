@@ -592,11 +592,13 @@ if(infoScreen) {
   table->DrawTable();
 
   //Impulsweiser
-  glBegin(GL_TRIANGLES);
-      glVertex3f( 4.0, 0.0001, 1.0);
-      glVertex3f( 6.0, 0.0001, 0.0);
-      glVertex3f( 5.0, 0.0001, -1.0);
-  glEnd();
+  if(selectionMode) {
+	  glBegin(GL_TRIANGLES);
+		  glVertex3f( 4.0, 0.0001, 1.5);
+		  glVertex3f( 6.0, 0.0001, 0.0);
+		  glVertex3f( 5.0, 0.0001, -0.5);
+	  glEnd();
+  }
 
 
   Goal* goal = new Goal(1.25, -2.0, 0.0002, 0.0);
