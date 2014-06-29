@@ -25,7 +25,7 @@ static float moveX = 0.0;	// Verschiebung des Würfels auf der X-Achse
 static float moveY = 0.0;	// Verscheibung des Würfels auf der Y-Achse
 
 static double sphereSize = 0.286;
-static double sphereX = 5;
+static double sphereX = 5.3;
 static double sphereY = sphereSize;
 static double sphereZ = 0;
 
