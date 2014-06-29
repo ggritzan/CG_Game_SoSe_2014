@@ -933,8 +933,8 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		whiteBall->wallLeft = false;
 		whiteBall->wallRight = false;
 		whiteBall->wallObst = false;
-		whiteBall->speedZ = -0.4;
-		whiteBall->speedX = 0.1;
+		whiteBall->speedZ = 0.1;
+		whiteBall->speedX = 0.4;
 	}
 
 	//Leertaste zum Zurücksetzen der Kugel auf die Startposition
