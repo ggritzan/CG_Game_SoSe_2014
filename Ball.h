@@ -3,17 +3,14 @@
 #ifndef BILLIARDBALL_H_
 #define BILLIARDBALL_H_
 class Cube;
-
 class Wall;
-
 class Cylinder;
-
-
 class Vec3;
 
-class BilliardBall {
+//Kugelklasse
+class Ball {
 public:
-
+	//Attribute
 	float ballSize;
 	double speedX;
 	double speedY;
@@ -32,34 +29,25 @@ public:
 	bool wallLeft;
 	bool wallRight;
 	bool wallObst;
-
 	bool cubeBack;
 	bool cubeFront;
 	bool cubeLeft;
 	bool cubeRight;
 
-	BilliardBall(double posX, double posY, double posZ, float size, double friction, double colourR, double colourG, double colourB);
-	virtual ~BilliardBall();
-
-	//bool detectCollision(BilliardBall b);
-
+	//Funktionen
+	Ball(double posX, double posY, double posZ, float size, double friction, double colourR, double colourG, double colourB);
+	virtual ~Ball();
 	void updatePosition();
-
 	bool wallCollisionDetection(Vec3& wallDot, Vec3& wallNormVec);
 	bool cubeCollisionDetection(Vec3& wallDot, Vec3& wallNormVec);
-	bool detectCollision(BilliardBall b);
-
+	bool detectCollision(Ball b);
 	bool detectCollision(Wall w);
 	bool detectCollision(Cylinder c);
 	bool detectCollision(Cube c);
 	bool detectCollision(double posX, double posY, double posZ, double size);
-
-	bool checkCollisionType(BilliardBall a, BilliardBall b);
-	bool checkCollisionType(BilliardBall a, Cylinder c);
-
-
+	bool checkCollisionType(Ball a, Ball b);
+	bool checkCollisionType(Ball a, Cylinder c);
 	void DrawBall(const Vec3& ctr, double r);
-
 };
 
 #endif /* BILLIARDBALL_H_ */

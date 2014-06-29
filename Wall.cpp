@@ -5,6 +5,7 @@
 
 #include "vec3.hpp"
 
+//Konstruktor
 Wall::Wall(double size, double posX, double posY, double posZ) {
 	this->wallSize = size;
 	this->posX = posX;
@@ -24,23 +25,18 @@ Wall::Wall(double size, double posX, double posY, double posZ) {
 
 }
 
+//Destruktor
 Wall::~Wall() {
 	// TODO Auto-generated destructor stub
 }
 
-
+//Zeichnen der Hinderniswand
 void Wall::DrawWall(){
 
 	double a = (wallSize * (1 / sqrt(2)));
 
-
     glPushMatrix();
-//    glTranslatef(posX, posY, posZ);
-//    glRotated(rotX, 1, 0, 0);
-//    glRotated(rotY, 0, 1, 0);// Rotation um die Y Achse
-//    glRotated(rotZ, 0 ,0 ,1);
 		glBegin(GL_QUADS);
-			  //Hinderniswand
 			  glNormal3f(wallSize * 6, 0.0, 8.0);
 
 			  glVertex3f(posX - a, 1.0, posZ + a);
@@ -50,9 +46,11 @@ void Wall::DrawWall(){
 		glEnd();
 	glPopMatrix();
 
+	//Kollisionspunkt updaten
     this->UpdateColliPoints();
 }
 
+//Neubelegeung des Kollisionspunktes
 void Wall::UpdateColliPoints() {
 	this->newWallDotObs = Vec3((this->wallDotObs.p[0] + posX ), (this->wallDotObs.p[1] + posY ), (this->wallDotObs.p[2] + posZ ));
 }

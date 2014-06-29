@@ -9,9 +9,11 @@
 #define CYLINDER_H_
 class Vec3;
 
+//Zylinderklasse
 class Cylinder {
 public:
 
+	//Attribute
 	float cylinderSize;
 	double speedX;
 	double speedY;
@@ -20,9 +22,9 @@ public:
 	double posY;
 	double posZ;
 
+	//Funktionen
 	Cylinder(float size, double posX, double posY, double posZ);
 	virtual ~Cylinder();
-
 	void DrawCylinder(double x, double y, double z, double r);
 };
 

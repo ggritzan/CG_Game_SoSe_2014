@@ -16,7 +16,7 @@
 #define degToRad( x ) ( x*0.0174532925 )
 
 
-/* constructor */
+//Konstruktor
 Goal::Goal(double goalSize, double posX, double posY, double posZ) {
 	this->goalSize = goalSize;
 	this->posX = posX;
@@ -24,18 +24,18 @@ Goal::Goal(double goalSize, double posX, double posY, double posZ) {
 	this->posZ = posZ;
 }
 
-/* destructor */
+//Destruktor
 Goal::~Goal() {
 
 }
 
-/* method to draw the goal */
+//Zeichnen des Zielbereichs
 void Goal::DrawGoal() {
 
 	SetMaterialColor(1, 1.0, 0.0, 0.0);
 	SetMaterialColor(2, 1.0, 0.0, 0.0);
 
-	/* draws the cross */
+	//Zeichnen des Kreuzes
 	glBegin(GL_QUADS);
 			glNormal3f(0.0, 1.0, 0.0);
 			/*										x     								y     						z                  */
@@ -52,7 +52,7 @@ void Goal::DrawGoal() {
 			glVertex3d((-(this->goalSize/5.0)) + this->posX, 						this->posY, (this->goalSize/3.0) + this->posZ);
 	glEnd();
 
-	/* draws the circle */
+	//Berechnen des Kreises
 	SetMaterialColor(2, 1.0, 1.0, 1.0);
 	const double PI2 = 6.28272;
 	double xm = (posX - (goalSize-(this->goalSize/3.4)));
@@ -61,7 +61,7 @@ void Goal::DrawGoal() {
 	double r = goalSize/1.8;
 
 
-	/* draws the circle */
+	//Zeichnen des Kreises
 	glBegin(GL_TRIANGLE_FAN);
 		for( double i = 0.0; i < PI2; i += PI2 / 360.0 ) {
 			float x = xm + ( cos( i ) * r );
@@ -70,10 +70,9 @@ void Goal::DrawGoal() {
 		  }
 	glEnd();
 
-
 }
 
-/* set material color */
+//Setzen der Farbe
 void Goal::SetMaterialColor(int side, double r, double g, double b) {
   float	amb[4], dif[4], spe[4];
   int mat;
@@ -102,9 +101,8 @@ void Goal::SetMaterialColor(int side, double r, double g, double b) {
   glMaterialf( mat, GL_SHININESS, 20);
 }
 
-/* method to check if the goal is reached */
+//Methode zum Prüfen des Zielbereichs
 bool Goal::GoalReached(double ballPosX, double ballPosY, double ballPosZ) {
-
 	if (ballPosX >= ( -(this->goalSize + (this->goalSize/5.0))) + this->posX && ballPosX <= (-(this->goalSize/5.0)) + this->posX && ballPosZ >= 0 + this->posZ && ballPosZ <= ((this->goalSize/2.0) + this->posZ)) {
 		return true;
 	} else {

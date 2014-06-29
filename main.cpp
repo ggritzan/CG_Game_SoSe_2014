@@ -6,8 +6,8 @@
 #include <iostream>
 #include <vector>
 
-#include "BilliardBall.h"
-#include "BilliardTable.h"
+#include "Ball.h"
+#include "Table.h"
 #include "Wall.h"
 #include "Cube.h"
 #include "Goal.h"
@@ -44,11 +44,11 @@ static int cus = 0;
 static int os = 0;
 
 //Initialisierung von Tischobjekt und der weißen Kugel
-BilliardTable* table = new BilliardTable(size);
-BilliardBall* whiteBall = new BilliardBall(sphereX, sphereY, sphereZ, sphereSize, 0.978, 1.0, 1.0, 1.0);
+Table* table = new Table(size);
+Ball* whiteBall = new Ball(sphereX, sphereY, sphereZ, sphereSize, 0.978, 1.0, 1.0, 1.0);
 
 //Deklaration der Objekvektoren
-std::vector<BilliardBall*> ballVector;
+std::vector<Ball*> ballVector;
 std::vector<Cube*> cubeVector;
 std::vector<Cylinder*> cylinderVector;
 std::vector<Wall*> obstacleVector;
@@ -595,7 +595,7 @@ void Preview() {
 
 	Goal* goal = new Goal(1.25, -2.0, 0.0002, 0.0);
 	goal->DrawGoal();
-	//GoalReached - decreases the speed of the billiardball to 0 when the area is reached
+	//GoalReached - decreases the speed of the Ball to 0 when the area is reached
 	if(goal->GoalReached(ballVector.at(0)->posX, ballVector.at(0)->posY, ballVector.at(0)->posZ)) {
 		ballVector.at(0)->speedX=0;
 		ballVector.at(0)->speedZ=0;
@@ -712,7 +712,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		//BCZO Um neue Objekte hinzuzufügen
 		// (B) Erstellt einen neuen Ball
 		if (key == 66 && action == 1){
-			ballVector.push_back(new BilliardBall(5, sphereY, -3,sphereSize, 0.978, 0.0, 0.0, 0.0));
+			ballVector.push_back(new Ball(5, sphereY, -3,sphereSize, 0.978, 0.0, 0.0, 0.0));
 
 		}
 		// (C) Erstellt einen neuen Würfwl
