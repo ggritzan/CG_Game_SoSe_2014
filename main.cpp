@@ -14,38 +14,37 @@
 #include "Cylinder.h"
 #include "vec3.hpp"
 
-static double alpha_ = 35;		// Winkel für Y Achse
-static double beta_ = 25;		// Winkel für X Achse
+static double alpha_ = 35; //Winkel für Y Achse der Szenarie
+static double beta_ = 25; //Winkel für X Achse der Szenarie
 
-static float scale = 1.0;		// Skalierungswert
-static float size = 1.0;		// Größe des Würfels entspricht immer der Hälfte der Würfel Größe
+static float scale = 1.0; // Skalierungswert
+static float size = 1.0; //Größe des Würfels entspricht immer der Hälfte der Würfel Größe
 
-static double wallSize = 2.0;
-static float moveX = 0.0;	// Verschiebung des Würfels auf der X-Achse
-static float moveY = 0.0;	// Verscheibung des Würfels auf der Y-Achse
+static double wallSize = 2.0; //Größe der Wand
+static float moveX = 0.0; //Verschiebung des Würfels auf der X-Achse
+static float moveY = 0.0; //Verscheibung des Würfels auf der Y-Achse
 
-static double sphereSize = 0.286;
-static double sphereX = 5.3;
-static double sphereY = sphereSize;
-static double sphereZ = 0;
+static double sphereSize = 0.286; //Durchmesser des Balls
+static double sphereX = 5.3; //X Position des Balls
+static double sphereY = sphereSize; //Y Position des Balls
+static double sphereZ = 0; //Z Position des Balls
 
-static bool selectionMode = true;
+static bool selectionMode = true; //Bestimmt ob Gegenstände hinzugefügt und bewegt werden können
 
-static bool infoScreen = true;
-
-static std::string selectedObject = "balls";
+static std::string selectedObject = "balls"; //Ausgewählte Objektgruppe
 
 // Größe des OpenGL Fensters
 static double window_width_ = 1024;
 static double window_height_ = 768;
 
+//Zähler für die Objektauswahl innerhalb der Vektoren
 static int bs = 1;
 static int cs = 0;
 static int cus = 0;
 static int os = 0;
 
+//Initialisierung von Tischobjekt und der weißen Kugel
 BilliardTable* table = new BilliardTable(size);
-
 BilliardBall* whiteBall = new BilliardBall(sphereX, sphereY, sphereZ, sphereSize, 0.978, 1.0, 1.0, 1.0);
 
 //Deklaration der Objekvektoren
@@ -54,62 +53,60 @@ std::vector<Cube*> cubeVector;
 std::vector<Cylinder*> cylinderVector;
 std::vector<Wall*> obstacleVector;
 
+//Setzt Kollision der Bälle zurück
 void resetBalls() {
 	for (int i = 0; i<ballVector.size(); i++) {
 		ballVector.at(i)->collision = false;
 	}
 }
 
+//Überprüft Kollision zwischen Kugeln und Wänden
 void checkBallsandWalls() {
-
 	for (int i = 0; i<ballVector.size(); i++) {
-
-	  if((!ballVector.at(i)->wallBack) && ballVector.at(i)->wallCollisionDetection(table->wallDotBack, table->wallDotBackNormVec)){
-		  ballVector.at(i)->wallBack = true;
-		  ballVector.at(i)->wallFront = false;
-		  ballVector.at(i)->wallLeft = false;
-		  ballVector.at(i)->wallRight = false;
-		  ballVector.at(i)->wallObst = false;
-		  ballVector.at(i)->speedZ = ballVector.at(i)->speedZ * -1;
-	  }
-
-	  if ((!ballVector.at(i)->wallFront) && ballVector.at(i)->wallCollisionDetection(table->wallDotFront, table->wallDotFrontNormVec)) {
-		  ballVector.at(i)->wallBack = false;
-		  ballVector.at(i)->wallFront = true;
-		  ballVector.at(i)->wallLeft = false;
-		  ballVector.at(i)->wallRight = false;
-		  ballVector.at(i)->wallObst = false;
-		  ballVector.at(i)->speedZ = ballVector.at(i)->speedZ * -1;
-	  }
-
-	  if ((!ballVector.at(i)->wallLeft) && ballVector.at(i)->wallCollisionDetection(table->wallDotLeft, table->wallDotLeftNormVec)) {
-		  ballVector.at(i)->wallBack = false;
-		  ballVector.at(i)->wallFront = false;
-		  ballVector.at(i)->wallLeft = true;
-		  ballVector.at(i)->wallRight = false;
-		  ballVector.at(i)->wallObst = false;
-		  ballVector.at(i)->speedX = ballVector.at(i)->speedX * -1;
-	  }
-
-	  if ((!ballVector.at(i)->wallRight) && ballVector.at(i)->wallCollisionDetection(table->wallDotRight, table->wallDotRightNormVec)) {
-		  ballVector.at(i)->wallBack = false;
-		  ballVector.at(i)->wallFront = false;
-		  ballVector.at(i)->wallLeft = false;
-		  ballVector.at(i)->wallRight = true;
-		  ballVector.at(i)->wallObst = false;
-		  ballVector.at(i)->speedX = ballVector.at(i)->speedX * -1;
-	  }
+		//Überprüfung der hinteren Wand
+		if((!ballVector.at(i)->wallBack) && ballVector.at(i)->wallCollisionDetection(table->wallDotBack, table->wallDotBackNormVec)){
+			ballVector.at(i)->wallBack = true;
+			ballVector.at(i)->wallFront = false;
+			ballVector.at(i)->wallLeft = false;
+			ballVector.at(i)->wallRight = false;
+			ballVector.at(i)->wallObst = false;
+			ballVector.at(i)->speedZ = ballVector.at(i)->speedZ * -1;
+		}
+		//Überprüfung der vorderen Wand
+		if ((!ballVector.at(i)->wallFront) && ballVector.at(i)->wallCollisionDetection(table->wallDotFront, table->wallDotFrontNormVec)) {
+			ballVector.at(i)->wallBack = false;
+			ballVector.at(i)->wallFront = true;
+			ballVector.at(i)->wallLeft = false;
+			ballVector.at(i)->wallRight = false;
+			ballVector.at(i)->wallObst = false;
+			ballVector.at(i)->speedZ = ballVector.at(i)->speedZ * -1;
+		}
+		//Überprüfung der linken Wand
+		if ((!ballVector.at(i)->wallLeft) && ballVector.at(i)->wallCollisionDetection(table->wallDotLeft, table->wallDotLeftNormVec)) {
+			ballVector.at(i)->wallBack = false;
+			ballVector.at(i)->wallFront = false;
+			ballVector.at(i)->wallLeft = true;
+			ballVector.at(i)->wallRight = false;
+			ballVector.at(i)->wallObst = false;
+			ballVector.at(i)->speedX = ballVector.at(i)->speedX * -1;
+		}
+		//Überprüfung der rechten Wand
+		if ((!ballVector.at(i)->wallRight) && ballVector.at(i)->wallCollisionDetection(table->wallDotRight, table->wallDotRightNormVec)) {
+			ballVector.at(i)->wallBack = false;
+			ballVector.at(i)->wallFront = false;
+			ballVector.at(i)->wallLeft = false;
+			ballVector.at(i)->wallRight = true;
+			ballVector.at(i)->wallObst = false;
+			ballVector.at(i)->speedX = ballVector.at(i)->speedX * -1;
+		}
 	}
-
 }
 
+//Prüft Kollision zwischen Kugeln und platzierbaren Hinderniswänden
 void checkBallsandObstacle() {
-
 	for (int i = 0; i<ballVector.size(); i++) {
 		for(int j = 0; j<obstacleVector.size();j++) {
-
 			if ((!ballVector.at(i)->wallObst) && ballVector.at(i)->wallCollisionDetection(obstacleVector.at(j)->newWallDotObs, obstacleVector.at(j)->WallDotObsNormVec) && ballVector.at(i)->detectCollision(*obstacleVector.at(j))) {
-
 				ballVector.at(i)->wallBack = false;
 				ballVector.at(i)->wallFront = false;
 				ballVector.at(i)->wallLeft = false;
@@ -120,10 +117,10 @@ void checkBallsandObstacle() {
 				double betragA = (sqrt((obstacleVector.at(j)->WallDotObsNormVec.p[0]*obstacleVector.at(j)->WallDotObsNormVec.p[0]) + (obstacleVector.at(j)->WallDotObsNormVec.p[1]*obstacleVector.at(j)->WallDotObsNormVec.p[1]) + (obstacleVector.at(j)->WallDotObsNormVec.p[2]*obstacleVector.at(j)->WallDotObsNormVec.p[2]))) * (sqrt((obstacleVector.at(j)->WallDotObsNormVec.p[0]*obstacleVector.at(j)->WallDotObsNormVec.p[0]) + (obstacleVector.at(j)->WallDotObsNormVec.p[1]*obstacleVector.at(j)->WallDotObsNormVec.p[1]) + (obstacleVector.at(j)->WallDotObsNormVec.p[2]*obstacleVector.at(j)->WallDotObsNormVec.p[2])));
 				double aNeuX = (2 * amalV / betragA) * obstacleVector.at(j)->WallDotObsNormVec.p[0];
 				double aNeuZ = (2 * amalV / betragA) * obstacleVector.at(j)->WallDotObsNormVec.p[2];
-
+				//Anpassung der Geschwindigkeit der Kugel
 				ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 				ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
-
+				//urücksetzen der Kollisionen
 				ballVector.at(i)->wallBack = false;
 				ballVector.at(i)->wallFront = false;
 				ballVector.at(i)->wallLeft = false;
@@ -139,14 +136,11 @@ void checkBallsandObstacle() {
 	}
 }
 
+//Überprüfung der Kollisionen zwishen Kugeln und platzierbaren Würfeln
 void checkBallsandCube() {
-
 	for (int i = 0; i<ballVector.size(); i++) {
 		for(int j =0; j<cubeVector.size();j++) {
-
-
 			if( ( (!ballVector.at(i)->cubeBack) && ballVector.at(i)->detectCollision(*cubeVector.at(j)) ) && ballVector.at(i)->cubeCollisionDetection(cubeVector.at(j)->newCubeDotBack, cubeVector.at(j)->newCubeDotBackNormVec) ) {
-
 				ballVector.at(i)->cubeBack = true;
 				ballVector.at(i)->cubeFront = false;
 				ballVector.at(i)->cubeLeft = false;
@@ -258,6 +252,7 @@ void checkBallsandCube() {
 	}
 }
 
+//Überprüfung der Kollision zwischen Kugeln und platzierbaren Zylindern
 void checkBallsandCylinder() {
 
 	for (int i = 0; i<ballVector.size(); i++) {
@@ -265,8 +260,6 @@ void checkBallsandCylinder() {
 			if(ballVector.at(i)->detectCollision(*cylinderVector.at(j)) && !(ballVector.at(i)->collision)){
 				if (ballVector.at(i)->checkCollisionType(*ballVector.at(i), *cylinderVector.at(j))){
 					//gerade Kugelkollision
-
-					std::cout << "Gerade Kollision" << std::endl;
 
 					ballVector.at(i)->collision = true;
 
@@ -288,7 +281,6 @@ void checkBallsandCylinder() {
 
 				} else {
 					ballVector.at(i)->collision = true;
-
 
 					double betragMittelpunkte = sqrt( ( (cylinderVector.at(j)->posX - ballVector.at(i)->posX) * (cylinderVector.at(j)->posX - ballVector.at(i)->posX) ) + ( (cylinderVector.at(j)->posY - ballVector.at(i)->posY) * (cylinderVector.at(j)->posY - ballVector.at(i)->posY) ) + ( (cylinderVector.at(j)->posZ - ballVector.at(i)->posZ) * (cylinderVector.at(j)->posZ - ballVector.at(i)->posZ) ) );
 
@@ -343,6 +335,7 @@ void checkBallsandCylinder() {
 	}
 }
 
+//Überprüft Kollisionen zwischen Kugeln
 void checkBalls() {
 	for (int i = 0; i<ballVector.size();i++) {
 		for (int j = 0; j<ballVector.size(); j++) {
@@ -360,8 +353,6 @@ void checkBalls() {
 
 				if (ballVector.at(i)->checkCollisionType(*ballVector.at(i), *ballVector.at(j))){
 					//gerade Kugelkollision
-
-					std::cout << "Gerade Kollision" << std::endl;
 
 					ballVector.at(j)->collision = true;
 					ballVector.at(i)->collision = true;
@@ -395,8 +386,6 @@ void checkBalls() {
 					ballVector.at(j)->collision = true;
 					ballVector.at(i)->collision = true;
 
-					//double betragMittelpunkte = sqrt( ( (ballVector.at(j)->posX - ballVector.at(i)->posX) * (ballVector.at(j)->posX - ballVector.at(i)->posX) ) + ( (ballVector.at(j)->posY - ballVector.at(i)->posY) * (ballVector.at(j)->posY - ballVector.at(i)->posY) ) + ( (ballVector.at(j)->posZ - ballVector.at(i)->posZ) * (ballVector.at(j)->posZ - ballVector.at(i)->posZ) ) );
-
 					Vec3 n;
 					n.p[0] = ( (ballVector.at(j)->posX - ballVector.at(i)->posX));
 					n.p[1] = ( (ballVector.at(j)->posY - ballVector.at(i)->posY));
@@ -416,7 +405,6 @@ void checkBalls() {
 					vplusn.p[0] = ( ( v1maln.p[0] + v2maln.p[0] ) / 2.0 );
 					vplusn.p[1] = ( ( v1maln.p[1] + v2maln.p[1] ) / 2.0 );
 					vplusn.p[2] = ( ( v1maln.p[2] + v2maln.p[2] ) / 2.0 );
-//					Vec3 vplusn = (v1maln.operator +=(v2maln)) / 2.0;
 
 					Vec3 v1neu;
 					v1neu.p[0] = ( ballVector.at(j)->speedX + ( 2.0 * ( vplusn.p[0] - v1maln.p[0] ) * n.p[0]) );
@@ -481,9 +469,11 @@ void SetMaterialColor(int side, double r, double g, double b) {
   glMaterialf( mat, GL_SHININESS, 20);
 }
 
+//Zeichnen der Kugeln
 void drawVectorBalls(){
 	for (int i = 0; i<ballVector.size();i++) {
 		if (bs == i && selectionMode && selectedObject == "balls") {
+			//Wenn Auswahlmodus und Objektgruppe der Bälle ausgewählt ist
 			SetMaterialColor(1, 0.0, 1.0, 1.0);
 		} else {
 			SetMaterialColor(1, ballVector.at(i)->colourR, ballVector.at(i)->colourG, ballVector.at(i)->colourB);
@@ -491,9 +481,11 @@ void drawVectorBalls(){
 		ballVector.at(i)->DrawBall(Vec3( ballVector.at(i)->posX, ballVector.at(i)->posY,ballVector.at(i)->posZ), ballVector.at(i)->ballSize);
 	}
 }
+//Zeichnen der Zylinder
 void drawVectorCylinders() {
 	for (int i = 0; i<cylinderVector.size();i++) {
 		if (cs == i && selectionMode && selectedObject == "cylinders") {
+			//Wenn Auswahlmodus und Objektgruppe der Zylinder ausgewählt ist
 			SetMaterialColor(1, 0.0, 1.0, 1.0);
 			SetMaterialColor(2, 0.0, 1.0, 1.0);
 		} else {
@@ -503,9 +495,11 @@ void drawVectorCylinders() {
 	  	  cylinderVector.at(i)->DrawCylinder(cylinderVector.at(i)->posX, cylinderVector.at(i)->posY, cylinderVector.at(i)->posZ, cylinderVector.at(i)->cylinderSize);
 	}
 }
+//Zeichnen der Würfel
 void drawCubes() {
 	for(int i =0;i<cubeVector.size();i++){
 		if(cus==i && selectionMode && selectedObject == "cubes"){
+			//Wenn Auswahlmodus und Objektgruppe der Würfel ausgewählt ist
 			SetMaterialColor(2, 0.0, 1.0, 1.0);
 		}else{
 			SetMaterialColor(2 ,0.0, 0.0, 0.0);
@@ -513,9 +507,11 @@ void drawCubes() {
 		cubeVector.at(i)->DrawCube();
 	}
 }
+//Zeichnen der Hinderniswände
 void drawObstacles() {
 	for(int i =0;i<obstacleVector.size();i++){
 		if(os==i && selectionMode && selectedObject == "obstacles"){
+			//Wenn Auswahlmodus und Objektgruppe der Hinderniswände ausgewählt ist
 			SetMaterialColor(1, 0.0, 1.0, 1.0);
 			SetMaterialColor(2, 0.0, 1.0, 1.0);
 		}else{
@@ -525,11 +521,11 @@ void drawObstacles() {
 		obstacleVector.at(i)->DrawWall();
 	}
 }
-// Erstellung der Beleuchtung
+//Erstellung der Beleuchtung
 void InitLighting() {
   GLfloat lp1[4]  = { 10,  5,  10,  0};
   GLfloat lp2[4]  = { -5,  5, -10,  0};
-  GLfloat red[4]  = {1, 0.8,  0.8,  1};		//Beleuchtungsfarbe einstellen
+  GLfloat red[4]  = {1, 0.8,  0.8,  1}; //Beleuchtungsfarbe einstellen
   GLfloat blue[4] = { .8, .8, 1.0,  1};
 
   glEnable(GL_DEPTH_TEST);
@@ -561,10 +557,8 @@ void InitLighting() {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrtho(-15, 15, -10, 10, -20, 20);
-//glFrustum(-15, 15, -10, 10, -20, 20);
 
-
- glScalef(scale, scale, scale );
+  glScalef(scale, scale, scale );
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -572,124 +566,106 @@ void InitLighting() {
 
 // Zeichnen der Szene
 void Preview() {
-if(infoScreen) {
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();				  // Reset The Current Modelview Matrix
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();				  // Reset The Current Modelview Matrix
 
-  glPushMatrix();
+	glPushMatrix();
 
-  glTranslated(moveX, moveY, 0);
+	glTranslated(moveX, moveY, 0);
 
-  glRotated(alpha_, 0 , 1, 0);	// Rotation um die Y Achse
-  glRotated(beta_, 1 ,0 ,0);	// Rotation um die X Achse
+	glRotated(alpha_, 0 , 1, 0);	// Rotation um die Y Achse
+	glRotated(beta_, 1 ,0 ,0);	// Rotation um die X Achse
 
-  glScalef(scale, scale, scale );
-
-
-  //BilliardTable colours inside and outside
-  SetMaterialColor(2, 0.0, 1.0, 0.0);
-  SetMaterialColor(1, 0.0, 1.0, 0.2);
-  table->DrawTable();
-
-  //Impulsweiser
-  if(selectionMode) {
-	  glBegin(GL_TRIANGLES);
-		  glVertex3f( 4.0, 0.0001, 1.5);
-		  glVertex3f( 6.0, 0.0001, 0.0);
-		  glVertex3f( 5.0, 0.0001, -0.5);
-	  glEnd();
-  }
+	glScalef(scale, scale, scale );
 
 
-  Goal* goal = new Goal(1.25, -2.0, 0.0002, 0.0);
-  goal->DrawGoal();
-  /* GoalReached - decreases the speed of the billiardball to 0 when the area is reached */
-  if(goal->GoalReached(ballVector.at(0)->posX, ballVector.at(0)->posY, ballVector.at(0)->posZ)) {
-	  ballVector.at(0)->speedX=0;
-	  ballVector.at(0)->speedZ=0;
-  }
+	//BilliardTable colours inside and outside
+	SetMaterialColor(2, 0.0, 1.0, 0.0);
+	SetMaterialColor(1, 0.0, 1.0, 0.2);
+	table->DrawTable();
 
-  checkBallsandWalls();
+	//Impulsweiser
+	if(selectionMode) {
+		glBegin(GL_TRIANGLES);
+			glVertex3f( 4.0, 0.0001, 1.5);
+			glVertex3f( 6.0, 0.0001, 0.0);
+			glVertex3f( 5.0, 0.0001, -0.5);
+			glEnd();
+	}
 
-  checkBallsandObstacle();
-
-  checkBalls();
-
-  checkBallsandCylinder();
-  checkBallsandCube();
-  resetBalls();
-
-  for(int i =0; i<ballVector.size(); i++) {
-	  ballVector.at(i)->updatePosition();
-  }
-
-  if (ballVector.size()>=1) {
+	Goal* goal = new Goal(1.25, -2.0, 0.0002, 0.0);
+	goal->DrawGoal();
+	//GoalReached - decreases the speed of the billiardball to 0 when the area is reached
+	if(goal->GoalReached(ballVector.at(0)->posX, ballVector.at(0)->posY, ballVector.at(0)->posZ)) {
+		ballVector.at(0)->speedX=0;
+		ballVector.at(0)->speedZ=0;
+	}
+	//Verarbeiten der Kollisionen
+	checkBallsandWalls();
+	checkBallsandObstacle();
+	checkBalls();
+	checkBallsandCylinder();
+	checkBallsandCube();
+	resetBalls();
+	//Bewegen der Bälle
+	for(int i =0; i<ballVector.size(); i++) {
+		ballVector.at(i)->updatePosition();
+	}
+	//Zeichnen der Objekte
+	if (ballVector.size()>=1) {
 	  drawVectorBalls();
-  }
-  if (cylinderVector.size()>=1) {
-	  drawVectorCylinders();
-  }
-  if (obstacleVector.size()>=1) {
-	  drawObstacles();
-  }
-  if (cubeVector.size()>=1) {
-	  drawCubes();
-  }
-
+	}
+	if (cylinderVector.size()>=1) {
+		drawVectorCylinders();
+	}
+	if (obstacleVector.size()>=1) {
+		drawObstacles();
+	}
+	if (cubeVector.size()>=1) {
+		drawCubes();
+	}
 
   glPopMatrix();
-} else {
-
-
-
 
 }
-}
 
-// Key Callback
+//Key Callback
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods){
-//Pfeiltasten moving the table
+//Pfeiltasten um den Tisch zu bewegen
 	// (<-)
 	if (key == 263 && action == 2 && !(mods==GLFW_MOD_SHIFT)){
 		moveX -= 0.1;
 	}
-
 	// (->)
 	if (key == 262 && action == 2 && !(mods==GLFW_MOD_SHIFT)){
 		moveX += 0.1;
 	}
-
 	// (^)
 	if (key == 265 && action == 2 && !(mods==GLFW_MOD_SHIFT)){
 		moveY += 0.1;
 	}
-
 	// (v)
 	if (key == 264 && action == 2 && !(mods==GLFW_MOD_SHIFT)){
 		moveY -= 0.1;
 	}
-//WASD rotating the table
+//WASD um den Tisch zu drehen
 	// (W)
 	if (key == 87 && action == 2 && !(mods==GLFW_MOD_SHIFT)){
 		beta_ -= .9;
 	}
-
 	// (A)
 	if (key == 65 && action == 2&& !(mods==GLFW_MOD_SHIFT)){
 		alpha_ -= .9;
 	}
-
 	// (S)
 	if (key == 83 && action == 2&& !(mods==GLFW_MOD_SHIFT)){
 		beta_ += .9;
 	}
-
 	// (D)
 	if (key == 68 && action == 2&& !(mods==GLFW_MOD_SHIFT)){
 		alpha_ += .9;
 	}
-
-	//selectedObject verändern
+	//Auswahl der Objektgruppe ändern
 	if(key == 45 && action == 1 && !(mods==GLFW_MOD_SHIFT)) {
 		if(selectedObject=="balls"){
 			selectedObject="cylinders";
@@ -703,8 +679,6 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		}else if(selectedObject=="obstacles"){
 			selectedObject="balls";
 			printf("balls");
-		} else {
-			printf("Fatal fault");
 		}
 	}
 	if(key == 61 && action == 1 && !(mods==GLFW_MOD_SHIFT)) {
@@ -720,29 +694,40 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		}else if(selectedObject=="obstacles"){
 			selectedObject="cubes";
 			printf("cubes");
-		}else {
-			printf("Fatal fault");
 		}
 	}
+	//Im Auswahlmodus
 	if(selectionMode) {
-		//BCZO Creating new Objects
-		// (B) Creates a new Ball
+		//Entertaste zum Starten des Spiels (Kugel rollt los)
+		if (key == 257 && action == 1) {
+			selectionMode = false;
+			whiteBall->wallBack = false;
+			whiteBall->wallFront = false;
+			whiteBall->wallLeft = false;
+			whiteBall->wallRight = false;
+			whiteBall->wallObst = false;
+			whiteBall->speedZ = 1.5;
+			whiteBall->speedX = -2.0;
+		}
+		//BCZO Um neue Objekte hinzuzufügen
+		// (B) Erstellt einen neuen Ball
 		if (key == 66 && action == 1){
 			ballVector.push_back(new BilliardBall(5, sphereY, -3,sphereSize, 0.978, 0.0, 0.0, 0.0));
 
 		}
-		// (C) Creates a new Cube
+		// (C) Erstellt einen neuen Würfwl
 		if (key == 67 && action == 1){
 			cubeVector.push_back(new Cube(size, 0.0, 0.0, 0.0));
 		}
-		// (Z) Creates a new Cylinder
+		// (Z) Erstellt einen neen Zylinder
 		if (key == 90 && action == 1){
 			cylinderVector.push_back(new Cylinder(size, -2.5, 0.5, -2));
 		}
-		// (O) Creates a new Wall
+		// (O) Erstellt eine neue Hinderniswand
 		if (key == 79 && action == 1){
 			obstacleVector.push_back(new Wall(wallSize, 1.0, 0.0, -1.0));
 		}
+		//Wenn Ballgruppe ausgewählt ist
 		if (selectedObject == "balls") {
 			//zum Iterieren durch die Kugelauswahl Shift und +/-
 			if(key == 45 && action == 1 && mods==GLFW_MOD_SHIFT) {
@@ -778,8 +763,9 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 					ballVector.at(bs)->posZ += 0.1;
 				}
 			}
+		//Wenn Zylindergrupppe ausgewählt ist
 		}else if(selectedObject=="cylinders"){
-			//zum Iterieren durch die Zylinderauswahl strg und +/-
+			//zum Iterieren durch die Zylinderauswahl shift und +/-
 			if(key == 45 && action == 1 && mods==GLFW_MOD_SHIFT) {
 				if (cs-1 < 0) {
 					cs = cylinderVector.size()-1;
@@ -794,7 +780,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 					cs++;
 				}
 			}
-			//Bewegen des ausgewählten Zylinders strg + Pfeiltasten
+			//Bewegen des ausgewählten Zylinders shift + Pfeiltasten
 			if (cylinderVector.size()>0) {
 				// (<-)
 				if ((key == 263 && action == 2 )&& mods==GLFW_MOD_SHIFT){
@@ -813,6 +799,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 					cylinderVector.at(cs)->posZ += 0.1;
 				}
 			}
+		//Wenn Objektgruppe der Würfel ausgewählt ist
 		}else if(selectedObject=="cubes") {
 			//Zum Iterieren durch die Würfelauswahl
 			if(key == 45 && action == 1 && mods==GLFW_MOD_SHIFT) {
@@ -829,7 +816,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 					cus++;
 				}
 			}
-			//Bewegen des ausgewählten Würfels alt + Pfeiltasten
+			//Bewegen des ausgewählten Würfels Shift + Pfeiltasten
 			if (cubeVector.size()>0) {
 				// (<-)
 				if ((key == 263 && action == 2 )&& mods==GLFW_MOD_SHIFT){
@@ -859,6 +846,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 					cubeVector.at(cus)->rotY+=0.9;
 				}
 			}
+		//Wenn Gruppe der Hinderniswände ausgewählt ist
 		}else if(selectedObject=="obstacles") {
 			//Zum Iterieren durch die Wandauswahl
 			if(key == 45 && action == 1 && mods==GLFW_MOD_SHIFT) {
@@ -907,19 +895,6 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 			}
 		}
 	}
-
-	//Entertaste zum Starten des Spiels (Kugel rollt los)
-	if (key == 257 && action == 1) {
-		selectionMode = false;
-		whiteBall->wallBack = false;
-		whiteBall->wallFront = false;
-		whiteBall->wallLeft = false;
-		whiteBall->wallRight = false;
-		whiteBall->wallObst = false;
-		whiteBall->speedZ = 1.5;
-		whiteBall->speedX = -2.0;
-	}
-
 	//Leertaste zum Zurücksetzen der Kugel auf die Startposition
 	if (key == 32  && action == 1){
 		selectionMode = true;
@@ -929,6 +904,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		whiteBall->speedZ = 0;
 		whiteBall->speedX = 0;
 	}
+	//Leertaste + Shift zum Zurücksetzen des gesamten Spiels
 	if (key == 32  && action == 1 && mods==GLFW_MOD_SHIFT){
 		selectionMode = true;
 		selectedObject = "balls";
@@ -950,46 +926,48 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 }
 
 int main() {
-	  ballVector.push_back(whiteBall);
-	  GLFWwindow* window = NULL;
+	//Hinzufügend er weißen Kugel zum Kugelvektor
+	ballVector.push_back(whiteBall);
 
-	  if(!glfwInit()){
-		  return -1;
-	  }
+	GLFWwindow* window = NULL;
 
-	  window = glfwCreateWindow(window_width_, window_height_,
+	if(!glfwInit()){
+		return -1;
+	}
+
+	window = glfwCreateWindow(window_width_, window_height_,
 								"CG_BallGame", NULL, NULL);
-	  if(!window) {
-		  glfwTerminate();
-		  return -1;
-	  }
+	if(!window) {
+		glfwTerminate();
+		return -1;
+	}
 
-	  glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(window);
 
-	  while(!glfwWindowShouldClose(window)) {
-			// switch on lighting (or you don't see anything)
-			InitLighting();
+	while(!glfwWindowShouldClose(window)) {
+		// switch on lighting (or you don't see anything)
+		InitLighting();
 
-			// set background color
-			glClearColor(0.8, 0.8, 0.8, 1.0);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		// set background color
+		glClearColor(0.8, 0.8, 0.8, 1.0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			// draw the scene
-			Preview();
+		// draw the scene
+		Preview();
 
-			// make it appear (before this, it's hidden in the rear buffer)
-			glfwSwapBuffers(window);
+		// make it appear (before this, it's hidden in the rear buffer)
+		glfwSwapBuffers(window);
 
-			glfwPollEvents();
+		glfwPollEvents();
 
-			// Callbacks for Keyboard
-			glfwSetKeyCallback(window, key_callback);
+		// Callbacks for Keyboard
+		glfwSetKeyCallback(window, key_callback);
 
-	  }
+	}
 
-	  glfwTerminate();
+	glfwTerminate();
 
-	  printf("Goodbye!\n");
+	printf("Goodbye!\n");
 
-	  return 0;
+	return 0;
 }
