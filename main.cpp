@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
-
 #include "Ball.h"
 #include "Table.h"
 #include "Wall.h"
@@ -120,7 +119,7 @@ void checkBallsandObstacle() {
 				//Anpassung der Geschwindigkeit der Kugel
 				ballVector.at(i)->speedX = ballVector.at(i)->speedX - aNeuX;
 				ballVector.at(i)->speedZ = ballVector.at(i)->speedZ - aNeuZ;
-				//urücksetzen der Kollisionen
+				//Zurücksetzen der Kollisionen
 				ballVector.at(i)->wallBack = false;
 				ballVector.at(i)->wallFront = false;
 				ballVector.at(i)->wallLeft = false;
