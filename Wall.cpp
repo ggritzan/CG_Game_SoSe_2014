@@ -34,10 +34,10 @@ void Wall::DrawWall(){
 
 
     glPushMatrix();
-    glTranslatef(posX, posY, posZ);
-    glRotated(rotX, 1, 0, 0);
-    glRotated(rotY, 0, 1, 0);// Rotation um die Y Achse
-    glRotated(rotZ, 0 ,0 ,1);
+//    glTranslatef(posX, posY, posZ);
+//    glRotated(rotX, 1, 0, 0);
+//    glRotated(rotY, 0, 1, 0);// Rotation um die Y Achse
+//    glRotated(rotZ, 0 ,0 ,1);
 		glBegin(GL_QUADS);
 			  //Hinderniswand
 			  glNormal3f(wallSize * 6, 0.0, 8.0);
