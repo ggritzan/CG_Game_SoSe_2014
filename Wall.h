@@ -16,6 +16,7 @@ public:
 
     Vec3 wallDotObs;
     Vec3 WallDotObsNormVec;
+    Vec3 newWallDotObs;
 
 	bool obstacle;
 
@@ -23,6 +24,7 @@ public:
 	virtual ~Wall();
 
     void DrawWall();
+    void UpdateColliPoints();
 };
 
 #endif /* WALL_H_ */

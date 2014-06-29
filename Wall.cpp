@@ -20,6 +20,7 @@ Wall::Wall(double size, double posX, double posY, double posZ) {
 
     this->wallDotObs = Vec3(posX - a, 1.0, posZ + a);
     this->WallDotObsNormVec = Vec3(-2 * a, 0.0, -2 * a);
+    this->newWallDotObs = Vec3(posX - a, 1.0, posZ + a);
 
 }
 
@@ -48,4 +49,10 @@ void Wall::DrawWall(){
 			  glVertex3f(posX - a, 0.0, posZ + a);
 		glEnd();
 	glPopMatrix();
+
+    this->UpdateColliPoints();
+}
+
+void Wall::UpdateColliPoints() {
+	this->newWallDotObs = Vec3((this->wallDotObs.p[0] + posX ), (this->wallDotObs.p[1] + posY ), (this->wallDotObs.p[2] + posZ ));
 }
