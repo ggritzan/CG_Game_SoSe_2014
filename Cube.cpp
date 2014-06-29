@@ -2,13 +2,13 @@
  * Cube.cpp
  *
  *  Created on: 03.06.2014
- *      Author: Kathrin
+ *      Author: Kathrin, Giacomo, Nina
  */
 
 #include "Cube.h"
 
 #include <GL/gl.h>
-#include <iostream>
+#include <iostream>s
 #include "vec3.hpp"
 
 Cube::Cube(double size, double posX, double posY, double posZ) {
@@ -126,21 +126,16 @@ void Cube::DrawCube() {
 void Cube::UpdateColliPoints() {
 		/* Left */
 		this->newCubeDotLeft = Vec3((this->cubeDotLeft.p[0] + posX ), (this->cubeDotLeft.p[1] + posY ), (this->cubeDotLeft.p[2] + posZ ));
-		//this->newCubeDotLeftNormVec = Vec3((this->cubeDotLeftNormVec.p[0] + posX), (this->cubeDotLeftNormVec.p[1] + posY), (this->cubeDotLeftNormVec.p[2] + posZ));
 
+//		std::cout <<  this->cubeDotLeft.p[0] <<  this->cubeDotLeft.p[1] <<  this->cubeDotLeft.p[2]<< std::endl;
+//		std::cout << this->newCubeDotLeft.p[0] << this->newCubeDotLeft.p[1] << this->newCubeDotLeft.p[2] << std::endl;
 
 		/* Right */
 		this->newCubeDotRight = Vec3((this->cubeDotRight.p[0] + posX ), (this->cubeDotRight.p[1] + posY ), (this->cubeDotRight.p[2] + posZ ));
-		//this->newCubeDotRightNormVec = Vec3((this->cubeDotRightNormVec.p[0] + posX), (this->cubeDotRightNormVec.p[1] + posY), (this->cubeDotRightNormVec.p[2] + posZ));
-
 
 		/* Front */
 		this->newCubeDotFront = Vec3((this->cubeDotFront.p[0] + posX ), (this->cubeDotFront.p[1] + posY ), (this->cubeDotFront.p[2] + posZ ));
-		//this->newCubeDotFrontNormVec = Vec3((this->cubeDotFrontNormVec.p[0] + posX), (this->cubeDotFrontNormVec.p[1] + posY), (this->cubeDotFrontNormVec.p[2] + posZ));
-
 
 		/* Back */
 		this->newCubeDotBack = Vec3((this->cubeDotBack.p[0] + posX ), (this->cubeDotBack.p[1] + posY  ), (this->cubeDotBack.p[2] +posZ ));
-		//this->newCubeDotBackNormVec = Vec3((this->cubeDotBackNormVec.p[0] + posX), (this->cubeDotBackNormVec.p[1] + posY), (this->cubeDotBackNormVec.p[2] + posZ));
-
 }
