@@ -14,9 +14,6 @@
 #include "Cylinder.h"
 #include "vec3.hpp"
 
-
-
-
 static double alpha_ = 35;		// Winkel für Y Achse
 static double beta_ = 25;		// Winkel für X Achse
 
@@ -594,11 +591,14 @@ if(infoScreen) {
   SetMaterialColor(1, 0.0, 1.0, 0.2);
   table->DrawTable();
 
-//  wall->DrawWall();
+  //Impulsweiser
+  glBegin(GL_TRIANGLES);
+      glVertex3f( 4.0, 0.0001, 1.0);
+      glVertex3f( 6.0, 0.0001, 0.0);
+      glVertex3f( 5.0, 0.0001, -1.0);
+  glEnd();
 
 
-  //Rotes Zielkreuz
-  /* maxsize 1.5		size,   x,      y,   z    */
   Goal* goal = new Goal(1.25, -2.0, 0.0002, 0.0);
   goal->DrawGoal();
   /* GoalReached - decreases the speed of the billiardball to 0 when the area is reached */
@@ -616,7 +616,7 @@ if(infoScreen) {
   checkBallsandCylinder();
   checkBallsandCube();
   resetBalls();
-  //std::cout <<selectedObject << std::endl;
+
   for(int i =0; i<ballVector.size(); i++) {
 	  ballVector.at(i)->updatePosition();
   }
@@ -666,23 +666,23 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 	if (key == 264 && action == 2 && !(mods==GLFW_MOD_SHIFT)){
 		moveY -= 0.1;
 	}
-	//WASD rotating the table
-		// (W)
+//WASD rotating the table
+	// (W)
 	if (key == 87 && action == 2 && !(mods==GLFW_MOD_SHIFT)){
 		beta_ -= .9;
 	}
 
-		// (A)
+	// (A)
 	if (key == 65 && action == 2&& !(mods==GLFW_MOD_SHIFT)){
 		alpha_ -= .9;
 	}
 
-		// (S)
+	// (S)
 	if (key == 83 && action == 2&& !(mods==GLFW_MOD_SHIFT)){
 		beta_ += .9;
 	}
 
-		// (D)
+	// (D)
 	if (key == 68 && action == 2&& !(mods==GLFW_MOD_SHIFT)){
 		alpha_ += .9;
 	}
