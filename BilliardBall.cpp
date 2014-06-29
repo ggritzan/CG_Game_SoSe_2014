@@ -26,7 +26,6 @@ BilliardBall::BilliardBall(double posX, double posY, double posZ, float size, do
 	this->colourR = colourR;
 	this->colourG = colourG;
 	this->colourB = colourB;
-	this->adventureBall = false;
 
 	this->collision = false;
 	this->cylinderCol = false;
@@ -224,7 +223,6 @@ bool BilliardBall::checkCollisionType(BilliardBall a, Cylinder c) {
 
 // Updatet die Position der Kugel
 void BilliardBall::updatePosition(){
-	if (this->adventureBall) {
 		if (speedZ == 0 && speedX == 0) {
 			this->collision = false;
 			this->wallBack = false;
@@ -238,21 +236,6 @@ void BilliardBall::updatePosition(){
 		posZ = posZ + (speedZ * 0.1);
 		speedX = (speedX * friction);
 		speedZ = (speedZ * friction);
-	} else {
-		if (speedZ == 0 && speedX == 0) {
-			this->collision = false;
-			this->wallBack = false;
-			this->wallFront = false;
-			this->wallLeft = false;
-			this->wallRight = false;
-			this->wallObst = false;
-		}
-
-		posX = posX + (speedX * 0.1);
-		posZ = posZ + (speedZ * 0.1);
-		speedX = (speedX * friction);
-		speedZ = (speedZ * friction);
-	}
 }
 
 // Kollision mit einer Bande

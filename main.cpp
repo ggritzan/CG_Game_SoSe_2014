@@ -968,7 +968,6 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 }
 
 int main() {
-	whiteBall->adventureBall= true;
 	  ballVector.push_back(whiteBall);
 	  GLFWwindow* window = NULL;
 
