@@ -56,6 +56,10 @@ Cube::~Cube() {
 void Cube::DrawCube() {
 
    glPushMatrix();
+
+   glRotated(rotY, 0, 1, 0);
+
+
       glBegin(GL_QUADS);
       //Boden
       glNormal3f(0.0, 0.0, cubeSize);
@@ -105,10 +109,12 @@ void Cube::DrawCube() {
       glVertex3f(cubeSize+posX, cubeSize, -cubeSize+posZ);
       glVertex3f(cubeSize+posX, cubeSize, cubeSize+posZ);
       glEnd();
+
+      this->UpdateColliPoints();
     glPopMatrix();
 
     //Update der Kollisionspunkte
-    this->UpdateColliPoints();
+
 }
 
 //Funktion zum aktualisieren der Kollisionspunkte

@@ -158,7 +158,7 @@ bool Ball::detectCollision(Cube c) {
 
 	double a = 2 * c.cubeSize * (1 / sqrt(2));
 
-    //Geschwindigkeit
+	//Geschwindigkeit
     double dvX = this->speedX - c.speedX;
     double dvY = this->speedY - c.speedY;
     double dvZ = this->speedZ - c.speedZ;
@@ -188,6 +188,9 @@ bool Ball::detectCollision(Cube c) {
     if (D < 0) {
     	D = D * -1;
     }
+
+
+
     //Keine Kollision
     if(D > 0) {
         return false;
