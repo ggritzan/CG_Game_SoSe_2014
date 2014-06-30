@@ -49,7 +49,7 @@ public:
 	virtual ~Cube();
 	void DrawCube();
 	void UpdateColliPoints();
-	void RotateCube();
+	double RotateCube(double x, double y, double z, int selector);
 };
 
 #endif /* CUBE_H_ */
