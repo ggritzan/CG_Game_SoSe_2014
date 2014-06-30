@@ -52,6 +52,7 @@ Ball::~Ball() {
 
 //Überprüfung der Kollision zwischen zwei Kugeln
 bool Ball::detectCollision(Ball b) {
+
     //Geschwindigkeit
     double dvX = this->speedX - b.speedX;
     double dvY = this->speedY - b.speedY;

@@ -19,6 +19,9 @@ Cube::Cube(double size, double posX, double posY, double posZ) {
 	this->rotX = 0.0;
 	this->rotY = 0.0;
 	this->rotZ = 0.0;
+	this->posXOriginal = posX;
+	this->posYOriginal = posY;
+	this->posZOriginal = posZ;
 	this->posX = posX;
 	this->posY = posY;
 	this->posZ = posZ;
@@ -54,68 +57,88 @@ Cube::~Cube() {
 
 //Zeichnen des Würfels
 void Cube::DrawCube() {
+	this->RotateCube();
+	this->UpdateColliPoints();
 
    glPushMatrix();
 
+
    glRotated(rotY, 0, 1, 0);
+
 
 
       glBegin(GL_QUADS);
       //Boden
       glNormal3f(0.0, 0.0, cubeSize);
 
-      glVertex3f(-cubeSize+posX, 0, cubeSize+posZ);
-      glVertex3f(-cubeSize+posX, 0, -cubeSize+posZ);
-      glVertex3f(cubeSize+posX, 0, -cubeSize+posZ);
-      glVertex3f(cubeSize+posX, 0, cubeSize+posZ);
+      glVertex3f(-cubeSize+posXOriginal, 0, cubeSize+posZOriginal);
+      glVertex3f(-cubeSize+posXOriginal, 0, -cubeSize+posZOriginal);
+      glVertex3f(cubeSize+posXOriginal, 0, -cubeSize+posZOriginal);
+      glVertex3f(cubeSize+posXOriginal, 0, cubeSize+posZOriginal);
 
       //Linke Wand
       glNormal3f(-cubeSize, 0.0, 0.0);
 
-      glVertex3f(-cubeSize+posX, cubeSize, -cubeSize+posZ);
-      glVertex3f(-cubeSize+posX, cubeSize, cubeSize+posZ);
-      glVertex3f(-cubeSize+posX, 0, cubeSize+posZ);
-      glVertex3f(-cubeSize+posX, 0, -cubeSize+posZ);
+      glVertex3f(-cubeSize+posXOriginal, cubeSize, -cubeSize+posZOriginal);
+      glVertex3f(-cubeSize+posXOriginal, cubeSize, cubeSize+posZOriginal);
+      glVertex3f(-cubeSize+posXOriginal, 0, cubeSize+posZOriginal);
+      glVertex3f(-cubeSize+posXOriginal, 0, -cubeSize+posZOriginal);
 
       //Rechte Wand
       glNormal3f(0.0, 0.0, -cubeSize);
 
-      glVertex3f(cubeSize+posX, 0, cubeSize+posZ);
-      glVertex3f(cubeSize+posX, 0, -cubeSize+posZ);
-      glVertex3f(cubeSize+posX, cubeSize, -cubeSize+posZ);
-      glVertex3f(cubeSize+posX, cubeSize, cubeSize+posZ);
+      glVertex3f(cubeSize+posXOriginal, 0, cubeSize+posZOriginal);
+      glVertex3f(cubeSize+posXOriginal, 0, -cubeSize+posZOriginal);
+      glVertex3f(cubeSize+posXOriginal, cubeSize, -cubeSize+posZOriginal);
+      glVertex3f(cubeSize+posXOriginal, cubeSize, cubeSize+posZOriginal);
 
       //Vordere Wand
       glNormal3f(-cubeSize, 0.0, 0.0);
 
-      glVertex3f(-cubeSize+posX, cubeSize, cubeSize+posZ);
-      glVertex3f(-cubeSize+posX, 0, cubeSize+posZ);
-      glVertex3f(cubeSize+posX, 0, cubeSize+posZ);
-      glVertex3f(cubeSize+posX, cubeSize, cubeSize+posZ);
+      glVertex3f(-cubeSize+posXOriginal, cubeSize, cubeSize+posZOriginal);
+      glVertex3f(-cubeSize+posXOriginal, 0, cubeSize+posZOriginal);
+      glVertex3f(cubeSize+posXOriginal, 0, cubeSize+posZOriginal);
+      glVertex3f(cubeSize+posXOriginal, cubeSize, cubeSize+posZOriginal);
 
       //BHintere Wand
       glNormal3f(-cubeSize, 0.0, 0.0);
 
-      glVertex3f(-cubeSize+posX, cubeSize, -cubeSize+posZ);
-      glVertex3f(-cubeSize+posX, 0, -cubeSize+posZ);
-      glVertex3f(cubeSize+posX, 0, -cubeSize+posZ);
-      glVertex3f(cubeSize+posX, cubeSize, -cubeSize+posZ);
+      glVertex3f(-cubeSize+posXOriginal, cubeSize, -cubeSize+posZOriginal);
+      glVertex3f(-cubeSize+posXOriginal, 0, -cubeSize+posZOriginal);
+      glVertex3f(cubeSize+posXOriginal, 0, -cubeSize+posZOriginal);
+      glVertex3f(cubeSize+posXOriginal, cubeSize, -cubeSize+posZOriginal);
 
       //Deckel
       glNormal3f(0.0, 0.0, -cubeSize);
 
-      glVertex3f(-cubeSize+posX, cubeSize, cubeSize+posZ);
-      glVertex3f(-cubeSize+posX, cubeSize, -cubeSize+posZ);
-      glVertex3f(cubeSize+posX, cubeSize, -cubeSize+posZ);
-      glVertex3f(cubeSize+posX, cubeSize, cubeSize+posZ);
+      glVertex3f(-cubeSize+posXOriginal, cubeSize, cubeSize+posZOriginal);
+      glVertex3f(-cubeSize+posXOriginal, cubeSize, -cubeSize+posZOriginal);
+      glVertex3f(cubeSize+posXOriginal, cubeSize, -cubeSize+posZOriginal);
+      glVertex3f(cubeSize+posXOriginal, cubeSize, cubeSize+posZOriginal);
       glEnd();
 
-      this->UpdateColliPoints();
+
     glPopMatrix();
+
+
 
     //Update der Kollisionspunkte
 
 }
+
+
+void Cube::RotateCube(){
+
+	double c = cos(rotY);
+	double s = sin(rotY);
+
+	this->posX = (this->posXOriginal * c) - (s*this->posZOriginal);
+	this->posY = this->posYOriginal;
+	this->posZ = ( this->posXOriginal * s) + (this->posZOriginal*c);
+
+
+}
+
 
 //Funktion zum aktualisieren der Kollisionspunkte
 void Cube::UpdateColliPoints() {
