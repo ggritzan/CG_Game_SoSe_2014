@@ -819,19 +819,19 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 			if (cubeVector.size()>0) {
 				// (<-)
 				if ((key == 263 && action == 2 )&& mods==GLFW_MOD_SHIFT){
-					cubeVector.at(cus)->posXOriginal -= 0.1;
+					cubeVector.at(cus)->posX -= 0.1;
 				}
 				// (->)
 				if (key == 262 && action == 2 && mods==GLFW_MOD_SHIFT){
-					cubeVector.at(cus)->posXOriginal += 0.1;
+					cubeVector.at(cus)->posX += 0.1;
 				}
 				// (^)
 				if (key == 265 && action == 2 && mods==GLFW_MOD_SHIFT){
-					cubeVector.at(cus)->posZOriginal -= 0.1;
+					cubeVector.at(cus)->posZ -= 0.1;
 				}
 				// (v)
 				if (key == 264 && action == 2 && mods==GLFW_MOD_SHIFT){
-					cubeVector.at(cus)->posZOriginal += 0.1;
+					cubeVector.at(cus)->posZ += 0.1;
 				}
 			}
 			//AD rotieren des ausgewählten Würfels

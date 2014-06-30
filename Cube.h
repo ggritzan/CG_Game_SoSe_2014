@@ -21,9 +21,6 @@ public:
 	double rotX;
 	double rotY;
 	double rotZ;
-	double posXOriginal;
-	double posYOriginal;
-	double posZOriginal;
 	double posX;
 	double posY;
 	double posZ;
@@ -49,7 +46,6 @@ public:
 	virtual ~Cube();
 	void DrawCube();
 	void UpdateColliPoints();
-	double RotateCube(double x, double y, double z, int selector);
 };
 
 #endif /* CUBE_H_ */
