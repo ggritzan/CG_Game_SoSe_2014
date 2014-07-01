@@ -242,8 +242,8 @@ void Ball::updatePosition(){
 		//Bearbeiten von Position und Geschwindigkeit
 		posX = posX + (speedX * 0.1);
 		posZ = posZ + (speedZ * 0.1);
-		speedX = (speedX * friction);
-		speedZ = (speedZ * friction);
+		//speedX = (speedX * friction);
+		//speedZ = (speedZ * friction);
 }
 
 // Kollision mit einer Bande
